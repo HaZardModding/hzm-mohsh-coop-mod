@@ -1,0 +1,387 @@
+//-------------------------------------------------------------------------
+//	gags/T1L3_BoatRide.Scr
+//	Jeff Leggett
+//	07/30/2002
+//
+//
+//
+//-------------------------------------------------------------------------
+
+
+//-------------------------------------------------------------------------
+main:
+//-------------------------------------------------------------------------
+
+	level.rower	= $friendlyprivate
+	level.cappy = $friendlycaptain
+	level.player_listener = $player_listener
+
+	level.cappy physics_off
+
+	level.cappy attach $boat "passenger1" 0
+
+	level.nashtyboy = 0
+
+	waitthread global/items.scr::add_item "binoculars" noprint	// Show binoculars inventory icon
+	
+
+end
+
+//-------------------------------------------------------------------------
+DoBoatRide:
+//-------------------------------------------------------------------------
+
+	level.slowBoatSpeed = 75
+	level.fastBoatSpeed = 160
+	level.parkBoatSpeed = 75
+
+	level.rower.no_idle = 1
+	level.cappy.no_idle = 1
+
+	freezeplayer
+	$player physics_off
+	$player.viewangles = "0 270 0"
+
+	thread SpawnGun
+
+	level.player_listener thread ListenForPlayer
+
+	level.rower physics_off
+	level.rower attach $boat "passenger2" 0
+
+	local.org = $playerspot_boat.origin - (0 0 64)
+	$playerspot_boat.origin = local.org
+
+	$playerspot_boat bind $boat
+
+	$player glue $playerspot_boat 0
+	$player notsolid
+
+	$player physics_on
+
+	wait 2
+	level.cappy thread DoCappy
+	level.rower thread DoRower
+
+	$boat thread DriveBoat
+
+end
+
+
+//-------------------------------------------------------------------------
+DoCappy:
+//
+//	Play Captains opening dialog and loop his idle..
+//-------------------------------------------------------------------------
+
+	self exec global/disable_ai.scr
+
+	self thread global/LoopAnim.Scr::LoopAnim 13C101_CaptainIdle
+
+	wait 7	// however long..
+
+	self waitthread global/LoopAnim.Scr::LoopAnimStop
+
+	if ( level.nashtyboy == 0 )
+	{
+		self anim 13C103_CaptainDialog01
+		self waittill animdone
+	}
+
+	self thread global/LoopAnim.Scr::LoopAnim 13C101_CaptainIdle
+
+end
+
+
+//-------------------------------------------------------------------------
+DoRower:
+//-------------------------------------------------------------------------
+	self exec global/disable_ai.scr
+
+	self thread global/LoopAnim.Scr::LoopAnim 13A101_SlowRow
+
+end
+
+
+//-------------------------------------------------------------------------
+YellAtPlayer:
+//
+//	Captain yells at player for shooting!
+//-------------------------------------------------------------------------
+
+	self waitthread global/LoopAnim.Scr::LoopAnimStop
+
+	self anim 13C104_CaptainDialog02
+	self waittill animdone
+	self anim 13C106_CaptainIdletolow
+	self waittill animdone
+
+	self waitthread global/LoopAnim.Scr::LoopAnim 13C102_CaptainIdleLow
+
+end
+
+
+//-------------------------------------------------------------------------
+RowFaster:
+//-------------------------------------------------------------------------
+
+	// tell boat to go faster...
+	$boat thread DriveBoatFast
+
+	// stop our looping
+	self waitthread global/LoopAnim.Scr::LoopAnimStop
+
+	// notice the noise...
+	self anim 13A102_NoticeGunFire
+	self waittill animdone
+
+	// row faster
+	self thread global/LoopAnim.Scr::LoopAnim 13A103_FastRow
+
+
+end
+
+
+//-------------------------------------------------------------------------
+BadPlayerBad:
+//-------------------------------------------------------------------------
+
+	// spawn extra guys
+	thread global/ai.scr::spawn 500
+	
+	// have cappy and rower do their things...
+	level.cappy thread YellAtPlayer
+	level.rower thread RowFaster
+
+end
+
+
+//-------------------------------------------------------------------------
+ListenForPlayer:
+//-------------------------------------------------------------------------
+
+	self hide
+	self notsolid
+
+	self waittill hasenemy
+
+	if ( isAlive self )
+	{
+		thread BadPlayerBad
+		level.nashtyboy = 1
+		thread gags/t1l3_colonel.scr::colonelattack
+	}
+
+	self ai_off
+
+end
+
+
+//-------------------------------------------------------------------------
+DriveBoat:
+//
+//	drive boat
+//-------------------------------------------------------------------------
+
+	self.slowrow	= local
+
+	self flypath $boat_path level.slowBoatSpeed 200 256
+
+	$boat thread global/LoopAnim.Scr::LoopAnim 13P101_SlowPaddle
+	$boat notsolid
+
+	self waitmove
+
+	self thread ParkBoat 0
+
+end
+
+
+//-------------------------------------------------------------------------
+DriveBoatFast:
+//-------------------------------------------------------------------------
+
+	// kill the slow driving thread...
+	self.slowrow delete
+
+	self waitthread global/LoopAnim.Scr::LoopAnimStop
+
+	self anim 13P102_Slow2fasttran
+	self waittill animdone
+	self thread global/LoopAnim.Scr::LoopAnim 13P103_FastPaddle
+
+	self modifyflypath level.fastBoatSpeed 200 256
+	self waitmove
+
+	self thread ParkBoat 1
+
+end
+
+
+//-------------------------------------------------------------------------
+ParkBoat local.fast:
+//
+//-------------------------------------------------------------------------
+
+	level.player_listener delete
+
+	if ( local.fast==1 )
+	{
+		thread SlowBoatDown 0.1 5 level.fastBoatSpeed
+		level.rower thread RowerGetOutOfBoat 4.6		// rower tells cappy when to get out..
+		self flypath $boat_park level.fastBoatSpeed 200 256
+	}
+	else
+	{
+		thread SlowBoatDown 2 1 level.slowBoatSpeed
+		level.rower thread RowerGetOutOfBoat 7.75		// rower tells cappy when to get out..
+		self flypath $boat_park level.slowBoatSpeed 200 256
+	}
+
+	self waitmove
+	self stop
+
+	thread AtDock
+
+end
+
+
+//-------------------------------------------------------------------------
+SlowBoatDown local.waittime local.rate local.startspeed:
+//-------------------------------------------------------------------------
+
+	wait local.waittime
+
+	local.speed = local.startspeed
+
+	while ( local.speed > 20 )
+	{
+		local.speed -= local.rate
+		self modifyflypath local.speed 200 256
+		wait 0.25
+	}
+
+end
+
+
+//-------------------------------------------------------------------------
+AtDock:
+//-------------------------------------------------------------------------
+
+	$boat notsolid
+
+	$playerspot_boat unbind
+
+	local.uptime = 0.4
+
+	$playerspot_boat time local.uptime
+	$playerspot_boat moveup 30
+	$playerspot_boat move
+	wait local.uptime
+
+	$player unglue
+	$player solid
+
+end
+
+
+//-------------------------------------------------------------------------
+CappyGetOutOfBoat:
+//-------------------------------------------------------------------------
+
+	wait 0.5
+
+	self waitthread global/LoopAnim.Scr::LoopAnimStop
+
+	self detach
+	self solid
+	self physics_on
+
+	self anim_noclip 13C107_transtodock
+	self waittill animdone
+
+	self anim_noclip 13C105_CaptainDock
+	self waittill animdone
+
+
+	// become a friendly here?
+	self runto $cappy_dest
+	self waittill movedone
+
+	self exec global/enable_ai.scr
+
+	self.no_idle = 0
+
+
+	self thread global/friendly.scr::friendlythink
+	self.friendtype = 0
+
+end
+
+
+//-------------------------------------------------------------------------
+RowerGetOutOfBoat local.waittime:
+// stop rowing
+//-------------------------------------------------------------------------
+
+	wait local.waittime
+
+	self waitthread global/LoopAnim.Scr::LoopAnimStop
+
+	// have boat stop playing it's rowing animation...
+	$boat thread global/LoopAnim.Scr::LoopAnimStop
+
+	$boat anim 13P104_PutOarsDown
+	self anim 13A105_PutOarsDown
+	self thread GimmeGun
+	self waittill animdone
+
+	$boat thread global/LoopAnim.Scr::LoopAnim 13P105_OarsatSide
+
+	level.cappy thread CappyGetOutOfBoat
+
+	self anim_noclip 13A104_RowerDock
+	self waittill animdone
+
+	// become a friendly here?
+	self runto $rower_dest
+	self waittill movedone
+	self exec global/enable_ai.scr
+
+	self.no_idle = 0
+	self thread global/friendly.scr::friendlythink
+	self.friendtype = 0
+
+end
+
+
+//-------------------------------------------------------------------------
+SpawnGun:
+//-------------------------------------------------------------------------
+
+	level.rower_gun = spawn script_model model "models/weapons/enfield.tik"
+
+//	level.rower_gun attach $boat "passenger2" 0 ( 20 -30 -10 )
+//	level.rower_gun angles "-30 -120 180"
+// jsl-->offset these to get it just right....
+	level.rower_gun attach $boat "passenger2" 0 ( -20 -25 0 )
+	level.rower_gun angles "0 -120 120"
+	level.rower_gun notsolid
+
+end
+
+
+//-------------------------------------------------------------------------
+GimmeGun:
+//-------------------------------------------------------------------------
+
+	wait 1.26
+	self gun enfield
+	level.rower_gun delete
+
+	wait 2.0
+	self detach
+	self solid
+	self physics_on
+
+end

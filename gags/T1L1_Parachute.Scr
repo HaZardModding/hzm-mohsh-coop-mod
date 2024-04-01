@@ -1,0 +1,111 @@
+//---------------------------------------------------------------------------------
+//	gags/T1L1_Parachute.Scr
+//
+//	Parachute guy that get's killed in front of player...
+//
+//	threads:
+//			gags/T1L1_Parachute.Scr::DoAAGuy <time=7>
+//			gags/T1L1_Parachute.Scr::AAGuyDie
+//	
+//---------------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------------
+main:
+//---------------------------------------------------------------------------------
+	level.didAAGuy = 0
+
+	end
+
+//---------------------------------------------------------------------------------
+DoAAGuy local.time:
+//
+//	Start up the AA gag.  Have guy get killed by projectile generator.
+//
+//---------------------------------------------------------------------------------
+
+	if ( level.didAAGuy == 1 )
+	{
+		// don't do this more than once!
+		End
+	}
+
+	level.didAAGuy = 1
+
+	if ( $aa_guy_spot==NIL )
+	{
+		dprintln "Error creating AA guy..."
+		END
+	}
+
+	spawn static/parachute_actors "classname" "scriptmodel" "origin" $aa_guy_spot.origin "angles" $aa_guy_spot.angles "targetname" "aa_chute"
+	spawn human/allied_airborne_soldier "origin" $aa_guy_spot.origin "angles" $aa_guy_spot.angles "targetname" "AAGuy"
+
+	if ( $AAGuy==NIL )
+	{
+		dprintln "Error creating AA guy..."
+		END
+	}
+
+	$aa_chute attach $AAGuy "Bip01 Spine2" 0 (0 0 0)
+
+	$AAGuy thread AAGuyGo local.time
+
+	End
+
+//---------------------------------------------------------------------------------
+AAGuyGo local.time:
+//---------------------------------------------------------------------------------
+
+	if (local.time==NIL)
+		local.time	= 7
+
+	self thread AAGuyDelete local.time
+
+	self glue $aa_guy_spot 0
+	self exec global/disable_ai.scr
+	self nodamage
+
+	self thread global/LoopAnim.Scr::LoopAnim 11A900_ParaIdle
+
+	$aa_guy_spot time local.time
+	$aa_guy_spot moveto $aa_guy_dest
+	$aa_guy_spot move
+
+	wait 4
+
+	thread AAGuyDie
+
+	End
+
+//---------------------------------------------------------------------------------
+AAGuyDie:
+//---------------------------------------------------------------------------------
+
+	$aa_pg target self
+	$aa_pg TurnOn
+
+	// stop looping anim
+	self thread global/LoopAnim.Scr::LoopAnimStop
+
+	// play our death anim
+	self anim 11A905_ParaShot
+	self waittill animdone
+
+	// loop our dead anim...
+	self thread global/LoopAnim.Scr::LoopAnim 11A906_ParaDead
+
+	end
+
+//---------------------------------------------------------------------------------
+AAGuyDelete local.time:
+//---------------------------------------------------------------------------------
+
+	wait local.time
+
+	$aa_chute detach 
+
+	$aa_chute delete
+
+	self delete
+
+	end
