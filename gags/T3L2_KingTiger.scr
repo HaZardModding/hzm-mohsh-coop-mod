@@ -50,7 +50,7 @@ main:
 	//wait 4
 	//thread DoKingTiger1
 
-	End
+End
 
 
 
@@ -63,7 +63,7 @@ DoKingTiger1:
 
 	$kingtiger1 thread KingTigerGo
 
-	End
+End
 
 
 //------------------------------------------------------------------
@@ -75,7 +75,7 @@ KingTiger1_GoPath1:
 
 	$kingtiger1.direction = 1
 
-	End
+End
 
 //------------------------------------------------------------------
 KingTiger1_GoPath2:
@@ -86,7 +86,7 @@ KingTiger1_GoPath2:
 
 	$kingtiger1.direction = 2
 
-	End
+End
 
 //------------------------------------------------------------------
 BridgeTankGo:
@@ -98,7 +98,7 @@ BridgeTankGo:
 	$bridgetank thread GotoBridge $bridgetank_path1 $bridgetank_spawnloc bridge_tiger 1
 ////	$bridgetank health 50
 
-	end
+end
 
 //------------------------------------------------------------------
 BridgeTank2Go:
@@ -109,7 +109,7 @@ BridgeTank2Go:
 	$bridgetank2 waitthread ShowTank
 	$bridgetank2 thread GotoBridge $bridgetank_path2 $bridgetank2_spawnloc bridge_panzer 1
 
-	end
+end
 
 //------------------------------------------------------------------
 PushBridgeTank:
@@ -124,7 +124,7 @@ PushBridgeTank:
 		thread global/exploder.scr::explode 3511
 	}
 
-	End
+End
 
 //------------------------------------------------------------------
 PushBridgeTank2:
@@ -138,7 +138,7 @@ PushBridgeTank2:
 		thread global/exploder.scr::explode 3501
 	}
 
-	End
+End
 
 
 
@@ -167,7 +167,7 @@ KingTigerGo:
 
 	self thread SetupPath
 
-	End
+End
 
 //------------------------------------------------------------------
 DoBridgeSpawns:
@@ -180,7 +180,7 @@ DoBridgeSpawns:
 	thread BridgeSpawnLeft $panzer_tank
 	thread BridgeSpawnRight $panzer_tank
 
-	End
+End
 
 //------------------------------------------------------------------
 BridgeSpawnLeft local.collisionent:
@@ -198,7 +198,7 @@ BridgeSpawnLeft local.collisionent:
 	thread SpawnPanzer bridgetank5_spawn $spawner3 $spawner3_path3 local.collisionent
 
 
-	End
+End
 
 //------------------------------------------------------------------
 BridgeSpawnRight local.collisionent:
@@ -209,7 +209,7 @@ BridgeSpawnRight local.collisionent:
 	wait 45
 	thread SpawnPanzer bridgetank7_spawn $spawner4 $spawner4_path2 local.collisionent
 
-	End
+End
 
 //------------------------------------------------------------------
 HideTank:
@@ -243,7 +243,7 @@ HideTank:
 		self.collisionent = self.target
 	}
 
-	End
+End
 
 //------------------------------------------------------------------
 ShowTank:
@@ -267,7 +267,7 @@ ShowTank:
 		self.gun3 solid
 	}
 	
-	End
+End
 
 //------------------------------------------------------------------
 DefaultPath:
@@ -280,7 +280,7 @@ DefaultPath:
 	if ( self.direction==0 )
 		self.direction = 1
 
-	End
+End
 
 //------------------------------------------------------------------
 TurnOnAI:
@@ -288,7 +288,7 @@ TurnOnAI:
 	// now just be a normal tank... (ie: go after player...)
 	self thread global/vehicles_thinkers.scr::enemy_tank_think 0 empty_tiger
 
-	End
+End
 
 //------------------------------------------------------------------
 SetupPath:
@@ -315,7 +315,7 @@ SetupPath:
 
 	// Done!  Let AI take over from here...
 
-	End
+End
 
 
 
@@ -346,7 +346,7 @@ GotoBridge local.path local.spawnloc local.type local.spawnnext:
 		thread SpawnNext self.targetname local.path local.spawnloc local.type self.collisionent
 	}
 
-	end
+end
 
 //------------------------------------------------------------------
 GetReadyForPush:
@@ -358,7 +358,7 @@ GetReadyForPush:
 	self.collisionent	= NULL
 
 
-	End
+End
 
 
 //------------------------------------------------------------------
@@ -384,7 +384,7 @@ PushMe:
 	local.gun2 delete
 	self delete
 
-	End
+End
 
 
 //------------------------------------------------------------------
@@ -419,7 +419,7 @@ SpawnNext local.targetname local.path local.spawnloc local.type local.collisione
 		break
 	}
 
-	End
+End
 
 //------------------------------------------------------------------
 SpawnTiger local.targetname local.spawnloc local.path local.collisionent:
@@ -432,7 +432,7 @@ SpawnTiger local.targetname local.spawnloc local.path local.collisionent:
 
 	local.tank thread GotoBridge local.path local.spawnloc bridge_tiger 0
 
-	end local.tank
+end local.tank
 
 //------------------------------------------------------------------
 SpawnPanzer local.targetname local.spawnloc local.path local.collisionent:
@@ -445,5 +445,5 @@ SpawnPanzer local.targetname local.spawnloc local.path local.collisionent:
 
 	local.tank thread GotoBridge local.path local.spawnloc bridge_panzer 0
 
-	end local.tank
+end local.tank
 

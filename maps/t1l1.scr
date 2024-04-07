@@ -68,7 +68,7 @@ thread DisableGuys
 	waitthread global/objectives.scr::add_objectives 2 1 "Destroy Tank With AA Gun" $aagun3.origin
 	waitthread global/objectives.scr::add_objectives 3 1 "Regroup With Your Allies" $britishcaptaindestination.origin
 
-	End
+End
 
 //-------------------------------------------------------------------
 InBarn:
@@ -79,15 +79,17 @@ InBarn:
 	thread SetupTruck
 	thread EnableGuys
 	
-	end
+end
 
 //-------------------------------------------------------------------
 DisableGuys:
 //-------------------------------------------------------------------
 
+
+
 	// anyone to disable?
 
-	end
+end
 
 //-------------------------------------------------------------------
 EnableGuys:
@@ -95,11 +97,10 @@ EnableGuys:
 
 	// anyone to enable?
 
-	end
+end
 
 //-------------------------------------------------------------------
 SetupAAGun:
-//
 //	AA Gun Properties 
 //
 //-------------------------------------------------------------------
@@ -136,7 +137,7 @@ SetupAAGun:
 	$aagun1_aim delete
 	$aagun2_aim delete
 
-	end
+end
 
 //-------------------------------------------------------------------
 SetupTruck:
@@ -182,7 +183,7 @@ SetupTruck:
 	$truck_1.passenger[3] gun "Mauser KAR 98K"
 	$truck_1.passenger[4] gun "mp40"
 
-	End
+End
 
 //-------------------------------------------------------------------
 KillTruckGuysOnDeath:
@@ -208,7 +209,7 @@ KillTruckGuysOnDeath:
 		self.passenger[local.i] hurt 999 1
 	}
 	
-	end
+end
 
 //-------------------------------------------------------------------
 TruckGuyGetPlayer:
@@ -237,7 +238,7 @@ TruckGuyGetPlayer:
 
 	self attackplayer
 
-	End
+End
 
 //-------------------------------------------------------------------
 TruckGuyRun:
@@ -252,20 +253,24 @@ TruckGuyRun:
 	}
 	
 
-	End
+End
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  Mike Goodwin - Start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+//-------------------------------------------------------------------
 barn_hole:
+//-------------------------------------------------------------------
 
 	exec gags/t1l1_barn_crash.scr::crashthroughroof
 	$player loopsound t1_barninside
 
 end
 
+//-------------------------------------------------------------------
 cutharness:
+//-------------------------------------------------------------------
 
 	exec gags/t1l1_barn_crash.scr::cutharness
 	exec gags/t1l1_misc.scr::searchlightsoff
@@ -275,7 +280,9 @@ end
 //  Mike Goodwin - End
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+//-------------------------------------------------------------------
 doAAguy:
+//-------------------------------------------------------------------
 
 	thread gags/T1L1_Parachute.Scr::DoAAGuy 10
 
@@ -288,11 +295,11 @@ endleveltrigger:
 //-------------------------------------------------------------------
 //	$obj1 Complete
 //	exec global/missioncomplete.scr t1l2 1
-	end
+end
 
 //-------------------------------------------------------------------
 artillery_message:
-//
+
 //	this is to trigger an onscreen prompt for controlling artillery
 //-------------------------------------------------------------------
 
@@ -324,7 +331,7 @@ WaitForTruckTrigger:
 	self waittill trigger
 	level.bDoTruck	= 1
 
-	End
+End
 
 //-------------------------------------------------------------------
 StartTruckOnDeath:
@@ -332,7 +339,7 @@ StartTruckOnDeath:
 	self waittill death
 	level.bDoTruck	= 1
 
-	End
+End
 
 //-------------------------------------------------------------------
 stuka_start:
@@ -353,6 +360,7 @@ stuka_start:
 
 end
 
+
 //-------------------------------------------------------------------
 stuka_end:
 //-------------------------------------------------------------------
@@ -364,10 +372,11 @@ stuka_end:
 
 end
 
-//--------------------------------------------------------------
+
+//-------------------------------------------------------------------
 rollplane local.rollspeed:
 // Make the plane do a cool roll...
-//--------------------------------------------------------------
+//-------------------------------------------------------------------
  
 	local.ang = self.angles
  
@@ -380,32 +389,33 @@ rollplane local.rollspeed:
 		waitframe
 	}
  
- 	end
+ end
 
-//--------------------------------------------------------------
+
+//-------------------------------------------------------------------
 TurnOffAAGuns:
 // turn off the guns
-//--------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	exec gags/T1L1_Falling.Scr::TurnOffAAGuns
 	$player stoploopsound
 end
 
 
-//--------------------------------------------------------------
+//-------------------------------------------------------------------
 mayhem:
 // play the chaos sound
-//--------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	wait 1
 	dprintln "playing sound"
 	$mayhem playsound den_T1L1_GermanWalla
 end
 
-//--------------------------------------------------------------
+//-------------------------------------------------------------------
 sound_barn_outside:
 // switch the ambient
-//--------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	$player loopsound t1_barnoutside
 	

@@ -34,7 +34,7 @@ main:
 	$player takeall
 
 
-	End
+End
 
 
 //------------------------------------------------------------------
@@ -48,7 +48,7 @@ DoStartup:
 	waitthread global/fadein.scr::DoFadeIn t2l4_1 t2l4_2 t2l4_3 NIL 0
 	wait 0.25
 
-	end
+end
 
 //------------------------------------------------------------------
 //Start Arillery
@@ -68,10 +68,12 @@ DuckPlayer:
 	$player modheight duck
 	$player physics_off
 
-	end
+end
 
-
+//------------------------------------------------------------------
 attachtosmokegrenade:
+//------------------------------------------------------------------
+
 	local.count = level.time + 10
 	local.makesolid = level.time + 2
 	while (local.count > level.time)
@@ -88,7 +90,9 @@ attachtosmokegrenade:
 		$smokeG delete
 end
 
+//------------------------------------------------------------------
 startsmokegrenade:
+//------------------------------------------------------------------
 	
 	local.vertical = 256
 	level.throwgrenade = 0
@@ -265,7 +269,7 @@ DoOpeningDialog:
 
 	$cappy nodamage	
 
-	end
+end
 
 
 //------------------------------------------------------------------
@@ -282,7 +286,7 @@ DoAlertAnim local.anim:
 	self thread StartGuyGo self.target
 
 
-	end
+end
 
 //------------------------------------------------------------------
 DoSmokeGrenade:
@@ -293,7 +297,7 @@ DoSmokeGrenade:
 
 	$smokegrenade TurnOn
 
-	end
+end
 
 
 
@@ -313,7 +317,7 @@ StartGuyGo local.dest:
 	if (isalive self)
 		radiusdamage self.origin 100 16
 
-	End
+End
 
 
 //------------------------------------------------------------------
@@ -334,20 +338,28 @@ StartGuyGo local.dest:
 //------------------------------------------------------------------
 //	Call this to turn off the artillery barrage
 //------------------------------------------------------------------
-StopArtillery:
 
+
+//------------------------------------------------------------------
+StopArtillery:
+//------------------------------------------------------------------
 	
 	for (local.i=1;local.i<=$artillery.size;local.i++)
 	{
 		$artillery[local.i] TurnOff
 	}
 
-	End
+End
 
 //------------------------------------------------------------------
 // Insert comment here...
 //------------------------------------------------------------------
+
+
+//------------------------------------------------------------------
 RunToTargetEnt local.engage_time:
+//------------------------------------------------------------------
+
 	if ( self.target==NIL )
 	{
 		// dprintln self.targetname "No target!"
@@ -363,7 +375,7 @@ RunToTargetEnt local.engage_time:
 		self thread EnableAI local.engage_time
 	}
 
-	End
+End
 
 //------------------------------------------------------------------
 //	Tell the passed ai(s) to run to their current target...
@@ -371,7 +383,10 @@ RunToTargetEnt local.engage_time:
 //  for a little while before engaging....
 //------------------------------------------------------------------
 
+
+//------------------------------------------------------------------
 RunToTarget local.name local.engage_time:
+//------------------------------------------------------------------
 	
 	for (local.i=1;local.i<=local.name.size;local.i++)
 	{
@@ -382,22 +397,31 @@ RunToTarget local.name local.engage_time:
 		}
 	}
 
-	End
+End
 
 //------------------------------------------------------------------
 // Insert comment here...
 //------------------------------------------------------------------
 
+
+//------------------------------------------------------------------
 EnableAI local.wait_time:
+//------------------------------------------------------------------
+
 	wait local.wait_time
 	self exec global/enable_ai.scr
 
-	End
+End
 
 //------------------------------------------------------------------
 //	wait until he dies.  Then respawn him if needed...
 //------------------------------------------------------------------
+
+
+//------------------------------------------------------------------
 AllyDead:
+//------------------------------------------------------------------
+
 // 	local.target			= self.target
 	local.model				= self.model
 	local.targetname		= self.targetname
@@ -411,7 +435,7 @@ AllyDead:
 	if ( level.no_more_chargers==1 )
 	{
 		// if this is set, don't spawn anymore of these suckers...
-		end
+			end
 	}
 	
 	local.target			= self.target
@@ -448,19 +472,24 @@ AllyDead:
 		local.ent thread turnguyon
 	}
 
-	End
+End
 
 //------------------------------------------------------------------
 // Insert comment here...
 //------------------------------------------------------------------
+
+
+//------------------------------------------------------------------
 GetSpawnOrigin:
+//------------------------------------------------------------------
+
 	local.ent = NULL
 	local.origin = "0 0 0"
 
 	if ( level.ally_zone.size==0 )
 	{
 		// dprintln "Error!  Invalid AllySpawn? " level.ally_zone
-		End local.origin
+			End local.origin
 	}
 
 	local.random = randomint (level.ally_zone.size-1)
@@ -473,21 +502,29 @@ GetSpawnOrigin:
 		local.random = level.ally_zone.size
 	}
 
-	End level.ally_zone[local.random].origin
+End level.ally_zone[local.random].origin
 
 //------------------------------------------------------------------
 //	Call this to delete the starting allies...
 //------------------------------------------------------------------
+
+
+//------------------------------------------------------------------
 DeleteAllies:
+//------------------------------------------------------------------
+
 	thread DeleteAI $start_allies
 
-	End
+End
 
 //------------------------------------------------------------------
 //	Can call this to delete a group of AI by name.
 //------------------------------------------------------------------
 
+
+//------------------------------------------------------------------
 DeleteAI local.name:
+//------------------------------------------------------------------
 
 	for (local.i=1;local.i<=local.name.size;local.i++)
 	{
@@ -497,19 +534,27 @@ DeleteAI local.name:
 		}
 	}
 
-	End
+End
 
 //-------------------------------------------------------------------
 // Turn Damage off
 //-------------------------------------------------------------------
+
+
+//------------------------------------------------------------------
 turndamageoff:
+//------------------------------------------------------------------
+
 	self nodamage
 end
 
 //-------------------------------------------------------------------
 // Turn Damage on
 //-------------------------------------------------------------------
+
+//------------------------------------------------------------------
 turndamageon:
+//------------------------------------------------------------------
 
 	self takedamage
 end
@@ -518,7 +563,11 @@ end
 // Chargers
 //-------------------------------------------------------------------
 
+
+//------------------------------------------------------------------
 ChargersInit:
+//------------------------------------------------------------------
+
 	//dprintln "Chargers Init"
 
 	for (local.i=1;local.i<$chargers.size+1;local.i++)
@@ -536,15 +585,20 @@ ChargersInit:
 
 end
 
+
+//------------------------------------------------------------------
 ChargersStartMoving local.engage_time:
+//------------------------------------------------------------------
+
 	self rendereffects "-dontdraw"
 	self takedamage
 	self thread RunToTargetEnt local.engage_time
 	self thread AllyDead
 	// self waittill movedone
 end
-
+//------------------------------------------------------------------
 ChargerAimShootWaitDelay local.target local.wait local.delay:
+//------------------------------------------------------------------
 	
 	self exec global/aimat.scr local.target
 	wait local.wait
@@ -553,7 +607,10 @@ ChargerAimShootWaitDelay local.target local.wait local.delay:
 	
 end
 
+//------------------------------------------------------------------
 ChargerDontStopOnTopOfYourBuddy local.target:
+//------------------------------------------------------------------
+
 	local.dist = 0
 	for (local.i=1;local.i<$chargers.size+1;local.i++)
 	{
@@ -570,7 +627,9 @@ ChargerDontStopOnTopOfYourBuddy local.target:
 	}	
 end
 
+//------------------------------------------------------------------
 ChargerAttackThisTank local.target local.dist:
+//------------------------------------------------------------------
 
 	self waitthread ChargerDontStopOnTopOfYourBuddy local.target
 
@@ -612,7 +671,9 @@ ChargerAttackThisTank local.target local.dist:
 
 end
 
+//------------------------------------------------------------------
 nicetrace local.start local.dest:
+//------------------------------------------------------------------
 
 	if (local.start != $player)
 	{
@@ -624,20 +685,22 @@ nicetrace local.start local.dest:
 	}
 
 	if (local.start canseenoents local.dest)
-		end 1
+			end 1
 
 	if (local.start canseenoents local.dest.origin)
-		end 1
+			end 1
 
 	if (local.start canseenoents (local.dest.origin + (0 0 35)))
-		end 1
+			end 1
 
 	if (local.start canseenoents (local.dest.origin + (0 0 70)))
-		end 1
+			end 1
 
-end -1
+			end -1
 
+//------------------------------------------------------------------
 ChargerFindAGoodSpot:
+//------------------------------------------------------------------
 	
 	for (local.i=1;local.i<$notagoodspot.size+1;local.i++)
 	{	
@@ -655,7 +718,9 @@ ChargerFindAGoodSpot:
 
 end
 
+//------------------------------------------------------------------
 ChargerGotAnyBazooka:
+//------------------------------------------------------------------
 	
 	local.engage = 1500
 
@@ -851,7 +916,9 @@ ChargerGotAnyBazooka:
 
 end
 
+//------------------------------------------------------------------
 ChargersNoDrawManager:
+//------------------------------------------------------------------
 	
 	while (isalive self && self!=NULL && self!=NIL )
 	{
@@ -884,7 +951,9 @@ ChargersNoDrawManager:
 	}
 end			
 
+//------------------------------------------------------------------
 ChargersGo local.engage_time:
+//------------------------------------------------------------------
 
 	for (local.i=1;local.i<$chargers.size+1;local.i++)
 	{
@@ -899,7 +968,10 @@ ChargersGo local.engage_time:
 
 end
 
+//------------------------------------------------------------------
 AdvancePossitionOne:
+//------------------------------------------------------------------
+
 	// dprintln "AdvancePossitionOne!"
 	for (local.i=1;local.i<$chargers.size+1;local.i++)
 	{
@@ -934,7 +1006,10 @@ AdvancePossitionOne:
 	}
 end
 
+//------------------------------------------------------------------
 AdvancePossitionTwo:
+//------------------------------------------------------------------
+
 	// dprintln "AdvancePossitionTwo!"
 	for (local.i=1;local.i<$chargers.size+1;local.i++)
 	{
@@ -970,7 +1045,10 @@ AdvancePossitionTwo:
 end
 
 
+//------------------------------------------------------------------
 AdvancePossitionThree:
+//------------------------------------------------------------------
+
 	// dprintln "AdvancePossitionThree!"
 	for (local.i=1;local.i<$chargers.size+1;local.i++)
 	{
@@ -1009,14 +1087,19 @@ end
 // Wander Enemy
 //------------------------------------------------------------------------
 
+//------------------------------------------------------------------
 WanderEnemyInit:
+//------------------------------------------------------------------
 
 	level.respawn_start_enemies = 0
 	level.nEnemiesSpawned = 0
 
 end
 
+//------------------------------------------------------------------
 WanderEnemyStartMoving:
+//------------------------------------------------------------------
+
 	self rendereffects "-dontdraw"
 	self takedamage
 	self thread RunToTargetEnt local.engage_time
@@ -1024,7 +1107,9 @@ WanderEnemyStartMoving:
 //	self waittill movedone
 end
 
+//------------------------------------------------------------------
 WanderEnemyGoToNextTarget:
+//------------------------------------------------------------------
 
 	if (self.target)
 		local.ent = self.target
@@ -1042,7 +1127,9 @@ WanderEnemyGoToNextTarget:
 
 end
 
+//------------------------------------------------------------------
 WanderEnemyGo local.engage_time:
+//------------------------------------------------------------------
 	
 	while (level.objective1 == 0)
 		wait 1
@@ -1056,7 +1143,10 @@ WanderEnemyGo local.engage_time:
 
 end
 
+//------------------------------------------------------------------
 EnemyDead:
+//------------------------------------------------------------------
+
 	local.target		= self.target
 	local.model			= self.model
 	local.targetname	= self.targetname
@@ -1088,13 +1178,18 @@ EnemyDead:
 
 End
 
+//------------------------------------------------------------------
 EnemyTurnRespawnOff:
+//------------------------------------------------------------------
+
 	while (level.objective5 == 0)
 		wait 1
 	self.set = 0	
 end
 
+//------------------------------------------------------------------
 FieldEnemyTurnRespawnOff:
+//------------------------------------------------------------------
 	for (local.i=1;local.i<$wander_enemy.size+1;local.i++)
 	{
 		if ($wander_enemy[local.i].set == 2)
@@ -1104,7 +1199,9 @@ FieldEnemyTurnRespawnOff:
 	}
 end
 
+//------------------------------------------------------------------
 TownEnemyTurnRespawnOff1:
+//------------------------------------------------------------------
 	for (local.i=1;local.i<$wander_enemy.size+1;local.i++)
 	{
 		if ($wander_enemy[local.i].group == 1)
@@ -1114,7 +1211,9 @@ TownEnemyTurnRespawnOff1:
 	}
 end
 
+//------------------------------------------------------------------
 TownEnemyTurnRespawnOffGroup1:
+//------------------------------------------------------------------
 	for (local.i=1;local.i<$wander_enemy.size+1;local.i++)
 	{
 		if ($wander_enemy[local.i].group == 1)
@@ -1123,7 +1222,9 @@ TownEnemyTurnRespawnOffGroup1:
 		}
 	}
 end
+//------------------------------------------------------------------
 TownEnemyTurnRespawnOffGroup2:
+//------------------------------------------------------------------
 	for (local.i=1;local.i<$wander_enemy.size+1;local.i++)
 	{
 		if ($wander_enemy[local.i].group == 2)
@@ -1132,7 +1233,9 @@ TownEnemyTurnRespawnOffGroup2:
 		}
 	}
 end
+//------------------------------------------------------------------
 TownEnemyTurnRespawnOffGroup3:
+//------------------------------------------------------------------
 	for (local.i=1;local.i<$wander_enemy.size+1;local.i++)
 	{
 		if ($wander_enemy[local.i].group == 3)
@@ -1141,7 +1244,9 @@ TownEnemyTurnRespawnOffGroup3:
 		}
 	}
 end
+//------------------------------------------------------------------
 TownEnemyTurnRespawnOffGroup4:
+//------------------------------------------------------------------
 	for (local.i=1;local.i<$wander_enemy.size+1;local.i++)
 	{
 		if ($wander_enemy[local.i].group == 4)
@@ -1150,7 +1255,9 @@ TownEnemyTurnRespawnOffGroup4:
 		}
 	}
 end
+//------------------------------------------------------------------
 TownEnemyTurnRespawnOffGroup5:
+//------------------------------------------------------------------
 	for (local.i=1;local.i<$wander_enemy.size+1;local.i++)
 	{
 		if ($wander_enemy[local.i].group == 5)
@@ -1164,7 +1271,10 @@ end
 //------------------------------------------------------------------------
 //Turn guy on
 //------------------------------------------------------------------------
+
+//------------------------------------------------------------------
 turnguyon:
+//------------------------------------------------------------------
 	self exec global/enable_ai.scr
 	self rendereffects "-dontdraw"
 	self thread turndamageon  
@@ -1174,7 +1284,10 @@ end
 //Turn guy off
 //------------------------------------------------------------------------
 
+
+//------------------------------------------------------------------
 turnguyoff:
+//------------------------------------------------------------------
 	self exec global/disable_ai.scr
 	self rendereffects "+dontdraw"
 	self thread turndamageoff  
@@ -1188,7 +1301,10 @@ end
 // Same Set Number MG Guy, and MGNest
 //------------------------------------------------------------------------
 
+
+//------------------------------------------------------------------
 mg42_nest_init:
+//------------------------------------------------------------------
 
 	level.mg42targetplayer = 0
 	//dprintln "MG_42 Init"
@@ -1209,14 +1325,20 @@ mg42_nest_init:
 
 end
 
+//------------------------------------------------------------------
 mg42_nest local.trigger:
+//------------------------------------------------------------------
 end
 
 
 //------------------------------------------------------------------------
 //Artillery Message
 //------------------------------------------------------------------------
+
+
+//------------------------------------------------------------------
 ArtilleryMessage:
+//------------------------------------------------------------------
 	for (local.i=1;local.i<$kill_amb_allies.size+1;local.i++)
 		{
 			$kill_amb_allies[local.i] waittill trigger
@@ -1229,7 +1351,10 @@ end
 //Init Tanks
 //------------------------------------------------------------------------
 
+
+//------------------------------------------------------------------
 panzer_init:
+//------------------------------------------------------------------
 	level.sightdistance = 2400
 	//dprintln "Panzer's Init!"
 
@@ -1286,9 +1411,9 @@ panzer_init:
 end
 
 
-//---------------------------------------------------------------------
+//------------------------------------------------------------------
 FindPanzerTarget:
-//---------------------------------------------------------------------
+//------------------------------------------------------------------
 
 	local.rand = randomint 5
 
@@ -1304,7 +1429,7 @@ FindPanzerTarget:
 			if ((sighttrace $player.centroid local.trace_offset 1))
 			{
 //				dprintln self.targetname " Targeting player!"
-				end $player
+			end $player
 			}
 		}
 
@@ -1325,7 +1450,7 @@ FindPanzerTarget:
 				{
 //					dprintln self.targetname " Targeting charger#" local.i
 					local.target = $chargers[local.i]				
-					end local.target
+			end local.target
 				}
 			}
 		}
@@ -1340,20 +1465,20 @@ FindPanzerTarget:
 			if ((sighttrace $player.centroid local.trace_offset 1))
 			{
 //				dprintln self.targetname " targeting player (pass2)"
-				end $player
+			end $player
 			}
 		}
 	}
 
 
-	end NULL
+end NULL
 
-//---------------------------------------------------------------------
+//------------------------------------------------------------------
 panzer_target:
 //
 //	panzers pick a target, (player or not) and keep firing on it until
 //  its dead.  Then they go for another target..
-//---------------------------------------------------------------------
+//------------------------------------------------------------------
 
 	self.attack_thread = local
 
@@ -1363,7 +1488,7 @@ panzer_target:
 	if (self == $panzerwerfer)
 	{
 		level.playertanktarget = $player
-		end
+			end
 	}
 
 	self.gun = self QueryTurretSlotEntity 0
@@ -1413,11 +1538,13 @@ panzer_target:
 	}
 
 
-	end
+end
 
 
 
+//------------------------------------------------------------------
 panzer_think local.ent local.pathname local.speed local.startmovingdelay:
+//------------------------------------------------------------------
 
 	if(local.ent == $panzer4)
 	{
@@ -1449,7 +1576,9 @@ panzer_think local.ent local.pathname local.speed local.startmovingdelay:
 
 end
 
+//------------------------------------------------------------------
 drive_path local.path local.speed local.remove:
+//------------------------------------------------------------------
 
 //	dprintln self.targetname ": driving path:" local.path
 
@@ -1473,13 +1602,19 @@ end
 // sniper 
 //------------------------------------------------------------------------
 
+
+//------------------------------------------------------------------
 sniper_init:
+//------------------------------------------------------------------
+
 //dprintln "sniper init"
 	$sniper1 thread sniper_think
 ////	$sniper2 thread sniper_think
 end
 
+//------------------------------------------------------------------
 sniper_disable_ai:
+//------------------------------------------------------------------
 	
 	while (isalive self)
 	{
@@ -1490,7 +1625,9 @@ sniper_disable_ai:
 end
 
 
+//------------------------------------------------------------------
 sniper_think:
+//------------------------------------------------------------------
 
 	if (self.set == 1)
 	{
@@ -1513,8 +1650,10 @@ sniper_think:
 			
 	while (isalive self)
 	{
+//------------------------------------------------------------------
 sniper_reaquire:
 //dprintln "sniperthink"
+//------------------------------------------------------------------
 
 		local.target = 0
 		local.shots = 0
@@ -1672,7 +1811,11 @@ end
 // barrage
 //////////////////////////////////////////////////////////////////////
 
+
+
+//------------------------------------------------------------------
 BarrageInit:
+//------------------------------------------------------------------
 	level.newbarrageon = 0	
 	level.startbarrage = 0
 
@@ -1684,7 +1827,9 @@ BarrageInit:
 	
 end
 
+//------------------------------------------------------------------
 BarrageThink:
+//------------------------------------------------------------------
 
 	while (level.startbarrage == 0)
 	{
@@ -1698,16 +1843,20 @@ BarrageThink:
 
 end
 
+//------------------------------------------------------------------
 DoNewBarrageDelay local.delay:
 //dprintln "barrage is off run for cover!!"
+//------------------------------------------------------------------
 	while (local.delay > level.time)
 	{	
 		waitframe
 	}		
 end
 
+//------------------------------------------------------------------
 DoNewBarrageDuration local.duration:
 //dprintln "are we starting the new barrage?"
+//------------------------------------------------------------------
 
 $player playsound arty_leadin05
 
@@ -1734,7 +1883,9 @@ $player playsound arty_leadin05
 
 end
 	
+//------------------------------------------------------------------
 DoNewBarrage:
+//------------------------------------------------------------------
 	level.newbarrageon	= 1
 // dprintln "inside newbarrage"
 	while (level.newbarrageon == 1)
@@ -1763,14 +1914,18 @@ DoNewBarrage:
 
 end
 
+//------------------------------------------------------------------
 DoNewBarrageOn:
+//------------------------------------------------------------------
 
 // dprintln "DoNewBarrageOn"
 
 	level.newbarrageon = 1
 end
 
+//------------------------------------------------------------------
 DoNewBarrageOff:
+//------------------------------------------------------------------
 
 // dprintln "DoNewBarrageOff"
 
@@ -1778,10 +1933,12 @@ DoNewBarrageOff:
 end
 
 
+//------------------------------------------------------------------
 Killtheplayer:
+//------------------------------------------------------------------
 	// old
 
-	end
+end
 
 
 //-------------------------------------------------------------------
@@ -1836,7 +1993,7 @@ FriendlyRunTo local.ent local.movedoneradius:
 
 	*/
 
-	End
+End
 
 
 

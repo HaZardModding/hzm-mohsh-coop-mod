@@ -30,7 +30,7 @@ Init:
 	$startingsolidier7 exec global/disable_ai.scr
 
 
-	End
+End
 
 //------------------------------------------------------------------------------
 DoSanta:
@@ -76,7 +76,7 @@ DoSanta:
 	$santa exec global/enable_ai.scr
 	$santa accuracy 75
 
-	End
+End
 
 //------------------------------------------------------------------------------
 DoClosetGermans:
@@ -108,7 +108,7 @@ DoClosetGermans:
 		$wave3[local.i] exec global/enable_ai.scr
 	}
 
-	End
+End
 
 //------------------------------------------------------------------------------
 DoGermanWave1:
@@ -136,7 +136,7 @@ DoGermanWave1:
 	if ($wave1==NIL)
 	{
 		dprintln "DoGermanWave1 not setup correctly. (wave1)"
-		End
+			End
 	}
 
 
@@ -164,7 +164,7 @@ DoGermanWave1:
 	thread DoGermanWave2
 
 
-	End
+End
 
 //------------------------------------------------------------------------------
 DoGermanWave2:
@@ -187,7 +187,7 @@ DoGermanWave2:
 	if ($wave2==NIL)
 	{
 		dprintln "DoGermanwave2 not setup correctly. (wave2)"
-		End
+			End
 	}
 
 
@@ -212,7 +212,7 @@ DoGermanWave2:
 	}
 
 
-	End
+End
 
 //------------------------------------------------------------------------------
 DeleteGermanWaves:
@@ -235,7 +235,7 @@ DeleteGermanWaves:
 		$wave3[local.i] delete
 	}
 
-	End
+End
 
 //------------------------------------------------------------------------------
 DoStaticTruck local.health:
@@ -245,7 +245,7 @@ DoStaticTruck local.health:
 //------------------------------------------------------------------------------
 	self waitthread SetupTruck local.health
 
-	End
+End
 
 
 //------------------------------------------------------------------------------
@@ -283,7 +283,7 @@ DoTruck local.health local.nPassengers local.bSmartPassengers local.passenger_he
 	if ( local.bSmartPassengers	== 1 )
 		self.driver thread StopTruckOnDeath self
 
-	End
+End
 	
 
 //------------------------------------------------------------------------------
@@ -329,7 +329,7 @@ TruckDrive local.path local.sightdist local.speed local.removewhendone local.vie
 		self thread TruckStop
 	  */
 
-	End
+End
 
 
 //------------------------------------------------------------------------------
@@ -388,7 +388,7 @@ JeepExplosion:
 	local.explosion1 remove
 //	local.explosion2 remove
 
-	End
+End
 
 //------------------------------------------------------------------------------
 TruckBlowUp:
@@ -404,7 +404,7 @@ TruckBlowUp:
 	self thread global/vehicles_thinkers.scr::truck_killed "notgreen"
 
 
-	End
+End
 
 //------------------------------------------------------------------------------
 SetupTruck local.hp:
@@ -421,7 +421,7 @@ SetupTruck local.hp:
 	// setup our explosion...
 	self thread TruckBlowUp
 
-	End
+End
 
 //------------------------------------------------------------------------------
 SetupTruckPass local.hp local.passengers local.bFriendly:
@@ -448,7 +448,7 @@ SetupTruckPass local.hp local.passengers local.bFriendly:
 	// create the thread that will do the explosion of the truck...
 /////////	self thread global/vehicles_thinkers.scr::enemy_truck_think local.hp local.passengers nil NIL NIL "models/human/german_wehrmact_soldier" NIL local.passenger_name local.driver_name
 
-	End
+End
 
 
 //------------------------------------------------------------------------------
@@ -457,7 +457,7 @@ TruckStop local.bStop:
 
 	if ( self.stopped==1 )
 	{
-		End
+			End
 	}
 
 	self.stopped = 1
@@ -472,7 +472,7 @@ TruckStop local.bStop:
 
 	self thread global/vehicles_thinkers.scr::truck_unload
 
-	End
+End
 
 //------------------------------------------------------------------------------
 EvacuateTruck:
@@ -481,7 +481,7 @@ EvacuateTruck:
 	wait 3
 	self thread global/vehicles_thinkers.scr::truck_unload
 
-	End
+End
 
 //------------------------------------------------------------------------------
 TruckLookForPlayer local.sightdist local.viewangle local.reverseviewangle:
@@ -522,7 +522,7 @@ TruckLookForPlayer local.sightdist local.viewangle local.reverseviewangle:
 			{
 				// we can see the player...
 				self thread TruckStop 1
-				End
+			End
 			}
 		}
 
@@ -535,7 +535,7 @@ TruckLookForPlayer local.sightdist local.viewangle local.reverseviewangle:
 		self thread EvacuateTruck
 	}
 	
-	End
+End
 
 //------------------------------------------------------------------------------
 TankLookForPlayer local.sightdist local.viewangle local.reverseviewangle:
@@ -575,13 +575,13 @@ TankLookForPlayer local.sightdist local.viewangle local.reverseviewangle:
 				dprintln "STOPPING TANK -- FOUND PLAYER!"
 				// we can see the player...
 				self stop
-				End
+			End
 			}
 		}
 		wait 0.35
 	}
 	
-	End
+End
 
 
 //------------------------------------------------------------------------------
@@ -597,7 +597,7 @@ StopTruckOnDeath local.ent:
 		local.ent thread TruckStop 1
 	}
 
-	End
+End
 
 //------------------------------------------------------------------------------
 StopTruckOnPain local.ent:
@@ -613,7 +613,7 @@ StopTruckOnPain local.ent:
 		local.ent thread TruckStop 1
 	}
 
-	End
+End
 
 //------------------------------------------------------------------------------
 SetupTankPass local.nPassengers:
@@ -632,5 +632,5 @@ SetupTankPass local.nPassengers:
 		self.passenger[local.i].health = local.random
 	}
 
-	End
+End
 

@@ -12,7 +12,9 @@
 // the captain for him to no longer follow the player
 // level.medicfindtarget = 512 default
 
+//--------------------------------------------------------------------------------
 medic_health:
+//--------------------------------------------------------------------------------
 	while (isalive $medic)
 	{
 //		dprintln ( "medic health : " + $medic.health )
@@ -24,8 +26,9 @@ medic_health:
 		waitframe
 	}
 end
-
+//--------------------------------------------------------------------------------
 t2l3_medic_init:
+//--------------------------------------------------------------------------------
 	$stuka hide
 
 	level.releasesarg = 0
@@ -99,10 +102,10 @@ thread medic_health
 	$woundedcaptain thread t2l3_woundedguyloop 
 end
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------------------------
 rollplane local.rollspeed:
 // Make the plane do a cool roll...
-//--------------------------------------------------------------
+//--------------------------------------------------------------------------------
  
 	local.ang = self.angles
  
@@ -115,9 +118,10 @@ rollplane local.rollspeed:
 		waitframe
 	}
  
- 	end
-
+ end
+//--------------------------------------------------------------------------------
 stuka_engine:
+//--------------------------------------------------------------------------------
 	local.thisorigin = $stuka.origin
 	local.tempent = spawn script_origin
 	local.tempent playsound plane
@@ -132,8 +136,9 @@ stuka_engine:
 	}
 	local.tempent remove
 end
-
+//--------------------------------------------------------------------------------
 stuka_run:
+//--------------------------------------------------------------------------------
 	thread stuka_engine
 	$stuka show
 //	dprintln "stuka is go!!"
@@ -141,8 +146,9 @@ stuka_run:
 	$stuka thread rollplane .5
 	$stuka anim fire
 end
-
+//--------------------------------------------------------------------------------
 webber_hit_stuka local.fx:
+//--------------------------------------------------------------------------------
 	local.temp = spawn script_model model local.fx
 	local.temp notsolid
 	local.temp.origin = self.origin  
@@ -151,8 +157,9 @@ webber_hit_stuka local.fx:
 	wait .2
 	local.temp remove
 end
-
+//--------------------------------------------------------------------------------
 t2l3_webber_loop:
+//--------------------------------------------------------------------------------
 	local.count = 0
 	
 	$bombertrigger waittill trigger	
@@ -190,13 +197,15 @@ t2l3_webber_loop:
 	}
 	
 end
-
+//--------------------------------------------------------------------------------
 t2l3_sarg_kneeling_loop:
+//--------------------------------------------------------------------------------
 	$sarg anim 23A820_KneelingCycle
 	$sarg waittill animdone
 end
-
+//--------------------------------------------------------------------------------
 t2l3_sarg_kneeling_loop_perm:
+//--------------------------------------------------------------------------------
 	
 	while (level.captainlivetime > 0 && level.releasesarg == 0 )
 	{
@@ -205,8 +214,9 @@ t2l3_sarg_kneeling_loop_perm:
 	}
 	
 end
-
+//--------------------------------------------------------------------------------
 t2l3_sarg_think:
+//--------------------------------------------------------------------------------
 		
 
 	$sarg turnto $woundedcaptain
@@ -222,24 +232,27 @@ t2l3_sarg_think:
 
 	thread gags/t2l3_blitzkrieg.scr::DoNewBarrageOn
 end
-
+//--------------------------------------------------------------------------------
 t2l3_privateparts_loop:
+//--------------------------------------------------------------------------------
 	while (level.captainisok == 0)
 	{
 		$privateparts anim 23A827_KneelingCycle
 		$privateparts waittill animdone
 	}
 end
-
+//--------------------------------------------------------------------------------
 t2l3_private_parts_perm:
+//--------------------------------------------------------------------------------
 	while (level.releasesarg == 0)
 	{
 		$privateparts anim 23A827_KneelingCycle
 		$privateparts waittill animdone
 	}
 end
-
+//--------------------------------------------------------------------------------
 t2l3_private_parts:
+//--------------------------------------------------------------------------------
 	$privateparts nodamage
 	if (isalive $privateparts)
 	{
@@ -247,19 +260,22 @@ t2l3_private_parts:
 		$privateparts thread t2l3_privateparts_loop
 	}
 end
-
+//--------------------------------------------------------------------------------
 t2l3_private_wounded:
+//--------------------------------------------------------------------------------
 	$woundedgalvan exec global/disable_ai.scr	
 	$woundedgalvan anim "wounded"
 end
-
+//--------------------------------------------------------------------------------
 private_galvan_visible:
+//--------------------------------------------------------------------------------
 	$woundedgalvan rendereffects "-dontdraw"
 	wait 10
 	$woundedgalvan rendereffects "+dontdraw"
 end
-
+//--------------------------------------------------------------------------------
 t2l3_medic_healingdone_loop:
+//--------------------------------------------------------------------------------
 	while (1)
 	{
 		$medic anim 23A828_HealingCycle
@@ -270,9 +286,9 @@ end
 // 
 // the moment the medic kneels the sarg and private
 // stand up and turn to the wounded captain node
-// 
+//--------------------------------------------------------------------------------
 medic_kneels_infront_of_captain:
-
+//--------------------------------------------------------------------------------
 // iprintlnbold "medic kneeling infront of captain"
 	thread playerStartAmbient
 	thread gags/t2l3_blitzkrieg.scr::DoNewBarrageOff
@@ -346,8 +362,9 @@ medic_kneels_infront_of_captain:
 	thread privateparts_go
 	
 end
-
+//--------------------------------------------------------------------------------
 playerStartAmbient:
+//--------------------------------------------------------------------------------
 	while (level.return == 0)
 		waitframe
 	local.dist = 99999
@@ -360,8 +377,9 @@ playerStartAmbient:
 	level.ambientbarrage = 1	
 	thread gags/t2l3_blitzkrieg.scr::DoNewBarrageOff
 end
-
+//--------------------------------------------------------------------------------
 sarg_go:
+//--------------------------------------------------------------------------------
 	wait 3
 	$sarg.movedoneradius = 32.0
 	$sarg runto $anchor1
@@ -379,8 +397,9 @@ sarg_go:
 	$sarg thread maps/t2l3.scr::death_check_american
 	
 end
-
+//--------------------------------------------------------------------------------
 privateparts_go:	
+//--------------------------------------------------------------------------------
 	wait 3
 	$privateparts.movedoneradius = 64.0
 	$privateparts runto $anchor2
@@ -401,9 +420,9 @@ end
 //
 // this is the tread that controls the medic 
 // doing the side mission to heal webber
-//
+//--------------------------------------------------------------------------------
 medic_kneels_heals_webber:
-
+//--------------------------------------------------------------------------------
 	$medic turnto $webber
 	$medic exec global/crouch.scr
 	//$medic anim 23A830_Runtocrouch
@@ -436,8 +455,9 @@ medic_kneels_heals_webber:
 	thread medicincommingdialogue
 
 end
-
+//--------------------------------------------------------------------------------
 t2l3_medic_kneeling_loop:
+//--------------------------------------------------------------------------------
 	$medic anim 23A828_HealingCycle
 	$medic waittill animdone
 end
@@ -445,8 +465,9 @@ end
 //
 // get the medic going
 //
+//--------------------------------------------------------------------------------
 medic_start:
-
+//--------------------------------------------------------------------------------
 
 	$medic exec global/disable_ai.scr	
 
@@ -508,9 +529,9 @@ medic_start:
 	thread medic_kneels_heals_webber	
 	
 end
-
+//--------------------------------------------------------------------------------
 t2l3_woundedguyloop:
-		
+//--------------------------------------------------------------------------------	
 	while (level.captainisok == 0)
 	{
 		self anim 23A825_InjuredCycle
@@ -523,9 +544,9 @@ t2l3_woundedguyloop:
 		self waittill animdone
 	}
 end
-
+//--------------------------------------------------------------------------------
 t2l3_stiff local.origin:
-	
+//--------------------------------------------------------------------------------
 	local.ent = spawn models/human/2nd-ranger_captain_snow.tik "$targetname" "friendly" "type_attack" "cover"			
 	local.ent exec global/disable_ai.scr
 	local.ent nodamage
@@ -540,17 +561,18 @@ t2l3_stiff local.origin:
 	}
 
 end
-
+//--------------------------------------------------------------------------------
 t2l3_sarg_stand_loop:
+//--------------------------------------------------------------------------------
 	while (1)
 	{
 		$sarg anim 23A824_StandCycle	
 		$sarg waittill animdone
 	}
 end
-
+//--------------------------------------------------------------------------------
 t2l3_captain_death_camera:
-	
+//--------------------------------------------------------------------------------
 	$player physics_off
 
 	local.origin = $woundedcaptain.origin
@@ -592,9 +614,9 @@ t2l3_captain_death_camera:
 	
 	$player physics_on
 end
-
+//--------------------------------------------------------------------------------
 t2l3_iscaptainalive:
-
+//--------------------------------------------------------------------------------
 	// $woundedcaptain thread t2l3_woundedguyloop 
 	$woundedgalvan thread t2l3_woundedguyloop 
 
@@ -607,7 +629,7 @@ t2l3_iscaptainalive:
 		wait 1
 	}
 	if (level.captainisok == 1)
-		end
+			end
 	else
 	{
 		// iprintln "captain died"
@@ -619,8 +641,9 @@ end
 // find and go to the player
 //////////////////////////////////////
 
+//--------------------------------------------------------------------------------
 gettotheplayer local.ent local.type local.who local.finaldestination local.threadname:
-
+//--------------------------------------------------------------------------------
 	$medic nodamage
 	$medic.health = $medic.maxhealth
 		 
@@ -715,7 +738,10 @@ end
 // bonus time
 ////////////////////////////////////////////
 
+
+//--------------------------------------------------------------------------------
 bonus_time_zero:
+//--------------------------------------------------------------------------------
 	level.captainlivetime = 0
 end
 
@@ -723,8 +749,9 @@ end
 // fog control
 ///////////////////////////////////////////
 
+//--------------------------------------------------------------------------------
 store_original_fog:
-
+//--------------------------------------------------------------------------------
 	level.farplane = 2500
 	level.farplane_bias = -1000
 //	level.farplane_color = (0.28 0.33 0.38)
@@ -736,8 +763,9 @@ store_original_fog:
 	level.fogtotalchange = level.farplanedelta 
 
 end
-
+//--------------------------------------------------------------------------------
 change_fog:
+//--------------------------------------------------------------------------------
 	local.exit = 0	
 	while ((level.fogcount < level.fogtotalchange) && (local.exit == 0))
 	{
@@ -749,8 +777,9 @@ change_fog:
 		wait 0.1
 	}
 end
-
+//--------------------------------------------------------------------------------
 restore_fog:
+//--------------------------------------------------------------------------------
 	local.exit = 0	
 	while ((level.fogcount > 0) && (local.exit == 0))
 	{
@@ -766,8 +795,9 @@ end
 // webber trees
 ///////////////
 
+//--------------------------------------------------------------------------------
 webbertreesinit:
-
+//--------------------------------------------------------------------------------
 	for (local.i=1;local.i<=$webbertrees.size;local.i++)
 	{
 		$webbertrees[local.i] nodamage
@@ -787,8 +817,9 @@ end
 // medic incomming dialogue
 /////////////////////////////
 
+//--------------------------------------------------------------------------------
 medicincommingdialogue:
-
+//--------------------------------------------------------------------------------
 	
 	wait 5
 	$player playsound mortar_fire
@@ -813,8 +844,9 @@ end
 // remove initial guys
 ////////////////////////
 
+//--------------------------------------------------------------------------------
 removeinitialguys:
-	
+//--------------------------------------------------------------------------------
 	$soldier01 remove
 	$soldier02 remove
 

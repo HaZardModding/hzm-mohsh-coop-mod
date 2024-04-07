@@ -31,7 +31,9 @@
 	level.skyshow = 1
 end
 
+//-------------------------------------------------------------------------------------------
 execute_fx_region local.box local.fx local.mindelay local.maxdelay:
+//-------------------------------------------------------------------------------------------
 
 	local.origin = local.box.origin
 	local.mins = local.box.getmins
@@ -57,8 +59,9 @@ execute_fx_region local.box local.fx local.mindelay local.maxdelay:
 
 end
 
-
+//-------------------------------------------------------------------------------------------
 execute_player_fx local.fx local.mindelay local.maxdelay local.mindist local.maxdist:
+//-------------------------------------------------------------------------------------------
 
 	local.delay = local.maxdelay - local.mindelay
 
@@ -99,17 +102,23 @@ execute_player_fx local.fx local.mindelay local.maxdelay local.mindist local.max
 
 end
 
-
+//-------------------------------------------------------------------------------------------
 restart_all_fx_region:
+//-------------------------------------------------------------------------------------------
+
 	level.skyshow = 1
 end
 
-
+//-------------------------------------------------------------------------------------------
 stop_all_fx_region:
+//-------------------------------------------------------------------------------------------
 	level.skyshow = 0
 end
 
+//-------------------------------------------------------------------------------------------
 execute_target_flak local.fx local.infonull local.delay:
+//-------------------------------------------------------------------------------------------
+
 	wait local.delay
 	local.temp = spawn script_model model local.fx
 	local.temp.origin = local.infonull.origin
@@ -121,9 +130,9 @@ execute_target_flak local.fx local.infonull local.delay:
 end
 
 
-//-------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------
 Flash:
-//-------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------
 
 
 	fadein 0.3 1 1 1 .75

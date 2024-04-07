@@ -4,7 +4,7 @@ main:
 
 	thread SetupFlakCannons
 	level.bKillCappy	= 0
-	End
+End
 
 //-------------------------------------------------------------------
 EnableFlakGuys:
@@ -18,7 +18,7 @@ EnableFlakGuys:
 	$FlakGerman5 threatbias 5000
 	$FlakGerman6 threatbias 5000
 
-	End
+End
 
 //-------------------------------------------------------------------
 SetupFlakCannons:
@@ -41,7 +41,7 @@ SetupFlakCannons:
 	$FlakGerman5 threatbias ignoreme
 	$FlakGerman6 threatbias ignoreme
 
-	End
+End
 
 //-------------------------------------------------------------------
 DoFlak88Guys:
@@ -112,7 +112,7 @@ DoFlak88Guys:
 
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 StopFlak88Guys:
@@ -157,7 +157,7 @@ StopFlak88Guys:
 
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 DoFlakGuy local.bFireFlak:
@@ -195,7 +195,7 @@ DoFlakGuy local.bFireFlak:
 		self waittill animdone
 	}
 
-	End
+End
 
 //-------------------------------------------------------------------
 OfficerIdle:
@@ -204,7 +204,7 @@ OfficerIdle:
 	self thread global/LoopAnim.Scr::LoopAnimStop
 	self thread global/LoopAnim.Scr::LoopAnim 12G301_Officeridle
 
-	End
+End
 
 //-------------------------------------------------------------------
 OfficerLook:
@@ -223,7 +223,7 @@ OfficerLook:
 	self thread OfficerIdle
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 DoFlakOfficer:
@@ -232,7 +232,7 @@ DoFlakOfficer:
 
 	self thread OfficerIdle
 
-	End
+End
 
 //-------------------------------------------------------------------
 CancelGagWait:
@@ -249,7 +249,7 @@ CancelGagWait:
 
 	thread CancelGag
 
-	End
+End
 
 //-------------------------------------------------------------------
 CancelGagOnDeath:
@@ -259,14 +259,14 @@ CancelGagOnDeath:
 
 	thread CancelGag
 
-	end
+end
 
 //-------------------------------------------------------------------
 CancelGag:
 //	
 //-------------------------------------------------------------------
 	if ( level.bFlakCancelled == 1 )
-		End
+			End
 
 	level.bFlakCancelled = 1
 
@@ -296,7 +296,7 @@ CancelGag:
 	$FlakGerman6 exec global/enable_ai.scr
 	$FlakGerman6 runto $player
 
-	End
+End
 
 //-------------------------------------------------------------------
 FireFlak88Loop local.min_time local.rand_time:
@@ -322,7 +322,7 @@ FireFlak88Loop local.min_time local.rand_time:
 		self.gun sound flak_snd_reload
 	}
 
-	End
+			End
 
 //-------------------------------------------------------------------
 StopFlak88Loop:
@@ -330,7 +330,7 @@ StopFlak88Loop:
 
 	self.loop_thread delete
 
-	End
+End
 
 //-------------------------------------------------------------------
 Fire local.bKillCappy:
@@ -364,6 +364,5 @@ Fire local.bKillCappy:
 		radiusdamage level.cappy.origin 600 900 1
 	}
 
-
-	End
+End
 

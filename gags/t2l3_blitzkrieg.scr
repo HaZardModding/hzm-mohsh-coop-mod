@@ -11,9 +11,9 @@ $barrage2
 $barrage3
 
 */
-
+//--------------------------------------------------------------------------------
 BarrageInit:
-
+//--------------------------------------------------------------------------------
 	level.DoNewBarrageIsOn = 0 
 
 	level.randombarrage = 0
@@ -36,16 +36,16 @@ BarrageInit:
 	thread BarrageThink
 	thread pocketflashesInit	
 end
-
+//--------------------------------------------------------------------------------
 barrage_dialogue_init:
-	
+//--------------------------------------------------------------------------------
 	// make sure this matches the projectile generator max time key value pair
 	level.barrage_dialogue_time = level.time + 15
 
 end
-
+//--------------------------------------------------------------------------------
 barrage_dialogue:
-
+//--------------------------------------------------------------------------------
 	if (level.foundmedic == 1)
 		end
 	
@@ -58,9 +58,9 @@ barrage_dialogue:
 
 end
 
-
+//--------------------------------------------------------------------------------
 artillery_barrage_checker:
-	
+//--------------------------------------------------------------------------------
 	level.barragerunning = 1
 
 	wait 60.0
@@ -70,9 +70,9 @@ artillery_barrage_checker:
 	level.barragerunning = 0
 end
 
-
+//--------------------------------------------------------------------------------
 BarrageThink:
-
+//--------------------------------------------------------------------------------
 	while (level.startbarrage == 0)
 		wait 1
 
@@ -129,17 +129,19 @@ dprintln "start random barrage"
 	}
 	$randombarrage turnoff 
 end
-
+//--------------------------------------------------------------------------------
 DoNewBarrageDelay local.delay:
 	//dprintln "barrage is off run for cover!!"
+//--------------------------------------------------------------------------------
 	while (local.delay > level.time)
 	{	
 		waitframe
 	}		
 end
-
+//--------------------------------------------------------------------------------
 DoNewBarrageDuration local.duration:
 	//dprintln "are we starting the new barrage?"
+//--------------------------------------------------------------------------------
 
 	level.DoNewBarrageIsOn = 1 
 	
@@ -178,9 +180,9 @@ DoNewBarrageDuration local.duration:
 	level.DoNewBarrageIsOn = 0 
 
 end
-	
+//--------------------------------------------------------------------------------
 DoNewBarrage:
-
+//--------------------------------------------------------------------------------
 	while (level.newbarrageon == 1)
 	{
 		
@@ -201,32 +203,34 @@ DoNewBarrage:
 	goto DoNewBarrage
 
 end
-
+//--------------------------------------------------------------------------------
 DoNewBarrageOn:
-
+//--------------------------------------------------------------------------------
 //iprintlnbold "DoNewBarrageOn"
 
 	level.newbarrageon = 1
 end
-
+//--------------------------------------------------------------------------------
 DoNewBarrageOff:
-
+//--------------------------------------------------------------------------------
 //iprintlnbold "DoNewBarrageOff"
 
 	level.newbarrageon = 0
 end
-
+//--------------------------------------------------------------------------------
 DoNewMedicBarrageOff:
+//--------------------------------------------------------------------------------
 	level.newbarrageon = 0
 	level.medicforcebarrageon = 0
 end
-
+//--------------------------------------------------------------------------------
 randombarrageoff:
+//--------------------------------------------------------------------------------
 	level.randombarrage = 0
 end
-
+//--------------------------------------------------------------------------------
 ModifyReturnBarrage1:
-
+//--------------------------------------------------------------------------------
 	if (level.return == 1)
 	{
 		level.bduration = 15
@@ -234,9 +238,9 @@ ModifyReturnBarrage1:
 	}
 
 end
-
+//--------------------------------------------------------------------------------
 ModifyReturnBarrage2:
-
+//--------------------------------------------------------------------------------
 	if (level.return == 1)
 	{
 		level.bduration = 20
@@ -244,9 +248,9 @@ ModifyReturnBarrage2:
 	}
 
 end
-
+//--------------------------------------------------------------------------------
 pocketflashesInit:
-
+//--------------------------------------------------------------------------------
 	local.delay = 3
 	
 	if ($pocketflashes.size)
@@ -265,8 +269,9 @@ pocketflashesInit:
 
 	thread pocketflashesRun
 end
-
+//--------------------------------------------------------------------------------
 pocketflashesRun:
+//--------------------------------------------------------------------------------
 	local.count = $pocketflashes.size+1
 	wait 1
 	while (level.pocketflashes == 1)
@@ -296,8 +301,9 @@ pocketflashesRun:
 	goto pocketflashesRun
 
 end
-
+//--------------------------------------------------------------------------------
 pocketflashFx local.fx:
+//--------------------------------------------------------------------------------
 	local.x = 128 - randomint(256)
 	local.y = 128 - randomint(256)
 	local.z = randomint(128)

@@ -25,7 +25,7 @@ main:
 	level.nTreeDeathWaitTime = 4
 	level.nCrashTruckSpawnTime = 5
 
-	End
+End
 
 
 
@@ -88,7 +88,7 @@ DoCrashingTruck:
 	// Time to spawn...
 	thread global/ai.scr::spawn 17
 
-	End
+End
 
 // --------------------------------------------------------------------------------
 CrashTruck:
@@ -101,7 +101,7 @@ CrashTruck:
 	
 	self stop
 
-	End
+End
 
 // --------------------------------------------------------------------------------
 DestroyTree:

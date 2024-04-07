@@ -14,7 +14,7 @@ main:
 //---------------------------------------------------------------------------------
 	level.didAAGuy = 0
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 DoAAGuy local.time:
@@ -26,7 +26,7 @@ DoAAGuy local.time:
 	if ( level.didAAGuy == 1 )
 	{
 		// don't do this more than once!
-		End
+			End
 	}
 
 	level.didAAGuy = 1
@@ -34,7 +34,7 @@ DoAAGuy local.time:
 	if ( $aa_guy_spot==NIL )
 	{
 		dprintln "Error creating AA guy..."
-		END
+			END
 	}
 
 	spawn static/parachute_actors "classname" "scriptmodel" "origin" $aa_guy_spot.origin "angles" $aa_guy_spot.angles "targetname" "aa_chute"
@@ -43,14 +43,13 @@ DoAAGuy local.time:
 	if ( $AAGuy==NIL )
 	{
 		dprintln "Error creating AA guy..."
-		END
+			END
 	}
 
 	$aa_chute attach $AAGuy "Bip01 Spine2" 0 (0 0 0)
 
 	$AAGuy thread AAGuyGo local.time
-
-	End
+End
 
 //---------------------------------------------------------------------------------
 AAGuyGo local.time:
@@ -75,7 +74,7 @@ AAGuyGo local.time:
 
 	thread AAGuyDie
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 AAGuyDie:
@@ -94,7 +93,7 @@ AAGuyDie:
 	// loop our dead anim...
 	self thread global/LoopAnim.Scr::LoopAnim 11A906_ParaDead
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 AAGuyDelete local.time:

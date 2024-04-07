@@ -61,7 +61,7 @@ IgnoreEnemy:
 //-------------------------------------------------------------------
 	self threatbias ignoreme
 	self thread OnEnemyIgnoreStop
-	end
+end
 
 //-------------------------------------------------------------------
 OnEnemyIgnoreStop:
@@ -69,7 +69,7 @@ OnEnemyIgnoreStop:
 	self waittill hasenemy
 	self threatbias 5000
 
-	end
+end
 //-------------------------------------------------------------------
 Init:
 //-------------------------------------------------------------------
@@ -97,7 +97,7 @@ Init:
 	$FlakGerman3 nodamage
 
 
-	End
+End
 
 
 //-------------------------------------------------------------------
@@ -182,7 +182,9 @@ Briefing:
 	self waittill sounddone
 
 	wait 0.2
+//------------------------------------------------------------------------------------------------------------------
 testskip:
+//------------------------------------------------------------------------------------------------------------------
 
 	// "Copy that motherbird, over and out." maps "t "
 	self waitthread global/LoopAnim.Scr::LoopAnimStop
@@ -205,7 +207,9 @@ testskip:
 	// save game here so they don't have to keep hearing the briefing....
 	exec global/autosave.scr 1
 
+//------------------------------------------------------------------------------------------------------------------
 skip:
+//------------------------------------------------------------------------------------------------------------------
 //	fadein 0.1 0 0 0 1
 
 	self waitthread FriendStart
@@ -235,7 +239,7 @@ skip:
 
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 DeleteGrenade:
@@ -244,7 +248,7 @@ DeleteGrenade:
 	wait 2.7
 	$projectile[$projectile.size] delete
 
-	end
+end
 
 //-------------------------------------------------------------------
 GotoBarn:
@@ -355,7 +359,7 @@ GotoBarn:
 	level.friendly3 exec global/enable_ai.scr
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 BlowFlak88:
@@ -389,7 +393,7 @@ BlowFlak88:
 //	level.friendly3 thread gags/t1l2_friend.scr::FollowCappy
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 SpawnInvestigators:
@@ -448,7 +452,7 @@ SpawnInvestigators:
 
 	self thread FriendStart
 
-	End
+End
 
 //------------------------------------------------------------------
 SpawnOutsideBarn:
@@ -466,7 +470,7 @@ SpawnOutsideBarn:
 	self waitthread global/ai.scr::spawnset 100 "barn_outside_guys"
 	self thread WaitForBarnClear
 
-	End
+End
 
 //------------------------------------------------------------------
 WaitTillCount local.name local.count:
@@ -492,7 +496,7 @@ WaitTillCount local.name local.count:
 	}
 
 
-	End
+End
 
 
 //------------------------------------------------------------------
@@ -506,7 +510,7 @@ WaitForBarnClear:
 	self waitthread FriendStop
 	self thread GotoBarn
 
-	End
+End
 
 
 
@@ -562,7 +566,7 @@ ThrowGrenade local.hint local.velocity local.toss:
 	}
 	else
 	{
-		dprintln "failed grenade test...
+		dprintln "failed grenade test..."
 	}
 
 End
@@ -614,7 +618,7 @@ DeathCheck:
 	wait 3
 	missionfailed
 
-	End
+End
 
 //------------------------------------------------------------------
 SpawnHouseAI:
@@ -637,7 +641,7 @@ SpawnHouseAI:
 
 	level.disableAI = 0
 
-	End
+End
 
 //-------------------------------------------------------------------
 TellPlayerFlushout:
@@ -648,10 +652,12 @@ TellPlayerFlushout:
 	// "Cover!  Barnes, get to the back of the house!  We'll flush them, and you take them out.  Go now!" maps "t "
 	self say dfr_T1L2_BC6909
 
-	End
+End
 
-
+//-------------------------------------------------------------------
 FakeGrenadeThrow:
+//-------------------------------------------------------------------
+
 	wait 3.25
 
 	$fake_grenade projectile models/projectiles/mills_grenade.tik
@@ -743,7 +749,7 @@ DoFlushOut:
 		self thread DownToThree
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 WaitForPlayer:
@@ -754,7 +760,7 @@ WaitForPlayer:
 		wait 1
 	}
 
-	End
+End
 		
 
 //-------------------------------------------------------------------
@@ -795,7 +801,7 @@ DoTrain:
 //	local.soundent delete
 	$train delete
 
-	End
+End
 
 //-------------------------------------------------------------------
 hidetrain:
@@ -806,7 +812,7 @@ hidetrain:
 	// give it a few more seconds to play the rest of its sound
 	$train hide
 	$train notsolid
-	end
+end
 
 //-------------------------------------------------------------------
 DoTrainSound:
@@ -825,7 +831,7 @@ DoTrainSound:
 
 	self delete
 
-	End
+End
 //-------------------------------------------------------------------
 TrainDialog:
 //-------------------------------------------------------------------
@@ -891,7 +897,7 @@ TrainDialog:
 	self lookat NULL
 	self turnto NULL
 
-	End
+End
 
 //-------------------------------------------------------------------
 DestroyFlak2:
@@ -967,7 +973,7 @@ DestroyFlak2:
 	// Now, wait for the player to trigger us from here...
 	self thread PlayerUpstairs
 
-	End
+End
 
 //-------------------------------------------------------------------
 PlayerUpstairs:
@@ -1029,7 +1035,7 @@ PlayerUpstairs:
 
 ////	self waitthread BeHealthy
 	
-	End
+End
 
 //-------------------------------------------------------------------
 PlayerAtWindow:
@@ -1100,7 +1106,7 @@ PlayerOutside:
 	self runto $CappyCheat
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 GetGermansAttention:
@@ -1116,7 +1122,7 @@ GetGermansAttention:
 	$FlakGerman6 runto level.friendly1
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 CoverFireStop:
@@ -1134,7 +1140,7 @@ Flak88_2_GonnaGoBoom:
 	//self runto $CappyCheat.origin
 
 	
-	End
+End
 
 //-------------------------------------------------------------------
 Flak88_2_BlownUp:
@@ -1150,7 +1156,7 @@ Flak88_2_BlownUp:
 
 	self thread FriendStart
 
-	End
+End
 
 //-------------------------------------------------------------------
 GoToBoat:
@@ -1167,7 +1173,7 @@ GoToBoat:
 	self.movedoneradius = 6
 	self waitthread CappyRunTo $TheBoat2
 
-	End
+End
 
 //-------------------------------------------------------------------
 BeHealthy:
@@ -1181,7 +1187,7 @@ BeHealthy:
 
 	if (self.health >= self.maxhealth)
 	{
-		end
+			end
 	}
 
 	self exec global/disable_ai.scr
@@ -1201,7 +1207,7 @@ BeHealthy:
 	self exec global/enable_ai.scr
 
 
-	End
+End
 
 // ---------------------------------------------------------------
 DownToThree:
@@ -1218,7 +1224,7 @@ DownToThree:
 	dprintln "cappy playing down to three dialog!"
 	self say dfr_T1L2_BC6963
 
-	end
+end
 
 //-------------------------------------------------------------------
 TurnUpTheFog:
@@ -1230,7 +1236,7 @@ TurnUpTheFog:
 		wait 0.01
 	}
 
-	end
+end
 
 
 //-------------------------------------------------------------------
@@ -1249,7 +1255,7 @@ say_to local.sound local.anim local.ent local.movecloser:
 
 	self waitthread global/dialog_to.scr::dialog local.sound local.anim local.ent 250 local.movecloser
 
-	End
+End
 
 //-------------------------------------------------------------------
 CappyRunTo local.ent local.movedoneradius:
@@ -1260,13 +1266,14 @@ CappyRunTo local.ent local.movedoneradius:
 	if ( local.ent==NIL )
 	{
 		dprintln "CappyRunTo: entity is NULL: " local.ent
-		End
+			End
 	}
 
 	if ( local.movedoneradius!=NIL )
 		self.movedoneradius = local.movedoneradius
-
+//-------------------------------------------------------------------
 CappyRunTo_DoAgain:
+//-------------------------------------------------------------------
 	self runto local.ent
 	self waittill movedone
 
@@ -1275,7 +1282,7 @@ CappyRunTo_DoAgain:
 
 	self.movedoneradius		= 275
 
-	End
+End
 
 
 //-------------------------------------------------------------------

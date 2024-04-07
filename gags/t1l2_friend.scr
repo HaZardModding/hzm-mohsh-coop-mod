@@ -50,7 +50,7 @@ Init:
 //	thread FriendlyCheck
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 GoTakeFlak88Cover2:
@@ -72,7 +72,7 @@ GoTakeFlak88Cover2:
 
 	self exec global/enable_ai.scr
 
-	End
+End
 	
 //-------------------------------------------------------------------
 GoTakeFlak88Cover3:
@@ -93,7 +93,7 @@ GoTakeFlak88Cover3:
 
 	self exec global/enable_ai.scr
 
-	End
+End
 	
 
 //-------------------------------------------------------------------
@@ -107,7 +107,7 @@ DoMachineGunAttack local.bTargetMe:
 	$machinegun turnon
 	level.cappy thread gags/t1l2_cappy.scr::DoFlushOut
 
-	End
+End
 
 //-------------------------------------------------------------------
 GetKilled:
@@ -148,7 +148,7 @@ GetKilled:
 		self thread FriendlyStart
 	}
 	
-	End
+End
 
 //-------------------------------------------------------------------
 AttackHouse:
@@ -202,14 +202,14 @@ AttackHouse:
 		
 	self waitthread FriendlyStart
 
-	End
+End
 
 //-------------------------------------------------------------------
 FollowPlayer:
 //-------------------------------------------------------------------
 //	self.destination			= $player
 
-	End
+End
 
 //-------------------------------------------------------------------
 FollowCappy:
@@ -223,8 +223,7 @@ FollowCappy:
 	wait 0.1
 	self thread global/friendly.scr::friendlythink
 	
-	End
-	
+End
 
 //-------------------------------------------------------------------
 FinishLevel:
@@ -256,7 +255,7 @@ FinishLevel:
 	$Objective3 SetCurrent
 	self waitthread FriendlyRunTo $TheBoat
 
-	End
+End
 
 //-------------------------------------------------------------------
 PlayerInBarn:
@@ -265,7 +264,7 @@ PlayerInBarn:
 	dprintln "PLAYER IN BARN!"
 	level.remind_player = 0
 
-	End
+End
 
 //-------------------------------------------------------------------
 RemindPlayer:
@@ -293,7 +292,7 @@ RemindPlayer:
 	}
 	self exec global/enable_ai.scr
 
-	End
+End
 
 //-------------------------------------------------------------------
 GoWaitForJump:
@@ -308,7 +307,7 @@ GoWaitForJump:
 
 	self.go_wait_thread = NULL
 
-	End
+End
 
 //-------------------------------------------------------------------
 GoWaitForJump2:
@@ -347,7 +346,7 @@ GoWaitForJump2:
 
 	self.go_wait_thread = NULL
 
-	End
+End
 
 //-------------------------------------------------------------------
 JumpOverWall:
@@ -394,7 +393,7 @@ JumpOverWall:
 	self origin $FriendTeleportBoat2.origin
 	self hide
 
-	End
+End
 
 //-------------------------------------------------------------------
 BlowUpGate:
@@ -485,7 +484,7 @@ BlowUpGate:
 	// wait for him...  (we'll continue when player hits the underbridgetrigger)
 	self turnto $player
 
-	end
+end
 
 //-------------------------------------------------------------------
 DoGateCover:
@@ -505,7 +504,7 @@ DoGateCover:
 	self lookat NULL
 
 
-	end
+end
 
 //-------------------------------------------------------------------
 StopGateCover:
@@ -518,7 +517,7 @@ StopGateCover:
 	self thread FriendlyStart
 
 
-	end
+end
 
 //-------------------------------------------------------------------
 BeFriendly:
@@ -527,7 +526,7 @@ BeFriendly:
 //	self.destination			= $player
 	self thread friendlythink
 	self exec global/enable_ai.scr
-	End
+End
 
 //-------------------------------------------------------------------
 FriendlyStart:
@@ -537,7 +536,7 @@ FriendlyStart:
 	wait 0.5
 	self.health_pickup = FALSE
 
-	End
+End
 
 //-------------------------------------------------------------------
 FriendlyStop:
@@ -545,7 +544,7 @@ FriendlyStop:
 	self waitthread global/friendly.scr::friendlystop
 //	self runto NULL
 
-	End
+End
 
 //-------------------------------------------------------------------
 FriendlyRunTo local.ent local.movedoneradius:
@@ -556,7 +555,7 @@ FriendlyRunTo local.ent local.movedoneradius:
 	if ( local.ent==NIL || local.ent==NULL )
 	{
 		dprintln "FriendlyRunTo: entity is NULL: " local.ent
-		End
+			End
 	}
 
 	if ( self.runto_thread!=NIL && self.runto_thread!=NULL )
@@ -590,7 +589,7 @@ FriendlyRunTo local.ent local.movedoneradius:
 	self.movedoneradius	= 250
 
 
-	End
+End
 
 
 //-------------------------------------------------------------------
@@ -631,7 +630,7 @@ PrintDeathMsg:
 		iprintlnbold "Private Galloway was killed in action."
 	}
 
-	end
+end
 
 //-------------------------------------------------------------------
 Friendly2DeathCheck:
@@ -647,7 +646,7 @@ Friendly2DeathCheck:
 
 	level.longtermfriend = level.friendly3
 
-	end
+end
 
 //-------------------------------------------------------------------
 Friendly3DeathCheck:
@@ -665,7 +664,7 @@ Friendly3DeathCheck:
 
 	thread LevelEndCheck
 
-	end
+end
 
 //-------------------------------------------------------------------
 GetNervous:
@@ -685,17 +684,17 @@ GetNervous:
 	// Ambush!!
 	self say dfr_T1L2_BP6736
 
-	end
+end
 
 //-------------------------------------------------------------------
 LevelEndCheck:
 //-------------------------------------------------------------------
 
 	if ( level.friendly2dead == 0 )
-		end
+			end
 
 	if ( level.friendly3dead == 0 )
-		end
+			end
 
 	iprintlnbold "Too many casualties."
 	iprintlnbold "Mission failed."
@@ -703,11 +702,13 @@ LevelEndCheck:
 	wait 3
 	missionfailed
 
-	end
+end
 
 
 // for debuging
+//-------------------------------------------------------------------
 FriendlyCheck:
+//-------------------------------------------------------------------
 
 	local.last = -1
 	local.curr = -1
@@ -732,7 +733,7 @@ FriendlyCheck:
 		waitframe
 	}
 
-	end
+end
 
 
 //-------------------------------------------------------------------
@@ -753,5 +754,5 @@ RunForGrenadeCover local.spot:
 	self exec global/enable_ai.scr
 
 	
-	end
+end
 
