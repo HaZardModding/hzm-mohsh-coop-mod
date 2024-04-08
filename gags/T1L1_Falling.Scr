@@ -56,8 +56,10 @@ PlayerFall:
 
 	thread RestrictView
 
-	$player glue $playerspot_plane 0
-	$player solid
+	//$player glue $playerspot_plane 0 //MiaCosa
+	exec coop_mod/replace.scr::glue $playerspot_plane 0
+	
+	$player solid //MiaCosa @Chrissstrahl
 
 	thread PlayerParachute
 
@@ -95,7 +97,8 @@ PlayerFall:
 	level.player_chute hide
 	$barn_parachute show
 
-	$player unglue
+	//$player unglue //MiaCosa
+	exec coop_mod/replace.scr::unglue
 
 	// Now use Tom's fogging value.
 	//println ("Using preset fog value")
@@ -386,7 +389,7 @@ Showpos:
 	while (self)
 	{
 		dprintln "I'm at" self.origin[0] " " self.origin[1] " " self.origin[2]
-		dprintln "Player's at" $player.origin[0] " " $player.origin[1] " " $player.origin[2]
+		dprintln "Player's at" $player.origin[0] " " $player.origin[1] " " $player.origin[2] //MiaCosa @Chrissstrahl
 
 		wait 0.5
 	}
@@ -450,7 +453,9 @@ DoYell:
 ////	wait 6
 	// jsl--> play the sound from the player so we can actually hear it!
 //	self playsound dfr_death_AS2871
-	$player playsound dfr_death_AS2871
+
+	//$player playsound dfr_death_AS2871 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_death_AS2871
 
 end
 
@@ -505,7 +510,7 @@ PlayerParachute:
 //		player_parachute_spot
 //		hitme_parachute
 //------------------------------------------------------------------------------------------------------------------
-	level.player_chute = spawn static/parachute "classname" "scriptmodel" "origin" $player.origin
+	level.player_chute = spawn static/parachute "classname" "scriptmodel" "origin" $player.origin //MiaCosa @Chrissstrahl
 	level.player_chute notsolid
 	level.player_chute hide
 
@@ -545,7 +550,7 @@ JiggleCamera local.time:
 //------------------------------------------------------------------------------------------------------------------
 	local.jiggletime = level.time + local.time
 	
-	local.angles = $player.angles
+	local.angles = $player.angles //MiaCosa @Chrissstrahl
 	
 	local.pitch = 0
 	local.yaw = 0
@@ -570,12 +575,12 @@ JiggleCamera local.time:
 				
 		local.yaw = local.yaw + ( local.animspeed * 4)
 		
-		$player.viewangles = (local.pitch local.yaw 0)
+		$player.viewangles = (local.pitch local.yaw 0) //MiaCosa @Chrissstrahl
 		
 		waitframe
 	}
 
-	$player.viewangles = local.angles
+	$player.viewangles = local.angles //MiaCosa @Chrissstrahl
 /*
 	local.jiggletime = level.time + 1
 
@@ -618,24 +623,24 @@ ClampYaw local.amount:
 //------------------------------------------------------------------------------------------------------------------
 	
 	local.clamptime = level.time + local.amount
-	local.angles = $player.angles
-	local.yaw = $player.angles[1]
+	local.angles = $player.angles //MiaCosa @Chrissstrahl
+	local.yaw = $player.angles[1] //MiaCosa @Chrissstrahl
 	local.oldyaw = local.yaw
 	while (local.clamptime > level.time)
 	{
-		local.y = $player.angles[1]
-		local.pitch = $player.angles[0]
+		local.y = $player.angles[1] //MiaCosa @Chrissstrahl
+		local.pitch = $player.angles[0] //MiaCosa @Chrissstrahl
 				
 		local.yaw = local.y
 
-		$player.viewangles = (local.pitch local.yaw 0)
+		$player.viewangles = (local.pitch local.yaw 0) //MiaCosa @Chrissstrahl
 
 		local.oldyaw = local.yaw
 		
 		waitframe
 	}
 
-	$player.viewangles = local.angles
+	$player.viewangles = local.angles //MiaCosa @Chrissstrahl
 
 end
 
@@ -645,7 +650,7 @@ DisplayYawPitch:
 
 	while (1)
 	{
-		dprintln "Yaw=" $player.viewangles[0] " Pitch=" $player.viewangles[1]
+		dprintln "Yaw=" $player.viewangles[0] " Pitch=" $player.viewangles[1] //MiaCosa @Chrissstrahl
 		wait 0.2
 	}
 
@@ -658,8 +663,8 @@ PlayerFaceYawPitch local.yaw_dest local.pitch_dest local.yaw_speed local.pitch_s
 //------------------------------------------------------------------------------------------------------------------
 
 
-	local.yaw = $player.viewangles[0]
-	local.pitch = $player.viewangles[1]
+	local.yaw = $player.viewangles[0] //MiaCosa @Chrissstrahl
+	local.pitch = $player.viewangles[1] //MiaCosa @Chrissstrahl
 
 	if ( local.yaw_dest==NIL )
 		local.yaw_dest = local.yaw
@@ -726,7 +731,7 @@ PlayerFaceYawPitch local.yaw_dest local.pitch_dest local.yaw_speed local.pitch_s
 			}
 		}
 
-		$player.viewangles = ( local.yaw local.pitch $player.viewangles[2] )
+		$player.viewangles = ( local.yaw local.pitch $player.viewangles[2] ) //MiaCosa @Chrissstrahl
 
 		waitframe
 	}
@@ -760,7 +765,7 @@ RestrictView:
 	releaseplayer
 
 	level.turret = spawn models/statweapons/camera_restrict.tik
-	level.turret.origin = $player.origin
+	level.turret.origin = $player.origin //MiaCosa @Chrissstrahl
 
 	level.turret notsolid
 	level.turret.angles = "90 0 0"
@@ -776,7 +781,7 @@ RestrictView:
 
 	level.turret setPlayerUsable 1
 	level.turret maxuseangle 180	// make sure the doUse command works!
-	level.turret doUse $player
+	level.turret doUse $player //MiaCosa @Chrissstrahl
 	level.turret setPlayerUsable 0
 
 	level.turret glue $playerspot_plane
@@ -794,7 +799,7 @@ UnrestrictView:
 //------------------------------------------------------------------------------------------------------------------
 
 	level.turret setPlayerUsable 1
-	level.turret doUse $player
+	level.turret doUse $player //MiaCosa @Chrissstrahl
 	level.turret setPlayerUsable 0
 	level.turret delete
 	level.turret = NULL

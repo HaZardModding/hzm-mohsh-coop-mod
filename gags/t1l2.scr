@@ -44,7 +44,7 @@ $Flak88A_turret0 maxyawoffset 20.0
 $Flak88A_turret0 pitchcaps "20 10 0"
 $Flak88A.collisionent = $flak88_collision
 $Flak88A_turret0.collisionent = $flak88_turret_collision
-$Flak88A lock
+$Flak88A lock //MiaCosa @Chrissstrahl
 
 $Flak88B_turret0 turnspeed 15
 $Flak88B_turret0 pitchspeed 7.5
@@ -53,7 +53,7 @@ $Flak88B_turret0 firedelay 4
 $Flak88B_turret0 pitchcaps "20 10 0"
 $Flak88B.collisionent = $flak88_collision
 $Flak88B_turret0.collisionent = $flak88_turret_collision
-$Flak88B lock
+$Flak88B lock //MiaCosa @Chrissstrahl
 
 // update damage for the flak88 throbbing boxes...
 $Flak1ThrobbingBox SetDamage 2000
@@ -82,7 +82,8 @@ level.friendly2.targetname = Friendly2
 level.friendly3.targetname = Friendly3
 
 
-$player stufftext "tmstart sound/music/Emmerich.mp3"
+//$player stufftext "tmstart sound/music/Emmerich.mp3" //MiaCosa @Chrissstrahl 
+exec coop_mod/replace.scr::tmstart "sound/music/Emmerich.mp3"
 
 // make sure our friendlies don't die....
 /*
@@ -105,7 +106,8 @@ $FlakGerman4 thread WaitForFlakDeath2
 $FlakGerman5 thread WaitForFlakDeath2
 $FlakGerman6 thread WaitForFlakDeath2
 
-$player item items/binoculars.tik
+//$player item items/binoculars.tik //MiaCosa
+exec coop_mod/replace.scr::item items/binoculars.tik
 
 $MG42Guy type_idle machinegunner
 $MG42Guy type_attack machinegunner
@@ -132,14 +134,15 @@ $biggate_lockedtrigger thread global/door_locked.scr::door_locked_barn
 $lastdoor_lockedtrigger thread global/door_locked.scr::door_locked_wood1
 $lastgate_lockedtrigger thread global/door_locked.scr::door_locked_barn
 
-$player fullheal
-
+	//$player fullheal //MiaCosa
+	exec coop_mod/replace.scr::fullheal
+	
 	freezeplayer
-	$player.viewangles = "0 160 0"
+	$player.viewangles = "0 160 0" //MiaCosa @Chrissstrahl
 	//dprintln "camera should be frozen"
 	wait 3
 	releaseplayer
-	$player.viewangles = "0 160 0"
+	$player.viewangles = "0 160 0" //MiaCosa @Chrissstrahl
 	//dprintln "camera unlocked"
 
 
@@ -609,12 +612,14 @@ End
 Flak88GonnaGoBoom:
 //------------------------------------------------------------------
 
-	$player stufftext "tmstart sound/music/Gotha.mp3"
+	//$player stufftext "tmstart sound/music/Gotha.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/Gotha.mp3"
 
 	level.cappy thread gags/t1l2_cappy.scr::SpawnInvestigators
 	
-
-	$player stufftext "tmstart sound/music/Gotha.mp3"
+	//$player stufftext "tmstart sound/music/Gotha.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/Gotha.mp3"
+	
 	thread DeadFlakCollision
 	wait 10
 	thread global/exploder.scr::explode 7
@@ -775,7 +780,8 @@ MG42Trigger:
 	$machinegun turnon
 	level.cappy thread gags/t1l2_cappy.scr::DoFlushOut
 
-	$player stufftext "tmstart sound/music/Labyrinth.mp3"
+	//$player stufftext "tmstart sound/music/Labyrinth.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/Labyrinth.mp3"
 
 	wait 0.4
 	if ( level.friendly3dead==0 && level.friendly2dead==0 )

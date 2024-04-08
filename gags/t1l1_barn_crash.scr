@@ -47,7 +47,8 @@ start:
 //turns off the flak
 	thread gags/box_effects.scr::stop_all_fx_region
 	
-	$player physics_off
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
 	thread morebouncetotheounce
 //	exec global/earthquake.scr 0.75 3.0 1 0
 
@@ -68,7 +69,7 @@ start:
 	thread soldiersrun
 	wait 1.0
 
-	local.usekey = getboundkey1 "+use"
+	local.usekey = getboundkey1 "+use" //MiaCosa @Chrissstrahl
 	local.msg = (loc_convert_string "Press ") + local.usekey + (loc_convert_string " to cut loose from the parachute.")
 	thread throbtext local.msg 0
 	
@@ -130,7 +131,8 @@ barnnazi1run:
 	self runto $barnnazipath1
 	self waittill movedone
 	wait 1.0
-	self turnto $player
+	//self turnto $player //MiaCosa
+	exec coop_mod/replace.scr::turnto
 	wait 1.0
 
 end
@@ -152,7 +154,8 @@ barnnazi2run:
 	self runto $barnnazipath2
 	self waittill movedone
 	wait 2.0
-	self turnto $player
+	//self turnto $player //MiaCosa
+	exec coop_mod/replace.scr::turnto
 	wait 1.0
 
 end
@@ -219,7 +222,8 @@ cutharness:
 
 	if ( level.cutharness == 1 )
 	{
-		$player playsound cutcord
+		//$player playsound cutcord //MiaCosa
+		exec coop_mod/replace.scr::playsound cutcord 
 		self remove
 
 		thread throbtext_off
@@ -230,27 +234,35 @@ cutharness:
 
 		level.bounce = 0
 
-		$player physics_on
+		//$player physics_on //MiaCosa
+		exec coop_mod/replace.scr::physics_on
 		
 		// give him weapons...
-		$player item weapons/colt45.tik
-		$player item weapons/m1_garand.tik
-		$player item weapons/m2frag_grenade.tik
-		$player item items/binoculars.tik
+		//$player item weapons/colt45.tik //MiaCosa
+		exec coop_mod/replace.scr::item weapons/colt45.tik
+		
+		//$player item weapons/m1_garand.tik //MiaCosa
+		exec coop_mod/replace.scr::item weapons/m1_garand.tik
+		
+		//$player item weapons/m2frag_grenade.tik //MiaCosa
+		exec coop_mod/replace.scr::item weapons/m2frag_grenade.tik
+		
+		//$player item items/binoculars.tik //MiaCosa
+		exec coop_mod/replace.scr::item items/binoculars.tik
 
 		waitthread global/items.scr::add_item "binoculars" noprint	// Show binoculars inventory icon
 
 
-		$player ammo pistol 50
-		$player ammo rifle 24
-		$player ammo grenade 3
+		$player ammo pistol 50 //MiaCosa @Chrissstrahl
+		$player ammo rifle 24 //MiaCosa @Chrissstrahl
+		$player ammo grenade 3 //MiaCosa @Chrissstrahl
 
 		drawhud 1
 
 		$tank_roof solid
 		wait 0.5
-		$player useweaponclass rifle
-		$player safeholster 0
+		$player useweaponclass rifle //MiaCosa @Chrissstrahl
+		$player safeholster 0 //MiaCosa @Chrissstrahl
 
 	}
 
@@ -272,7 +284,7 @@ throbtext local.str local.time:
 
 	local.hudindex = 66		// in honor of Galvan
 
-	huddraw_alpha local.hudindex 0
+	huddraw_alpha local.hudindex 0 //MiaCosa @Chrissstrahl 
 	huddraw_virtualsize local.hudindex 1
 	huddraw_string local.hudindex local.str
 	huddraw_align local.hudindex left top
@@ -287,7 +299,7 @@ throbtext local.str local.time:
 	{
 		for ( local.i = 0.0; local.i <= 1.0; local.i += 0.2 )
 		{
-			huddraw_alpha local.hudindex local.i
+			huddraw_alpha local.hudindex local.i //MiaCosa @Chrissstrahl
 			waitframe
 		}
 
@@ -295,7 +307,7 @@ throbtext local.str local.time:
 
 		for ( local.i = 1.0; local.i >= 0.0; local.i -= 0.2 )
 		{
-			huddraw_alpha local.hudindex local.i
+			huddraw_alpha local.hudindex local.i //MiaCosa @Chrissstrahl
 			waitframe
 		}
 
@@ -303,7 +315,7 @@ throbtext local.str local.time:
 			local.stop = level.time
 	}
 
-	huddraw_alpha local.hudindex 0
+	huddraw_alpha local.hudindex 0 //MiaCosa @Chrissstrahl
 
 end
 
@@ -342,7 +354,7 @@ morebouncetotheounce:
 		local.vel = (0.0 0.0 local.startdZ)
 		while ( (level.bounce == 1) && (local.vel[2] < -local.startdZ) )
 		{
-			$player.origin = $player.origin + local.vel
+			$player.origin = $player.origin + local.vel //MiaCosa @Chrissstrahl
 			local.vel = local.vel + (0.0 0.0 local.tension)
 //			println "velZ is " local.vel[2]
 

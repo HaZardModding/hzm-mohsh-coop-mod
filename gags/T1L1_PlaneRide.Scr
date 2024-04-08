@@ -33,14 +33,14 @@ SkipPlaneRide:
 	
 	fadein 0.1 0 0 0 1
 
-	$player notsolid
+	$player notsolid //MiaCosa @Chrissstrahl
 
 	waitthread SetupPlayer
 	waitthread PlayerStandUp
 	waitthread PlayerMoveForward
 	waitthread PlayerJump
 
-	$player solid
+	$player solid //MiaCosa @Chrissstrahl
 
 End
 //---------------------------------------------------------------------------------
@@ -143,10 +143,10 @@ DoPlaneRide:
 	$jumpmaster thread DoJumpMaster
 
 	freezeplayer
-	$player.viewangles = "0 0 0"
+	$player.viewangles = "0 0 0" //MiaCosa @Chrissstrahl
 	wait 13
 	releaseplayer
-	$player.viewangles = "0 0 0"
+	$player.viewangles = "0 0 0" //MiaCosa @Chrissstrahl
 
 End
 
@@ -167,8 +167,8 @@ Cleanup:
 		$airborne[local.i] delete
 	}
 
-	$player physics_on
-
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
 end
 
 //---------------------------------------------------------------------------------
@@ -376,8 +376,12 @@ End
 //---------------------------------------------------------------------------------
 SetupPlayer:
 //---------------------------------------------------------------------------------
-	$player physics_off
-	$player glue $playerspot_plane 0
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
+	//$player glue $playerspot_plane 0 //MiaCosa
+	exec coop_mod/replace.scr::glue $playerspot_plane 0
+	
 	$playerspot_plane time 0.001
 	$playerspot_plane movedown 64
 	$playerspot_plane move
@@ -469,7 +473,9 @@ PlayerJump:
 
 
 	// PlayerFall will glue us back...
-	$player unglue
+	
+	//$player unglue //MiaCosa
+	exec coop_mod/replace.scr::unglue
 
 	thread gags/T1L1_Falling.Scr::noparachute_guy $noparachute_guy_start $noparachute_guy_dest
 
@@ -590,7 +596,7 @@ StandUp_Trigger:
 		$airborne[local.i] thread StandUp
 	}
 
-	$player thread PlayerStandUp
+	$player thread PlayerStandUp //MiaCosa @Chrissstrahl
 
 End
 
@@ -749,12 +755,16 @@ FlakExplosion_Trigger:
 //	Do the flak explosion effect and animation on the squad..
 //---------------------------------------------------------------------------------
 //	$plane_explosion1 anim start
-	$player playsound explode_truck
+
+	//$player playsound explode_truck //MiaCosa
+	exec coop_mod/replace.scr::playsound explode_truck
 
 	wait 0.25
 
 	$plane_explosion2 anim start
-	$player playsound explode_truck
+	
+	//$player playsound explode_truck //MiaCosa
+	exec coop_mod/replace.scr::playsound explode_truck
 
 	thread boom
 
@@ -766,8 +776,9 @@ FlakExplosion_Trigger:
 	// stop our idle
 	//$the_plane thread global/LoopAnim.Scr::LoopAnimStop
 
-	$player playsound skydive
-
+	//$player playsound skydive //MiaCosa
+	exec coop_mod/replace.scr::playsound skydive
+	
 	// rock the plane
 	//$the_plane anim rock
 	//$the_plane waittill animdone

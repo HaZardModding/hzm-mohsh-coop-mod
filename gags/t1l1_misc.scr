@@ -258,9 +258,10 @@ end
 
 //------------------------------------------------------------------------------------------------------------------
 whistlesound local.ent:
-//------------------------------------------------------------------------------------------------------------------	
-	$player playsound whistle_blow
+//------------------------------------------------------------------------------------------------------------------
 	
+	//$player playsound whistle_blow //MiaCosa
+	exec coop_mod/replace.scr::playsound whistle_blow 
 	level.whistlesfx = 1
 		
 end
@@ -283,7 +284,9 @@ whistleblower:
 		$whistleblower waitthread RunTo $whistleblowerdestination
 
 		wait 1
-		$whistleblower turnto $player
+		//$whistleblower turnto $player //MiaCosa
+		$whistleblower exec coop_mod/replace.scr::turnto
+		
 		$whistleblower attackplayer
 		$whistleblower exec global/enable_ai.scr  
 

@@ -114,7 +114,8 @@ DeathCheck:
 	iprintlnbold "You failed the mission."
 //	fadeout 3 0 0 0 1
 	wait 3
-	missionfailed
+	//missionfailed //MiaCosa
+	exec coop_mod/replace.scr::missionfailed
 
 End
 
@@ -488,9 +489,10 @@ CappyWaitForPlayer:
 			level.brit1 physics_on
 			level.brit2 physics_on
 
-			self turnto $player
-			local.dist = vector_length($player.origin - self.origin)
-			if (local.dist < 256)
+			//self turnto $player //MiaCosa
+			exec coop_mod/replace.scr::turnto
+			local.dist = vector_length($player.origin - self.origin) //MiaCosa @Chrissstrahl
+			if (local.dist < 256)	
 				local.done = 1
 		}
 		wait 0.25
@@ -868,8 +870,11 @@ Regroup local.time local.dest:
 
 	wait local.time
 	self waitthread RunTo local.dest
-	self lookat $player
-	self turnto $player
+	//self lookat $player //MiaCosa
+	exec coop_mod/replace.scr::lookat
+	
+	//self turnto $player //MiaCosa
+	exec coop_mod/replace.scr::turnto
 	wait 0.4 
 	self turnto NULL
 	self lookat NULL
@@ -895,10 +900,16 @@ CappyFinishLevel:
 	local.done = 0
 	while(local.done == 0)
 	{
-		self turnto $player
-		local.dist = vector_length($player.origin - self.origin)
-		if (local.dist < 250)
+		//self turnto $player //MiaCosa
+		exec coop_mod/replace.scr::turnto
+		
+		//local.dist = vector_length($player.origin - self.origin) //MiaCosa
+		if(exec coop_mod/replace.scr::withinDistanceOf self 250){
 			local.done = 1
+		}else{
+			wait 2
+		}
+		
 		wait 0.25
 	}
 
@@ -928,8 +939,11 @@ end
 LockDownPlayer:
 //---------------------------------------------------------------------------------
 
-	$player takeall
-	$player physics_off
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
+	
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
 	drawhud 0
 	thread ForcedEnd
 end
@@ -939,23 +953,35 @@ UnlockPlayer:
 //---------------------------------------------------------------------------------
 
 	drawhud 1
-	$player physics_on
-	$player takeall
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
+	
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
 	// give him his weapons here..
-	$player item weapons/Webley_Revolver.tik 
-	$player item weapons/enfield.tik 
-	$player item weapons/sten.tik 
-	$player item weapons/mills_grenade.tik   
-	$player item weapons/M18_smoke_grenade.tik  
+	//$player item weapons/Webley_Revolver.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Webley_Revolver.tik
+	
+	//$player item weapons/enfield.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/enfield.tik
+	
+	//$player item weapons/sten.tik //MiaCosa 
+	exec coop_mod/replace.scr::item weapons/sten.tik
+	
+	//$player item weapons/mills_grenade.tik //MiaCosa 
+	exec coop_mod/replace.scr::item weapons/mills_grenade.tik
+	
+	//$player item weapons/M18_smoke_grenade.tik //MiaCosa  
+	exec coop_mod/replace.scr::item weapons/M18_smoke_grenade.tik
 
-	$player ammo pistol 32
+	$player ammo pistol 32 //MiaCosa @Chrissstrahl
 	$player ammo smg 128
 	$player ammo rifle 50
 	$player ammo smokegrenade 3
 	$player ammo grenade 3
 
-	$player useweaponclass smg
+	$player useweaponclass smg //MiaCosa @Chrissstrahl
 
 end
 
@@ -996,10 +1022,16 @@ GetWeapons:
 
 	wait 0.2
 
-	self turnto $player
-	self lookat $player
+	//self turnto $player //MiaCosa
+	exec coop_mod/replace.scr::turnto
+	
+	//self lookat $player //MiaCosa
+	exec coop_mod/replace.scr::lookat
+	
 	self.movedoneradius = 90
-	self runto $player
+	//self runto $player //MiaCosa
+	exec coop_mod/replace.scr::runtoClosest
+	
 	self waittill movedone
 
 
