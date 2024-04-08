@@ -69,7 +69,7 @@ execute_player_fx local.fx local.mindelay local.maxdelay local.mindist local.max
 	{
 		local.temp = spawn script_model model local.fx
 
-		local.origin = $player.origin
+		local.origin = $player.origin //MiaCosa @Chrissstrahl
 
 		local.x	= randomfloat(2) - 1.0
 		local.y	= randomfloat(2) - 1.0
