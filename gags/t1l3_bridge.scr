@@ -132,7 +132,10 @@ bridge_gag_start:
 	$explosive4 triggered 0
 
 	level.captain waitexec global/crouch.scr
-	level.captain turnto $player
+	
+	//level.captain turnto $player //MiaCosa
+	level.captain exec coop_mod/replace.scr::turnto
+	
 	level.captain waittill turndone
 	level.captain turnto NULL
 	level.captain anim 13C208_CaptDial09
@@ -331,11 +334,16 @@ bridge_gag_timer:
 		level.captain thread bridge_capt_timer
 		
 		// start the stopwatch
-		$player stopwatch level.chargedelay
-		$player loopsound bombtick
+		//$player stopwatch level.chargedelay //MiaCosa
+		exec coop_mod/replace.scr::stopwatch level.chargedelay
+		
+		//$player loopsound bombtick //MiaCosa
+		exec coop_mod/replace.scr::loopsound bombtick
+		
 		wait level.chargedelay
 
-		$player stoploopsound
+		//$player stoploopsound //MiaCosa
+		exec coop_mod/replace.scr::stoploopsound
 
 		if ( (level.playerwins == 1) && (level.playerloses == 0) )
 		{
@@ -458,7 +466,7 @@ camera_collapse:
 	$camera01 cut
 	cuecamera $camera01 0
 	waitframe
-	$player.origin = (0 0 6000)
+	$player.origin = (0 0 6000) //MiaCosa @chrissstrahl
 
 
 end
@@ -488,7 +496,9 @@ bridge_intact:
 	wait 5.0
 	fadeout 2 0 0 0 1
 	wait 2.0
-	missionfailed 1
+	
+	//missionfailed 1 //MiaCosa
+	exec coop_mod/replace.scr::missionfailed 1
 
 end
 
@@ -511,7 +521,7 @@ camera_intact:
 	$camera02 cut
 	cuecamera $camera02 0
 	waitframe
-	$player.origin = (0 0 6000)
+	$player.origin = (0 0 6000) //MiaCosa @chrissstrahl
 
 end
 
@@ -528,8 +538,10 @@ precameracut:
 
 	drawhud 0
 	freezeplayer
-	$player physics_off
-	$player hide
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
+	$player hide //MiaCosa @chrissstrahl
 
 	waitthread bridgespawneroff
 
@@ -556,11 +568,13 @@ bridge_kills_player:
 
 	thread bridge_blow_charges 0.5
 	wait 1.0
-	$player damage $world 15000 $world (0 0 0) (0 0 0) (0 0 0) 0 0 9 0
+	$player damage $world 15000 $world (0 0 0) (0 0 0) (0 0 0) 0 0 9 0  //MiaCosa @chrissstrahl
 	if ( isAlive $player )
 	{
 		wait 2.0
-		missionfailed
+		//missionfailed //MiaCosa
+		exec coop_mod/replace.scr::missionfailed
+
 	}
 
 end

@@ -54,7 +54,9 @@ end
 //--------------------------------------------------------------------------------
 lock_cannon:
 //--------------------------------------------------------------------------------
-	level.flakcannon lock
+
+	level.flakcannon lock //MiaCosa @chrissstrahl
+	
 
 end
 
@@ -88,10 +90,10 @@ flak_destroyed:
 		level.captain waitthread global/friendly.scr::friendlythink
 		level.captain exec global/enable_ai.scr
 
-		local.dist = vector_length(level.captain.origin - $player.origin)
+		local.dist = vector_length(level.captain.origin - $player.origin) //MiaCosa @chrissstrahl
 		while ( (isAlive level.captain) && (local.dist > 160) )
 		{
-			local.dist = vector_length(level.captain.origin - $player.origin)
+			local.dist = vector_length(level.captain.origin - $player.origin) //MiaCosa @chrissstrahl
 			waitframe
 		}
 		thread airdropdialog

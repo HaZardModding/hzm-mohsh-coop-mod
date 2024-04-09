@@ -45,7 +45,8 @@ Tank1Go:
 //--------------------------------------------------------------------------------
 
 	level.enemytankspeed = 200
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
+	
 	level.lookahead = 256
 	level.sightdistance = 16000
 	self setcollisionentity $panzertank_mask
@@ -229,18 +230,19 @@ GoAfterPlayer:
 
 	while ( self.bAttackPlayer==1 )
 	{
-		self.gun setAimTarget $player
-		self.gun waittill ontarget
+		self.gun setAimTarget $player //MiaCosa @chrissstrahl
+		self.gun waittill ontarget //MiaCosa @chrissstrahl
 
 		if (self == NULL)
 			end
 
 		// should probably be targeting the player or something...
-		if !(vector_within $player.origin self.origin 16000)
+		
+		if !(vector_within $player.origin self.origin 16000) //MiaCosa @chrissstrahl
 		{		
 			wait 1
 		}
-		else if (!(sighttrace $player.origin (self.gun.origin + (0 0 64)) 1))
+		else if (!(sighttrace $player.origin (self.gun.origin + (0 0 64)) 1)) //MiaCosa @chrissstrahl
 		{
 			wait 1
 		}
@@ -249,7 +251,7 @@ GoAfterPlayer:
 			wait 3
 			if ( self.bAttackPlayer==1 )
 			{
-				self.gun setAimTarget $player
+				self.gun setAimTarget $player //MiaCosa @chrissstrahl
 				self.gun waittill ontarget
 
 				if (self == NULL)
@@ -691,7 +693,8 @@ WaitForFightingToStop:
 
 			local.bNeedMedic = 0
 
-			local.health = ($player.health * 100) / $player.maxhealth
+			local.health = ($player.health * 100) / $player.maxhealth //MiaCosa @chrissstrahl
+			
 			if (local.health < level.medicmin)
 				local.bNeedMedic = 1
 

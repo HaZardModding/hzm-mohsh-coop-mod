@@ -141,13 +141,17 @@ soldier_tank_attack local.turret:
 			// attack 60%
 			local.lastaction = 1
 			local.attackcount++
-			self turnto $player
+			
+			//self turnto $player //MiaCosa
+			exec coop_mod/replace.scr::turnto
 
 			// <TWEAK> select random aim and fire times
 			local.aimtime = 0.50 + (randomint(50) / 100)
 			local.firetime = 2 + (randomint(200) / 100)
 
-			self aimat $player
+			//self aimat $player //MiaCosa
+			exec coop_mod/replace.scr::aimat
+			
 			wait local.aimtime
 			level.tanksoldierusemg = 1
 			wait local.firetime

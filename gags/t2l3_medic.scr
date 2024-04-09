@@ -370,7 +370,7 @@ playerStartAmbient:
 	local.dist = 99999
 	while (local.dist > 768)
 	{
-		local.dist = vector_length ($player.origin - $woundedcaptain.origin)
+		local.dist = vector_length ($player.origin - $woundedcaptain.origin) //MiaCosa @chrissstrahl
 		waitframe
 	}
 	level.medicforcebarrageon = 0
@@ -444,11 +444,12 @@ medic_kneels_heals_webber:
 
 	thread gags/t2l3_blitzkrieg.scr::ModifyReturnBarrage1	
 
-	$player playsound arty_leadin09 
+	//$player playsound arty_leadin09 //MiaCosa
+	exec coop_mod/replace.scr::playsound arty_leadin09 
 
 	thread gags/t2l3_blitzkrieg.scr::DoNewBarrageOn
 		
-	thread gettotheplayer $medic 2 $player $woundedcaptain medic_kneels_infront_of_captain	
+	thread gettotheplayer $medic 2 $player $woundedcaptain medic_kneels_infront_of_captain //MiaCosa @chrissstrahl	
 
 	level.medicfindtarget = 512
 
@@ -477,7 +478,7 @@ medic_start:
 
 	while ( local.dist > 256 )
 	{
-		local.dist = vector_length($medic.origin - $player.origin)
+		local.dist = vector_length($medic.origin - $player.origin) //MiaCosa @chrissstrahl
 		$medic anim 23A828_HealingCycle
 		$medic waittill animdone
 	}
@@ -506,7 +507,9 @@ medic_start:
 	while (isalive $stolentruck)
 	{
 		$medic.movedoneradius = 64.0
-		$medic runto $player
+		
+		//$medic runto $player //MiaCosa
+		$medic exec coop_mod/replace.scr::runtoClosest
 		waitframe
 	}
 		
@@ -573,7 +576,9 @@ end
 //--------------------------------------------------------------------------------
 t2l3_captain_death_camera:
 //--------------------------------------------------------------------------------
-	$player physics_off
+
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
 
 	local.origin = $woundedcaptain.origin
 
@@ -581,7 +586,7 @@ t2l3_captain_death_camera:
 
 	thread t2l3_stiff local.origin
 
-	$player nodamage
+	$player nodamage //MiaCosa @chrissstrahl
 
 	$sarg.origin = $sarganchor.origin
 	
@@ -599,7 +604,7 @@ t2l3_captain_death_camera:
 
 	// cuecamera causes us to switch to a camera
 	cuecamera $captaindeathcam
-	$player hide
+	$player hide //MiaCosa @chrissstrahl
 	
 	level.captainisok = 1
 
@@ -610,9 +615,11 @@ t2l3_captain_death_camera:
 	thread t2l3_sarg_stand_loop
 	
 	wait 3
-	missionfailed
+	//missionfailed //MiaCosa
+	exec coop_mod/replace.scr::missionfailed
 	
-	$player physics_on
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
 end
 //--------------------------------------------------------------------------------
 t2l3_iscaptainalive:
@@ -772,7 +779,9 @@ change_fog:
 		level.fogcount += level.howfast
 		$world farplane (level.farplane - level.fogcount)
 		dprintln ( "farplane: " + (level.farplane - level.fogcount) )
-		if ($player istouching $restorefog)
+		
+		//if ($player istouching $restorefog) //MiaCosa
+		if (exec coop_mod/replace.scr::istouching $restorefog)
 			local.exit = 1
 		wait 0.1
 	}
@@ -786,7 +795,9 @@ restore_fog:
 		level.fogcount -= level.howfast
 		$world farplane (level.farplane - level.fogcount)
 		dprintln ( "farplane: " + (level.farplane - level.fogcount) )
-		if ($player istouching $changefog)
+		
+		//if ($player istouching $changefog) //MiaCosa
+		if (exec coop_mod/replace.scr::istouching $changefog)
 			local.exit = 1
 		wait 0.1
 	}
@@ -822,7 +833,9 @@ medicincommingdialogue:
 //--------------------------------------------------------------------------------
 	
 	wait 5
-	$player playsound mortar_fire
+	//$player playsound mortar_fire //MiaCosa
+	exec coop_mod/replace.scr::playsound mortar_fire
+	
 //iprintlnbold "mortar_fire"	
 	wait 0.3
 	$medic say dfr_call_AP4320 // Incomming!!
@@ -833,7 +846,9 @@ medicincommingdialogue:
 	
 	while (local.time > level.time)
 	{
-		$player playsound dfr_T2L3_barrage
+		//$player playsound dfr_T2L3_barrage //MiaCosa
+		exec coop_mod/replace.scr::playsound dfr_T2L3_barrage
+		
 //iprintlnbold "random sound"		
 		wait (randomint(10) + 5)
 	}

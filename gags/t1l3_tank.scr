@@ -142,10 +142,13 @@ captainchase:
 	if ( $FaceDuringFlakSpeech )
 		self turnto $FaceDuringFlakSpeech
 	else
-		self turnto $player
+	
+		//self turnto $player //MiaCosa
+		exec coop_mod/replace.scr::turnto
+		
 	self waittill turndone
 
-	if ( isAlive $player )
+	if ( isAlive $player ) //MiaCosa @chrissstrahl
 	{
 		self anim 13C205_CaptDial06
 		wait 7.0
@@ -268,7 +271,7 @@ captainstart:
 	self waittill movedone
 
 	// following line triggers tank to move
-	while ( vector_length(self.origin - $player.origin) > 700 )
+	while ( vector_length(self.origin - $player.origin) > 700 ) //MiaCosa @chrissstrahl
 	{
 		wait 0.1
 	}

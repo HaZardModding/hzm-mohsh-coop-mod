@@ -45,7 +45,7 @@ Init:
 	self thread FriendlyStart
 	self.friendtype				= 1
 
-	$upstairs_door lock
+	$upstairs_door lock //MiaCosa @chrissstrahl
 
 //	thread FriendlyCheck
 
@@ -279,8 +279,13 @@ RemindPlayer:
 	if ( level.remind_player==1 )
 	{
 		self exec global/disable_ai.scr
-		self turnto $player
-		self lookat $player
+		
+		//self turnto $player //MiaCosa
+		exec coop_mod/replace.scr::turnto
+		
+		//self lookat $player //MiaCosa
+		exec coop_mod/replace.scr::lookat
+		
 //		self anim 12A001_Paradialog01
 //		self waittill animdone
 		self say 12A001_Paradialog01
@@ -364,7 +369,7 @@ JumpOverWall:
 
 	// unlock the door before we go thru...
 
-	$upstairs_door unlock
+	$upstairs_door unlock //MiaCosa @chrissstrahl
 	$lastdoor_lockedtrigger delete
 
 	if ( self.go_wait_thread!=NULL )
@@ -456,11 +461,11 @@ BlowUpGate:
 
 	// if player too close, KILL HIM!
 	exec global/earthquake.scr .2 4 0 0	
-	local.dist = vector_length($player.origin - $demolookhere.origin)
+	local.dist = vector_length($player.origin - $demolookhere.origin) //MiaCosa @chrissstrahl
 	if ( local.dist < 455 )
 	{
 		// make SURE player is far enough away...
-		$player damage $world 15000 $world (0 0 0) (0 0 0) (0 0 0) 0 0 9 0
+		$player damage $world 15000 $world (0 0 0) (0 0 0) (0 0 0) 0 0 9 0 //MiaCosa @chrissstrahl
 	}
 
 	wait 0.25
@@ -482,7 +487,9 @@ BlowUpGate:
 	self waitthread FriendlyRunTo $demowait
 
 	// wait for him...  (we'll continue when player hits the underbridgetrigger)
-	self turnto $player
+	
+	//self turnto $player //MiaCosa
+	exec coop_mod/replace.scr::turnto
 
 end
 
@@ -700,7 +707,8 @@ LevelEndCheck:
 	iprintlnbold "Mission failed."
 
 	wait 3
-	missionfailed
+	//missionfailed //MiaCosa
+	exec coop_mod/replace.scr::missionfailed
 
 end
 

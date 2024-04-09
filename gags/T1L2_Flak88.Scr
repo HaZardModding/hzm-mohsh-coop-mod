@@ -294,8 +294,10 @@ CancelGag:
 	$FlakGerman6 detach
 
 	$FlakGerman6 exec global/enable_ai.scr
-	$FlakGerman6 runto $player
-
+	
+	//$FlakGerman6 runto $player //MiaCosa
+	$FlakGerman6 exec coop_mod/replace.scr::runtoClosest
+	
 End
 
 //-------------------------------------------------------------------

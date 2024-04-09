@@ -145,11 +145,11 @@ TreeDeath local.death_anim local.death_loop:
 //--------------------------------------------------------------------------------
 	
 	$TreeGuy1prop detach
-	$TreeGuy1prop throw $TreeGuy1 100 $player
+	$TreeGuy1prop throw $TreeGuy1 100 $player //MiaCosa @chrissstrahl
 	$TreeGuy1prop thread removetheprop
 
 	$TreeGuy2prop detach
-	$TreeGuy2prop throw $TreeGuy2 120 $player
+	$TreeGuy2prop throw $TreeGuy2 120 $player //MiaCosa @chrissstrahl
 	$TreeGuy2prop thread removetheprop
 
 	print( "tree death guy dies" )

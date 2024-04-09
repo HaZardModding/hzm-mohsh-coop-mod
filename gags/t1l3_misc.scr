@@ -314,8 +314,8 @@ kalimbasays:
 		fadeout 0.25 0 0 0 1
 		drawhud 0
 
-		local.viewangles = $player.viewangles
-		local.origin = $player.origin
+		local.viewangles = $player.viewangles //MiaCosa @chrissstrahl
+		local.origin = $player.origin //MiaCosa @chrissstrahl
 
 		local.strlen = 70
 		local.str = ""
@@ -372,7 +372,7 @@ kalimbasays:
 
 		local.hudelement = 255
 
-		huddraw_virtualsize local.hudelement 1
+		huddraw_virtualsize local.hudelement 1 //MiaCosa @chrissstrahl
 		huddraw_string local.hudelement local.str
 		huddraw_align local.hudelement left top
 		huddraw_font local.hudelement handle-22
@@ -381,14 +381,14 @@ kalimbasays:
 
 		for (local.i = 0 ; local.i <= 1 ; local.i += .04)
 		{
-			huddraw_alpha local.hudelement local.i
+			huddraw_alpha local.hudelement local.i //MiaCosa @chrissstrahl
 			waitframe
 		}
 		huddraw_alpha local.hudelement 1.0
 
-		while ( $player.fireheld == 0 )
+		while ( $player.fireheld == 0 ) //MiaCosa @chrissstrahl
 		{
-			$player.viewangles = local.viewangles
+			$player.viewangles = local.viewangles//MiaCosa @chrissstrahl
 			$player.origin = local.origin
 			waitframe
 		}
@@ -396,7 +396,7 @@ kalimbasays:
 		fadein 1.5 0 0 0 1
 		for (local.i = 1 ; local.i >= 0 ; local.i -= .04)
 		{
-			huddraw_alpha local.hudelement local.i
+			huddraw_alpha local.hudelement local.i //MiaCosa @chrissstrahl
 			waitframe
 		}
 		drawhud 1

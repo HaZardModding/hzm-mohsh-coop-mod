@@ -52,7 +52,10 @@ t2l3_executecaptainwave2:
 	level.globalcaptainike.movedoneradius = 150.0
 	level.globalcaptainike exec global/disable_ai.scr
 	waitframe
-	level.globalcaptainike runto $player
+	
+	//level.globalcaptainike runto $player //MiaCosa
+	level.globalcaptainike exec coop_mod/replace.scr::runtoClosest
+	
 	waitthread t2l3_gettotheplayer
 	level.globalcaptainike resetleash
 	level.globalcaptainike.fixedleash = 1
@@ -60,14 +63,16 @@ end
 //------------------------------------------------------------------------------------------------
 t2l3_gettotheplayer:
 //------------------------------------------------------------------------------------------------
-	local.length = vector_length( level.globalcaptainike.origin - $player.origin )
+	local.length = vector_length( level.globalcaptainike.origin - $player.origin ) //MiaCosa @chrissstrahl
 	local.length2 = vector_length( level.globalcaptainike.origin - $anchor3.origin )
 
 	if (local.length2 < 2500)
 	{	
 		if (local.length < 150)
 		{
-			level.globalcaptainike runto $player
+			//level.globalcaptainike runto $player //MiaCosa
+			level.globalcaptainike exec coop_mod/replace.scr::runtoClosest
+			
 			level.globalcaptainike waittill movedone
 			level.globalcaptainike turnto $v6
 			level.globalcaptainike anim 23A837_captaindialogepartdeux

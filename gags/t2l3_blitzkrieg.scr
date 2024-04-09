@@ -49,7 +49,8 @@ barrage_dialogue:
 	if (level.foundmedic == 1)
 		end
 	
-	$player playsound dfr_T2L3_barrage
+	//$player playsound dfr_T2L3_barrage //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_T2L3_barrage
 
 	local.time = randomint(5) + 3
 	
@@ -145,7 +146,8 @@ DoNewBarrageDuration local.duration:
 
 	level.DoNewBarrageIsOn = 1 
 	
-	$player playsound arty_leadin05
+	//$player playsound arty_leadin05 //MiaCosa
+	exec coop_mod/replace.scr::playsound arty_leadin05
 		
 	while (local.duration > level.time)
 	{
