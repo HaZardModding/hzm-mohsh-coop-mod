@@ -8,12 +8,14 @@ main:
 	thread BarrageInit
 
 	//Music On
-	$player stufftext "tmstart sound/music/mus_14a_action.mp3"
+	//$player stufftext "tmstart sound/music/mus_14a_action.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/mus_14a_action.mp3"
 	
-	$player physics_off
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
 	
 	//No Damage during dialog
-	$player thread turndamageoff
+	$player thread turndamageoff //MiaCosa @chrissstrahl
 	$cappy thread turndamageoff
 	$startguy1 thread turndamageoff
 	$startguy2 thread turndamageoff
@@ -31,7 +33,9 @@ main:
 	level.stop_running		= 0
 
 	// take player's weapons..
-	$player takeall
+	
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
 
 End
@@ -43,7 +47,10 @@ DoStartup:
 
 	freezeplayer
 	thread LockView
-	$player physics_off
+	
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
 	$cappy thread DoOpeningDialog
 	waitthread global/fadein.scr::DoFadeIn t2l4_1 t2l4_2 t2l4_3 NIL 0
 	wait 0.25
@@ -64,9 +71,13 @@ end
 DuckPlayer:
 //------------------------------------------------------------------
 	wait 1
-	$player physics_on
-	$player modheight duck
-	$player physics_off
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
+	
+	$player modheight duck //MiaCosa @chrissstrahl
+	
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
 
 end
 
@@ -168,15 +179,25 @@ end
 ReleasePlayer:
 //------------------------------------------------------------------
 
-	$player item weapons/p38.tik 
-	$player item weapons/mp40.tik
-	$player item weapons/KAR98.tik 
-	$player item weapons/steilhandgranate.tik    
-////	$player item weapons/nebelhandgranate.tik    
-	$player item weapons/panzerschreck.tik
+	//$player item weapons/p38.tik //MiaCosa
+	exec coop_mod/replace.scr::item items/weapons/p38.tik 
+	
+	//$player item weapons/mp40.tik //MiaCosa
+	exec coop_mod/replace.scr::item items/weapons/mp40.tik
+	
+	//$player item weapons/KAR98.tik //MiaCosa
+	exec coop_mod/replace.scr::item items/weapons/KAR98.tik 
+	
+	//$player item weapons/steilhandgranate.tik //MiaCosa   
+	exec coop_mod/replace.scr::item items/weapons/steilhandgranate.tik  
+	
+////	$player item weapons/nebelhandgranate.tik  
+  
+	//$player item weapons/panzerschreck.tik //MiaCosa
+	exec coop_mod/replace.scr::item items/weapons/panzerschreck.tik
 
 
-	$player ammo rifle 20
+	$player ammo rifle 20 //MiaCosa @chrissstrahl
 	$player ammo heavy 2
 	$player ammo heavy 2
 	$player ammo pistol 32
@@ -185,10 +206,13 @@ ReleasePlayer:
 ////	$player ammo smokegrenade 2
 	$player ammo grenade 2
 
-	$player physics_on
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
+	
 	drawhud 1
 	$player thread turndamageon
-	$player modheight "stand"
+	
+	$player modheight "stand"  //MiaCosa @chrissstrahl
 
 	$player useweaponclass smg
 
@@ -215,7 +239,9 @@ DoOpeningDialog:
 	waitthread global/objectives.scr::current_objectives 1
 
 	//$player.viewangles = "0 135 0"
-	$player physics_on
+	
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
 	
 	$startguy1 thread DoAlertAnim 24A102_Soldier1TranAlert
 	$startguy2 thread DoAlertAnim 24A104_Soldier2TranAlert
@@ -675,7 +701,7 @@ end
 nicetrace local.start local.dest:
 //------------------------------------------------------------------
 
-	if (local.start != $player)
+	if (local.start != $player) //MiaCosa @chrissstrahl
 	{
 		if (local.start cansee local.dest 360)
 			end 1
@@ -927,7 +953,7 @@ ChargersNoDrawManager:
 		//local.vForward  = angles_toforward ( self.angles )
 
 		//local.dot = vector_dot local.vForward local.vObjDir
-		local.dist = vector_length (self.origin - $player.origin)
+		local.dist = vector_length (self.origin - $player.origin) //MiaCosa @chrissstrahl
 		
 		//if ( local.dot > 0.707 )
 		//{
@@ -1424,7 +1450,7 @@ FindPanzerTarget:
 		// 1 in 5 chance we'll try to target the player first...
 		local.trace_offset = self.gun.origin + (0 0 96)
 
-		if (vector_within $player.centroid local.trace_offset level.sightdistance)
+		if (vector_within $player.centroid local.trace_offset level.sightdistance) //MiaCosa @chrissstrahl
 		{		
 			if ((sighttrace $player.centroid local.trace_offset 1))
 			{
@@ -1460,7 +1486,7 @@ FindPanzerTarget:
 	{
 		local.trace_offset = self.gun.origin + (0 0 96)
 
-		if (vector_within $player.centroid local.trace_offset level.sightdistance)
+		if (vector_within $player.centroid local.trace_offset level.sightdistance) //MiaCosa @chrissstrahl
 		{		
 			if ((sighttrace $player.centroid local.trace_offset 1))
 			{
@@ -1487,7 +1513,7 @@ panzer_target:
 
 	if (self == $panzerwerfer)
 	{
-		level.playertanktarget = $player
+		level.playertanktarget = $player //MiaCosa @chrissstrahl
 			end
 	}
 
@@ -1681,16 +1707,16 @@ sniper_reaquire:
 // check if we have a target
 		if (local.target == 0)
 		{
-			if (isalive $player)
+			if (isalive $player) //MiaCosa @Chrissstrahl
 			{
-				local.nicetrace = waitthread gags/t2l4_start.scr::nicetrace self $player
+				local.nicetrace = waitthread gags/t2l4_start.scr::nicetrace self $player //MiaCosa @Chrissstrahl
 				if (local.nicetrace == 1)
 				{
-					local.distance = vector_length( self.origin - $player.origin)
+					local.distance = vector_length( self.origin - $player.origin) //MiaCosa @Chrissstrahl
 			// local.string = "player dist: " + local.distance
 			// dprintln local.string	
 					if (local.distance < 2600)
-						local.target = $player						
+						local.target = $player //MiaCosa @Chrissstrahl					
 				}
 			 }
 		}
@@ -1702,7 +1728,8 @@ sniper_reaquire:
 
 			local.thinktime	= 0.3
 
-			self turnto $player
+			//self turnto $player //MiaCosa
+			self exec coop_mod/replace.scr::turnto
 		}
 		else
 		{
@@ -1729,10 +1756,10 @@ sniper_reaquire:
 
 			if (level.objective1 == 1)
 			{
-				local.nicetrace = waitthread gags/t2l4_start.scr::nicetrace self $player
+				local.nicetrace = waitthread gags/t2l4_start.scr::nicetrace self $player //MiaCosa @chrissstrahl
 				if (local.nicetrace == 1)
 				{
-					local.target = $player
+					local.target = $player //MiaCosa @chrissstrahl
 				}
 			}
 
@@ -1752,7 +1779,7 @@ sniper_reaquire:
 
 						if (local.shots == 3)
 						{
-							if (local.target == $player)
+							if (local.target == $player) //MiaCosa @chrissstrahl
 							{
 								self turnto local.target
 								self exec global/aimat.scr local.target
@@ -1777,7 +1804,7 @@ sniper_reaquire:
 						{
 							
 							local.forward = angles_toforward(local.target)
-							if (local.target != $player)
+							if (local.target != $player) //MiaCosa @chrissstrahl
 								local.forward = local.forward * -1
 							local.dest = local.forward * 32
 							local.dest = local.forward + local.target.origin
@@ -1858,7 +1885,8 @@ DoNewBarrageDuration local.duration:
 //dprintln "are we starting the new barrage?"
 //------------------------------------------------------------------
 
-$player playsound arty_leadin05
+//$player playsound arty_leadin05 //MiaCosa
+exec coop_mod/replace.scr::playsound arty_leadin05
 
 	while (local.duration > level.time)
 	{
@@ -2000,7 +2028,7 @@ End
 //------------------------------------------------------------------
 LockView:
 //------------------------------------------------------------------
-	$player.viewangles = "0 135 0"
+	$player.viewangles = "0 135 0" //MiaCosa @chrissstrahl
 	wait 9.5
 	$player.viewangles = "0 135 0"
 	releaseplayer

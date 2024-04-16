@@ -44,7 +44,7 @@ main:
 	$bridgetank waitthread HideTank
 	$bridgetank2 waitthread HideTank
 
-	level.playertanktarget	= $player
+	level.playertanktarget	= $player //MiaCosa @chrissstrahl
 	level.spawntank			= 0
 
 	//wait 4

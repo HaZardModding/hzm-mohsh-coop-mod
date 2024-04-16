@@ -398,7 +398,9 @@ killcaptain:
 	wait 2
 //	dprintlnbold "captain got bombed "
 	//Mission Failure Kill Cappy
-	missionfailed
+	
+	//missionfailed //MiaCosa
+	exec coop_mod/replace.scr::missionfailed
 
 end
 

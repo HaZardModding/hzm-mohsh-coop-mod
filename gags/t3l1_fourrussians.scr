@@ -30,12 +30,18 @@ DoRussians:
 	setcvar g_subtitle level.subtitle_save
 	
 	wait 4
-	$player useweaponclass smg
-	$player physics_on
+	$player useweaponclass smg //MiaCosa @chrissstrahl
+	
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
+	
 	drawhud 1
 
-	$startingsoldier1 lookat $player
-	$startingsoldier1 turnto $player
+	//$startingsoldier1 lookat $player //MiaCosa
+	//$startingsoldier1 turnto $player //MiaCosa
+	$startingsoldier1 exec coop_mod/replace.scr::turntolookat 1
+	
+	
 
 	// initialize the objective list
 	waitthread maps/t3l1.scr::initobjectives

@@ -207,7 +207,7 @@ end
 //--------------------------------------------------------------------------------------------------
 cue_explosion_death:
 //--------------------------------------------------------------------------------------------------
-	if ( parm.other && (parm.other != $player) )
+	if ( parm.other && (parm.other != $player) ) //MiaCosa @chrissstrahl
 	{
 		parm.other thread cue_explosion_death_anim self.set
 		thread cue_explosion_mortar self.origin models/emitters/mortar_snow.tik

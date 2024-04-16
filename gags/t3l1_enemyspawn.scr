@@ -506,19 +506,19 @@ TruckLookForPlayer local.sightdist local.viewangle local.reverseviewangle:
 
 	while (IsAlive self && self.playerlook==1)
 	{
-		local.bCanSee = waitthread global/vehicle_warning.scr::CanSeeTarget $player local.sightdist local.viewangle 0
+		local.bCanSee = waitthread global/vehicle_warning.scr::CanSeeTarget $player local.sightdist local.viewangle 0 //MiaCosa @chrissstrahl
 
 		if ( local.bCanSee==0 && local.reverseviewangle!=0 )
 		{
 			// check behind us...
-			local.bCanSee = waitthread global/vehicle_warning.scr::CanSeeTarget $player local.sightdist local.reverseviewangle 1
+			local.bCanSee = waitthread global/vehicle_warning.scr::CanSeeTarget $player local.sightdist local.reverseviewangle 1 //MiaCosa @chrissstrahl
 		}
 
 		if ( local.bCanSee==1 )
 		{
 			// they are within the sightdist and viewangle.  Now see if anything
 			// is in the way...
-			if ( sighttrace $player.origin (self.origin + (0 0 150)) 1 )
+			if ( sighttrace $player.origin (self.origin + (0 0 150)) 1 ) //MiaCosa @chrissstrahl
 			{
 				// we can see the player...
 				self thread TruckStop 1
@@ -558,19 +558,19 @@ TankLookForPlayer local.sightdist local.viewangle local.reverseviewangle:
 
 	while (IsAlive self && self.driving==1)
 	{
-		local.bCanSee = waitthread global/vehicle_warning.scr::CanSeeTarget $player local.sightdist local.viewangle 0
+		local.bCanSee = waitthread global/vehicle_warning.scr::CanSeeTarget $player local.sightdist local.viewangle 0 //MiaCosa @chrissstrahl
 
 		if ( local.bCanSee==0 && local.reverseviewangle!=0 )
 		{
 			// check behind us...
-			local.bCanSee = waitthread global/vehicle_warning.scr::CanSeeTarget $player local.sightdist local.reverseviewangle 1
+			local.bCanSee = waitthread global/vehicle_warning.scr::CanSeeTarget $player local.sightdist local.reverseviewangle 1 //MiaCosa @chrissstrahl
 		}
 
 		if ( local.bCanSee==1 )
 		{
 			// they are within the sightdist and viewangle.  Now see if anything
 			// is in the way...
-			if ( sighttrace $player.origin (self.origin + (0 0 64)) 1 )
+			if ( sighttrace $player.origin (self.origin + (0 0 64)) 1 ) //MiaCosa @chrissstrahl
 			{
 				dprintln "STOPPING TANK -- FOUND PLAYER!"
 				// we can see the player...

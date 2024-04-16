@@ -76,7 +76,9 @@ CappyDeathCheck:
 	iprintlnbold "The Captain has been killed in action."
 	iprintlnbold "You failed the mission."
 	wait 3
-	missionfailed
+	
+	//missionfailed //MiaCosa
+	exec coop_mod/replace.scr::missionfailed
 
 	end
 
@@ -231,14 +233,17 @@ DoPreChurch:
 	wait 0.25
 
 	// player is here, say our shiznit and continue...
-	self lookat $player
-	self turnto $player
+	
+	//self lookat $player //MiaCosa
+	//self turnto $player //MiaCosa
+	self exec coop_mod/replace.scr::turntolookat 1
 
 	wait 1
 
 	// American Captain “Sergeant, clear this church!  I'll cover the front!”
 	$cappy say dfr_T2L4_AC9082
-	$cappy waittill saydone
+	
+	$cappy waittill saydone //MiaCosa @Chrissstrahl
 
 	self lookat NULL
 	self turnto NULL
@@ -336,7 +341,7 @@ CappyDoChurch:
 
 	self.health = 200
 	
-	self waitthread CappyRunTo $player
+	self waitthread CappyRunTo $player //MiaCosa @Chrissstrahl
 
 	self thread DoChurchToHotel
 
@@ -516,8 +521,13 @@ DoChurchToHotel:
 	thread RespawnMG42s
 	// tweak the cappy's health:
 	self takedamage
-	self lookat $player
-	self turnto $player
+	
+	//self lookat $player //MiaCosa
+	//self turnto $player //MiaCosa
+	self exec coop_mod/replace.scr::turntolookat 1
+	
+	
+	
 	self thread cappy_say 7
 	forcemusic aux3 aux3
 	self.movedoneradius = 150.0
@@ -630,16 +640,18 @@ DoHotel:
 	// wait for player to get to us...
 	self waitthread CappySayComeHere
 
-	self turnto $player
-	self lookat $player
-
+	//self turnto $player //MiaCosa
+	//self lookat $player //MiaCosa
+	self exec coop_mod/replace.scr::turntolookat 1
+	
 	wait 1
 
 	thread unlockhotel
 
 	// American Captain “Clear out this hotel sergeant, let's go!
 	self say dfr_T2L4_AC9084
-	self waittill saydone
+	
+	self waittill saydone //MiaCosa @Chrissstrahl
 
 	level.curr_objective	= 4
 
@@ -734,8 +746,12 @@ DoEnding:
 
 	forcemusic aux4 aux4
 	
-	self turnto $player
-	self lookat $player
+	//self turnto $player //MiaCosa
+	//self lookat $player //MiaCosa
+	self exec coop_mod/replace.scr::turntolookat 1
+	
+
+	
 	wait 0.25
 	self anim 24C103_CaptainDialog3 // Nice job son, we sure gave them one helluva Christmas present!
 	self waittill animdone
@@ -785,9 +801,14 @@ CappyDoFinalDialog:
 
 	waitthread global/objectives.scr::add_objectives 4 3
 
-	$cappy waitthread CappyRunTo $player 350
-	$cappy turnto $player
-	$cappy lookat $player
+	$cappy waitthread CappyRunTo $player 350 //MiaCosa @Chrissstrahl ( exec coop_mod/replace.scr::runtoClosest )
+	
+	//$cappy turnto $player //MiaCosa
+	//$cappy lookat $player //MiaCosa
+	$cappy exec coop_mod/replace.scr::turntolookat 1
+	
+	
+	
 	$cappy anim 24C105_CaptainDialog5	// "Nice shot Sergeant.  Now let's pack it up..."
 	$cappy waittill animdone
 
@@ -811,17 +832,20 @@ CappySayComeHere local.saylinedistance:
 		// don't say line if player within this distance....
 
 	// purposely don't go into this while loop ( and therefore don't say over here if the player is already close by...)
-	local.dist = vector_length ( self.origin - $player.origin )	
+	
+	local.dist = vector_length ( self.origin - $player.origin )	//MiaCosa @Chrissstrahl
 
 	local.next_yell = 0
 
 	while (local.dist > local.saylinedistance)
 	{
-		local.dist = vector_length ( self.origin - $player.origin )	
+		local.dist = vector_length ( self.origin - $player.origin )	//MiaCosa @Chrissstrahl
 
 		if ( local.next_yell < level.time )
 		{
-			self turnto $player
+			//self turnto $player //MiaCosa
+			self exec coop_mod/replace.scr::turnto
+			
 			self anim 24C102_CaptainDialog2 // Sergeant Barnes, over here!
 			self waittill animdone
 			local.next_yell = level.time + 10
@@ -845,7 +869,7 @@ CappyRunTo local.ent local.movedoneradius:
 	if ( local.ent==NIL || local.ent==NULL )
 	{
 //		dprintln "CappyRunTo: entity is NULL: " local.ent
-End
+		End
 	}
 
 	if ( self.runto_thread!=NIL && self.runto_thread!=NULL )
@@ -857,7 +881,7 @@ End
 
 	if ( local.movedoneradius==NIL )
 	{
-		if ( local.ent==$player )
+		if ( local.ent==$player ) //MiaCosa @Chrissstrahl
 			local.movedoneradius	= 250
 		else
 			local.movedoneradius	= 6
@@ -1119,7 +1143,7 @@ end
 //--------------------------------------------------------------------------------------------------
 lockdoors:
 //--------------------------------------------------------------------------------------------------
-	$hoteldoor lock
+	$hoteldoor lock //MiaCosa @Chrissstrahl
 	$hoteldoor2 lock
 	$churchdoor lock
 end
@@ -1128,14 +1152,14 @@ end
 unlockchurch:
 //--------------------------------------------------------------------------------------------------
 
-	$churchdoor unlock
+	$churchdoor unlock //MiaCosa @Chrissstrahl
 	$churchdoor spawnflags 0
 end
 
 //--------------------------------------------------------------------------------------------------
 unlockhotel:
 //--------------------------------------------------------------------------------------------------
-	$hoteldoor unlock
+	$hoteldoor unlock //MiaCosa @Chrissstrahl
 	$hoteldoor2 unlock
 	$hoteldoor spawnflags 0
 	$hoteldoor2 spawnflags 0
@@ -1276,7 +1300,7 @@ DoPlayerDeath:
 //--------------------------------------------------------------------------------------------------
 
 
-	while ( isAlive $player )
+	while ( isAlive $player ) //MiaCosa @Chrissstrahl
 	{
 		wait 0.2
 	}
@@ -1287,13 +1311,16 @@ DoPlayerDeath:
 	switch ( local.rand )
 	{
 		case	0:
-		$player playsound dfr_T2L4_AC9085
+		//$player playsound dfr_T2L4_AC9085 //MiaCosa
+		exec coop_mod/replace.scr::playsound dfr_T2L4_AC9085
 		break;
 		case	1:
-		$player playsound dfr_T2L4_AC9087
+		//$player playsound dfr_T2L4_AC9087 //MiaCosa
+		exec coop_mod/replace.scr::playsound dfr_T2L4_AC9087
 		break;
 		default:
-		$player playsound dfr_T2L4_AC9087
+		//$player playsound dfr_T2L4_AC9087 //MiaCosa
+		exec coop_mod/replace.scr::playsound dfr_T2L4_AC9087
 		break;
 
 	}

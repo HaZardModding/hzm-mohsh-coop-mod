@@ -87,7 +87,7 @@ GetTarget:
 					break;
 				}
 			default:
-				local.target = $player
+				local.target = $player //MiaCosa @chrissstrahl
 				break;
 		}
 	}
