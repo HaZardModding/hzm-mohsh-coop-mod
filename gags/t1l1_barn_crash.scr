@@ -49,6 +49,7 @@ start:
 	
 	//$player physics_off //MiaCosa
 	exec coop_mod/replace.scr::physics_off
+	
 	thread morebouncetotheounce
 //	exec global/earthquake.scr 0.75 3.0 1 0
 
@@ -132,7 +133,7 @@ barnnazi1run:
 	self waittill movedone
 	wait 1.0
 	//self turnto $player //MiaCosa
-	exec coop_mod/replace.scr::turnto
+	self exec coop_mod/replace.scr::turnto
 	wait 1.0
 
 end
@@ -155,7 +156,7 @@ barnnazi2run:
 	self waittill movedone
 	wait 2.0
 	//self turnto $player //MiaCosa
-	exec coop_mod/replace.scr::turnto
+	self exec coop_mod/replace.scr::turnto
 	wait 1.0
 
 end
