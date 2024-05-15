@@ -7,7 +7,9 @@ level waittill prespawn
 
 // Fade-in stuff.
 
-	$player physics_off
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
 	//freezeplayer
 	fadeout .001 0 0 0 1
 	drawhud 0
@@ -29,8 +31,9 @@ level waittill spawn
 
 // Set up Music
 
-	$player stufftext "tmstart sound/music/mus_SniperTown_01g.mp3"
-
+	//$player stufftext "tmstart sound/music/mus_SniperTown_01g.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/mus_SniperTown_01g.mp3"
+	
 // Initialize Snow Parameters
 
 	level.rain_speed = "40"
@@ -154,7 +157,7 @@ $mg42 convergetime 0.25
 
 // Tiger Tank 1
 	level.enemytankspeed = 200
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	level.lookahead = 256
 	//$tigertank1.collisionentity = $panzertank_mask
 
@@ -234,17 +237,31 @@ $mg42 convergetime 0.25
 
 // Heal the player and set up inventory
 
-	$player fullheal
-	$player takeall
-	$player item weapons/colt45.tik
-	$player item weapons/m1_garand.tik
-	$player item weapons/thompsonsmg.tik
-	$player item weapons/M2Frag_Grenade_sp.tik  
- 	$player item weapons/M18_smoke_grenade.tik  
+	//$player fullheal //MiaCosa
+	exec coop_mod/replace.scr::fullheal
+	
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
+	
+	//$player item weapons/colt45.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/colt45.tik
+	
+	//$player item weapons/m1_garand.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/m1_garand.tik
+	
+	//$player item weapons/thompsonsmg.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/thompsonsmg.tik
+	
+	//$player item weapons/M2Frag_Grenade_sp.tik //MiaCosa  
+	exec coop_mod/replace.scr::item weapons/M2Frag_Grenade_sp.tik  
+	
+ 	//$player item weapons/M18_smoke_grenade.tik //MiaCosa  
+ 	exec coop_mod/replace.scr::item weapons/M18_smoke_grenade.tik  
+	
 	waitthread global/items.scr::add_item "binoculars" noprint	// Show binoculars inventory icon
 	waitthread global/items.scr::blank_items
  
- 	$player ammo pistol 32
+ 	$player ammo pistol 32 //MiaCosa @chrissstrahl
  	$player ammo smg 128
  	$player ammo rifle 50
  	$player ammo smokegrenade 2
@@ -257,9 +274,12 @@ $mg42 convergetime 0.25
 
 // Begin Dialog
 
-	$player modheight "duck" // try crouch too
+	$player modheight "duck" // try crouch too //MiaCosa @chrissstrahl
+	
 	//level.friendly1 lookat $player
-	level.friendly1 turnto $player
+	//level.friendly1 turnto $player //MiaCosa
+	level.friendly1 exec coop_mod/replace.scr::turntolookat 1
+	
 	//level.friendly1 exec global/crouch.scr
 	
 	level.friendly2 turnto level.friendly1
@@ -303,7 +323,7 @@ level_fadein:
 //--------------------------------------
 
 	freezeplayer
-	$player.viewangles = "0 155 0"
+	$player.viewangles = "0 155 0" //MiaCosa @chrissstrahl
 	//dprintln "camera should be frozen"
 	
 	wait 1.5
@@ -335,9 +355,9 @@ level_fadein:
 	//$player physics_on
 	releaseplayer
 	drawhud 1
-	$player.viewangles = "0 155 0"
+	$player.viewangles = "0 155 0" //MiaCosa @chrissstrahl
 	waitthread global/items.scr::reload_items
-	$player use "Thompson"
+	$player use "Thompson" //MiaCosa @chrissstrahl
 
 //--------------------------------------
 // End of Fade-in
@@ -355,7 +375,8 @@ level_fadein:
 	level.friendly1 waittill animdone
 	level.friendly1 exec global/enable_ai.scr
 
-	$player physics_on
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
 	//releaseplayer
 
 	level.friendly1 takedamage
@@ -417,7 +438,10 @@ fstart local.medicflag:
 		self.enableEnemy = 1
 	}
 	self thread global/friendly.scr::friendlythink
-	self tether $player
+	
+	//self tether $player //MiaCosa
+	self exec coop_mod/main.scr::tether
+	
 	self.interval = 192
 	self.mins = 0
 	self.maxs = 30
@@ -628,7 +652,9 @@ parade_trigger_think: //local.activator:
 	{	
 		level.parade_trigger_on = 1
 		thread mg42_parade
-		while ($player istouching $parade_trigger)  
+		while
+		//($player istouching $parade_trigger) // MiaCosa @chrissstrahl
+		(exec coop_mod/replace.scr::istouching $parade_trigger)
 		{
 			//dprintln "Parade trigger is set to " level.parade_trigger_on
 			waitframe
