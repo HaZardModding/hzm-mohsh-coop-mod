@@ -871,10 +871,10 @@ Regroup local.time local.dest:
 	wait local.time
 	self waitthread RunTo local.dest
 	//self lookat $player //MiaCosa
-	exec coop_mod/replace.scr::lookat
-	
 	//self turnto $player //MiaCosa
-	exec coop_mod/replace.scr::turnto
+	self exec coop_mod/replace.scr::turntolookat 1
+	
+
 	wait 0.4 
 	self turnto NULL
 	self lookat NULL
@@ -897,20 +897,35 @@ CappyFinishLevel:
 		wait 1
 	}
 
+
+	//Chrissstrahl - updated to make this waiting loop work with coop
 	local.done = 0
 	while(local.done == 0)
 	{
 		//self turnto $player //MiaCosa
-		exec coop_mod/replace.scr::turnto
+		local.player = exec coop_mod/replace.scr::player_closestTo self NIL //Chrissstrahl - grab closest player to self
 		
-		//local.dist = vector_length($player.origin - self.origin) //MiaCosa
-		if(exec coop_mod/replace.scr::withinDistanceOf self 250){
-			local.done = 1
-		}else{
+		//Chrissstrahl - if returned player does exist
+		if(local.player){
+			self turnto local.player
+			
+			//Chrissstrahl - get distance between local.player and self
+			local.dist = vector_length(local.player.origin - self.origin)
+			
+			//Chrissstrahl - if distance between local.player and self is less or equal 250
+			if(local.dist <= 250){
+				local.done = 1
+			}else{
+				wait 2
+			}
+			
+			//wait a quarter sec each iteration
+			wait 0.25
+		}
+		//Chrissstrahl - no player on server, wait longer to reduce usage of compute resources
+		else{
 			wait 2
 		}
-		
-		wait 0.25
 	}
 
 	waitthread global/objectives.scr::add_objectives 3 3
@@ -1023,14 +1038,13 @@ GetWeapons:
 	wait 0.2
 
 	//self turnto $player //MiaCosa
-	exec coop_mod/replace.scr::turnto
-	
 	//self lookat $player //MiaCosa
-	exec coop_mod/replace.scr::lookat
+	self exec coop_mod/replace.scr::turntolookat 1
+	
 	
 	self.movedoneradius = 90
 	//self runto $player //MiaCosa
-	exec coop_mod/replace.scr::runtoClosest
+	self exec coop_mod/replace.scr::runtoClosest
 	
 	self waittill movedone
 
