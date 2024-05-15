@@ -71,7 +71,9 @@ level waittill spawn
 //For Captain's Dialog
 //---------------------------------------------------------------------
 thread gags/t2l4_captain.scr::t2l4_main
-$player fullheal
+
+//$player fullheal //MiaCosa
+exec coop_mod/replace.scr::fullheal
 
 	// save off mg42gunnerC's turret...
 	level.turret_gunnerC = $mg42gunnerC.turret
@@ -438,7 +440,8 @@ end
 	if ( local.panzer==1 )
 	{
 		// dprintln "Take out the Tanks!"
-		$player playsound dfr_call_AP4362
+		//$player playsound dfr_call_AP4362 //MiaCosa
+		exec coop_mod/replace.scr::playsound dfr_call_AP4362
 	}
 
 
@@ -450,10 +453,10 @@ end
 
 	wait 3
 
-	while(isalive $player)
+	while(isalive $player) //MiaCosa @chrissstrahl
 	{
 		//dprintln "forcing player dead."
-		radiusdamage $player.origin 900 400 1
+		radiusdamage $player.origin 900 400 1 //MiaCosa @chrissstrahl
 		wait 1
 	}
 
@@ -598,7 +601,7 @@ BeBazookaGuy:
 	 while ( isAlive self )
 
 		 {
-		  self exec global/aimat.scr $player
+		  self exec global/aimat.scr $player //MiaCosa - per instructions untouched
 		  wait 1
 		  self exec global/shoot.scr
 		  wait 3.5
@@ -848,7 +851,7 @@ end
 spawn_52:
 //	spawn flak guys...
 //-------------------------------------------------------------------
-	if (parm.other==$player || parm.other==$cappy )
+	if (parm.other==$player || parm.other==$cappy ) //MiaCosa @chrissstrahl
 	{
 		self delete
 		thread global/ai.scr::spawnset 52 wander_enemy 1
@@ -861,7 +864,7 @@ end
 spawn_70_a:
 //	guys right before hotel...
 //-------------------------------------------------------------------
-	if (parm.other==$player || parm.other==$cappy )
+	if (parm.other==$player || parm.other==$cappy ) //MiaCosa @chrissstrahl
 	{
 		self delete
 		thread global/ai.scr::spawnset 70 wander_enemy 1
@@ -876,7 +879,7 @@ spawn_70_b:
 //	guys right before hotel...
 //-------------------------------------------------------------------
 
-	if (parm.other==$player || parm.other==$cappy )
+	if (parm.other==$player || parm.other==$cappy ) //MiaCosa @chrissstrahl
 	{
 		self delete	
 		thread global/ai.scr::spawnset 70 wander_enemy 1
@@ -890,7 +893,7 @@ end
 spawn_70_c:
 //	guys right before hotel...
 //-------------------------------------------------------------------
-	if (parm.other==$player || parm.other==$cappy )
+	if (parm.other==$player || parm.other==$cappy ) //MiaCosa @chrissstrahl
 	{
 		self delete		
 		thread global/ai.scr::spawnset 70 wander_enemy 1
@@ -982,11 +985,13 @@ end
 give_sniper_rifle:
 //-------------------------------------------------------------------
 
-	$player item weapons/KAR98sniper.tik
+	//$player item weapons/KAR98sniper.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/KAR98sniper.tik
+	
 	$sniper_rifle playsound gewehr43_snd_pickup
 	iprintln "You picked up a sniper rifle"
 
-	$player use "KAR98 - Sniper"
+	$player use "KAR98 - Sniper" //MiaCosa @chrissstrahl
 
 end
 
@@ -1124,11 +1129,15 @@ shotgun_ammo:
 // give the player some shells
 //-------------------------------------------------------------------
 
-	$player take panzerschreck
+	//$player take panzerschreck //MiaCosa
+	exec coop_mod/replace.scr::take panzerschreck
 	$shotgun_pickup delete
-	$player give weapons/shotgun.tik
+	
+	//$player give weapons/shotgun.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/shotgun.tik
+	
 	wait .1
-	$player ammo shotgun 40
+	$player ammo shotgun 40 //MiaCosa @chrissstrahl
 	$player useweaponclass heavy
 end
 
@@ -1149,8 +1158,10 @@ end
 	$proj_9999 TurnOn
 
 	$billy exec global/disable_ai.scr
-	$billy turnto $player
-	$billy lookat $player
+	
+	//$billy turnto $player //MiaCosa
+	//$billy lookat $player
+	$billy exec coop_mod/replace.scr::turntolookat 1
 
 	wait 5
 
