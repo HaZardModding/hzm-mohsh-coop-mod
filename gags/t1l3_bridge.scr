@@ -572,6 +572,7 @@ bridge_kills_player:
 	if ( isAlive $player )
 	{
 		wait 2.0
+		
 		//missionfailed //MiaCosa
 		exec coop_mod/replace.scr::missionfailed
 
