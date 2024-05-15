@@ -82,7 +82,7 @@ level.friendly2.targetname = Friendly2
 level.friendly3.targetname = Friendly3
 
 
-//$player stufftext "tmstart sound/music/Emmerich.mp3" //MiaCosa @Chrissstrahl 
+//$player stufftext "tmstart sound/music/Emmerich.mp3" //MiaCosa
 exec coop_mod/replace.scr::tmstart "sound/music/Emmerich.mp3"
 
 // make sure our friendlies don't die....
