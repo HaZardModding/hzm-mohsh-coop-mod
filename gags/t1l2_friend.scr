@@ -281,10 +281,8 @@ RemindPlayer:
 		self exec global/disable_ai.scr
 		
 		//self turnto $player //MiaCosa
-		exec coop_mod/replace.scr::turnto
-		
 		//self lookat $player //MiaCosa
-		exec coop_mod/replace.scr::lookat
+		self exec coop_mod/replace.scr::turntolookat 1
 		
 //		self anim 12A001_Paradialog01
 //		self waittill animdone
@@ -489,7 +487,7 @@ BlowUpGate:
 	// wait for him...  (we'll continue when player hits the underbridgetrigger)
 	
 	//self turnto $player //MiaCosa
-	exec coop_mod/replace.scr::turnto
+	self exec coop_mod/replace.scr::turnto
 
 end
 
