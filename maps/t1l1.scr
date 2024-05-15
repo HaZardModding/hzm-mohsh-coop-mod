@@ -244,7 +244,8 @@ End
 TruckGuyRun:
 //-------------------------------------------------------------------
 	
-	self runto $player
+	//self runto $player //MiaCosa
+	self exec coop_mod/replace.scr::runtoClosest
 
 	self waittill movedone
 	if ( parm.movedone!=1 )
@@ -264,7 +265,9 @@ barn_hole:
 //-------------------------------------------------------------------
 
 	exec gags/t1l1_barn_crash.scr::crashthroughroof
-	$player loopsound t1_barninside
+	
+	//$player loopsound t1_barninside //MiaCosa
+	exec coop_mod/replace.scr::loopsound t1_barninside
 
 end
 
@@ -303,7 +306,7 @@ artillery_message:
 //	this is to trigger an onscreen prompt for controlling artillery
 //-------------------------------------------------------------------
 
-	local.usekey = getboundkey1 "+use"
+	local.usekey = getboundkey1 "+use" //MiaCosa @chrissstrahl
 	local.msg = (loc_convert_string "Approach controls and press ") + local.usekey + (loc_convert_string " to use artillery.")
 	thread gags/t1l1_barn_crash.scr::throbtext local.msg 7
 
@@ -398,7 +401,9 @@ TurnOffAAGuns:
 //-------------------------------------------------------------------
 
 	exec gags/T1L1_Falling.Scr::TurnOffAAGuns
-	$player stoploopsound
+	
+	//$player stoploopsound //MiaCosa
+	exec coop_mod/replace.scr::stoploopsound
 end
 
 
@@ -417,7 +422,8 @@ sound_barn_outside:
 // switch the ambient
 //-------------------------------------------------------------------
 
-	$player loopsound t1_barnoutside
+	//$player loopsound t1_barnoutside //MiaCosa
+	exec coop_mod/replace.scr::loopsound t1_barnoutside
 	
 end
 
