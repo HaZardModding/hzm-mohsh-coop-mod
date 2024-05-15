@@ -53,7 +53,10 @@
 	$world farplane 2750
 	$world farplane_color (.324 .324 .351)
 	$world farplane_bias -150
-	$player stufftext "tmstartloop sound/music/halftrack.mp3" 	
+	
+	//$player stufftext "tmstartloop sound/music/halftrack.mp3" //MiaCosa	
+	exec coop_mod/replace.scr::tmstartloop "sound/music/halftrack.mp3"
+ 	
 	$s1_jeep1 setcollisionentity $halftrack_mask
 	//$s1_truck1 setcollisionentity $opelcollision
 	//$nebel1 setcollisionentity $
@@ -89,8 +92,10 @@
 
 	fadein 5 0 0 0 1
 	drawhud 2
-	$player fullheal
-	$player.health = 1000
+	//$player fullheal //MiaCosa
+	exec coop_mod/replace.scr::fullheal
+	
+	$player.health = 1000 //MiaCosa @chrissstrahl
 	//$player.maxhealth = 1000
 	//$player.health = $player.maxhealth
 	$s1_jeep1 nodamage
@@ -164,20 +169,29 @@
 //*** telling the AI to not drop health
 	level.nodrophealth = 1
 	
-	$player playsound dfr_t2l2_AS3003 
+	//$player playsound dfr_t2l2_AS3003 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_t2l2_AS3003 
+	
 //"Keep your eyes peeled Barnes!  We're not just gonna waltz out of here with their supplies.  Keep that truck covered!"[ENGLISH]
 	wait 10
 	$s1_truck1 vehicleanim idlelights
 	thread global/spotlight.scr::deadcorona $s1_truck1 "light left"
 	thread global/spotlight.scr::deadcorona $s1_truck1 "light right"
 	$s1_truck1.driver nodamage
-	$player playsound den_call_gs5912
+	
+	//$player playsound den_call_gs5912 //MiaCosa
+	exec coop_mod/replace.scr::playsound den_call_gs5912
+	
 //"That's our truck, attack!" [GERMAN]
 	wait 8
-	$player playsound den_call_gs5913
+	//$player playsound den_call_gs5913 //MiaCosa
+	exec coop_mod/replace.scr::playsound den_call_gs5913
+	
 //"they've got our supplies!" [GERMAN]
 	wait 4
-	$player playsound den_call_gs5914
+	//$player playsound den_call_gs5914 //MiaCosa
+	exec coop_mod/replace.scr::playsound den_call_gs5914
+	
 //"Stop them!" [GERMAN]
 	
 end
@@ -206,14 +220,16 @@ end
 //-------------------------------------------------------------------
 alarm:
 //-------------------------------------------------------------------	
-
-	$player playsound alarm_siren
+	//$player playsound alarm_siren //MiaCosa
+	exec coop_mod/replace.scr::playsound alarm_siren
 
 end
 //-------------------------------------------------------------------
 panzer1call:
 //-------------------------------------------------------------------
-	$player playsound dfr_call_ap4361
+	//$player playsound dfr_call_ap4361 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4361
+	
 //"Panzer on the left!" [ENGLISH]
 
 end
@@ -221,7 +237,9 @@ end
 watchtrucktrigger:
 //-------------------------------------------------------------------
 	wait 6
-	$player playsound dfr_t2l2_ad4402
+	//$player playsound dfr_t2l2_ad4402 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_t2l2_ad4402
+	
 //"Cover the supply truck Barnes!" [American]
 
 
@@ -229,12 +247,14 @@ end
 //-------------------------------------------------------------------
 wobble1:
 //-------------------------------------------------------------------
-	$player playsound halftrack_bounce03
+	//$player playsound halftrack_bounce03 //MiaCosa
+	exec coop_mod/replace.scr::playsound halftrack_bounce03
 end
 //-------------------------------------------------------------------
 bmwbehind:
 //-------------------------------------------------------------------
-	$player playsound dfr_call_ap4315
+	//$player playsound dfr_call_ap4315 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4315
 end
 	
 //-------------------------------------------------------------------
@@ -251,7 +271,8 @@ end
 imstuck:
 //-------------------------------------------------------------------
 
-	$player playsound halftrack_stuck
+	//$player playsound halftrack_stuck //MiaCosa
+	exec coop_mod/replace.scr::playsound halftrack_stuck
 end
 //-------------------------------------------------------------------
 bikeboom:
@@ -289,7 +310,8 @@ end
 //-------------------------------------------------------------------
 planesound:
 //-------------------------------------------------------------------
-	$player playsound plane
+	//$player playsound plane //MiaCosa
+	exec coop_mod/replace.scr::playsound plane
 end
 //-------------------------------------------------------------------
 bombdrop:
@@ -373,7 +395,9 @@ end
 behind_us:
 //-------------------------------------------------------------------
 	wait 2
-	$player playsound dfr_call_ap4317
+	//$player playsound dfr_call_ap4317 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4317
+	
 //"Behind us!" [American]
 
 
@@ -454,7 +478,9 @@ end
 sdkfz:
 //-------------------------------------------------------------------
 
-	$player playsound dfr_call_ap4314
+	//$player playsound dfr_call_ap4314 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4314
+	
 	//"On the right, in the trees!  Take 'em out!" [ENGLISH]
 	thread global/halftrack.scr::halftrackinit $sdkfz 400 models/vehicles/halftrack_winter_d.tik
 	
@@ -492,7 +518,9 @@ sdkfz2:
 
 	self waittill drive
 	
-	$player playsound dfr_call_ap4364
+	//$player playsound dfr_call_ap4364 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4364
+	
 	//"Half Track on the Left!" [ENGLISH]
 	
 end
@@ -570,7 +598,7 @@ panzer1:
 	$panzer1.get_out = 0
 	$panzer1 thread debughealth
 	//println ( "panzer1 health: " + $panzer1.health)
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	$panzer1 drive $panzer1path 20 50 256 
 	$panzer1 waittill drive
 	$panzer1 stop
@@ -581,14 +609,17 @@ end
 panzer2:
 //-------------------------------------------------------------------
 	//dprintln "STARTING panzer TANK 2"
-	$player playsound dfr_call_ap4360
+	
+	//$player playsound dfr_call_ap4360 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4360
+	
 //"Panzer on the right!"
 	$panzer2.start_health = 400
 	$panzer2.accuracy = 75
 	$panzer2.health = $panzer2.start_health
 	$panzer2 thread global/vehicles_thinkers.scr::enemy_tank_think2 0 empty_panzer_winter
 	$panzer2.get_out = 0
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	$panzer2 drive $panzer2path 20 50 256 
 	$panzer2 waittill drive
 	$panzer2 stop
@@ -604,7 +635,7 @@ panzer3:
 //"On your six!"
 	$panzer3.start_health = 500
 	$panzer3 thread global/vehicles_thinkers.scr::enemy_tank_think2 0 empty_panzer_winter
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	$panzer3 drive $panzer3path 150 100 256
 	$panzer3 waittill drive
 	$panzer3 stop 
@@ -618,7 +649,7 @@ panzer4:
 	$player playsound dfr_call_ap4362
 //"Panzer dead ahead"
 	$panzer4 thread global/vehicles_thinkers.scr::enemy_tank_think2 0 empty_panzer_winter
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	$panzer4 drive $panzer4path 150 100 256
 	$panzer4 waittill drive
 	$panzer4 stop 
@@ -629,11 +660,14 @@ end
 panzer5:
 //-------------------------------------------------------------------
 	//dprintln "STARTING panzer TANK5"
-	$player playsound dfr_call_ap4362
+	
+	//$player playsound dfr_call_ap4362 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4362
+	
 //"Panzer dead ahead"
 	wait 3
 	$panzer5 thread global/vehicles_thinkers.scr::enemy_tank_think2 0 empty_panzer_winter
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	$panzer5 drive $panzer5path 50 50 256
 	$panzer5 waittill drive
 	$panzer5 stop 
@@ -644,10 +678,13 @@ end
 panzer6:
 //-------------------------------------------------------------------
 	//dprintln "STARTING panzer TANK6"
-	$player playsound dfr_call_ap4304
+	
+	//$player playsound dfr_call_ap4304 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4304
+	
 //"Enemy Spotted!"
 	$panzer6 thread global/vehicles_thinkers.scr::enemy_tank_think2 0 empty_panzer_winter
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa
 	$panzer6 drive $panzer6path 50 50 256
 	$panzer6 waittill drive
 	$panzer6 stop
@@ -667,7 +704,8 @@ end
 //-------------------------------------------------------------------
 panzerwerfercall:
 //-------------------------------------------------------------------
-	$player playsound dfr_call_ap4310
+	//$player playsound dfr_call_ap4310 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4310
 //"They're on the right!"
 
 end
@@ -677,10 +715,13 @@ end
 panzer7:
 //-------------------------------------------------------------------
 	//dprintln "STARTING panzer TANK7"
-	$player playsound dfr_call_ap4309
+	
+	//$player playsound dfr_call_ap4309 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4309
+	
 //"Enemy Spotted!"
 	$panzer7 thread global/vehicles_thinkers.scr::enemy_tank_think2 0 empty_panzer_winter
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	$panzer7 drive $panzer7path 50 50 256
 	$panzer7 waittill drive
 	$panzer7 stop
@@ -706,7 +747,9 @@ triggercamera:
 	self waittill trigger
 	//dprintln "camera trigger"
 	//waitthread s1jeep_yaw
-	$player playsound halftrack_wobble1
+	
+	//$player playsound halftrack_wobble1 //MiaCosa
+	exec coop_mod/replace.scr::playsound halftrack_wobble1
 	waitthread gags/t2l2_camera.scr::t2l2_camera
 	$s1_jeep1_turret0 psetviewangles (0 0 0)
 	waitthread s1jeep_yaw
@@ -826,7 +869,8 @@ truckhealthcheck:
 		//dprintln "waiting for damage"
 		waitframe
 	}
-	$player playsound dfr_T2L2_ad4403
+	//$player playsound dfr_T2L2_ad4403 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_T2L2_ad4403
 	//dprintln "SAY MY NAME!!!!"
 
 
@@ -877,7 +921,9 @@ PLAYER_JEEP_Drive:
 	
 //we's about to have ourselves an accident... 
 	
-	$player playsound halftrack_bounce03
+	//$player playsound halftrack_bounce03 //MiaCosa
+	exec coop_mod/replace.scr::playsound halftrack_bounce03
+	
 	self drive $halfdownhill 
 	self modifydrive 900 700 256
 	self waittill drive
@@ -906,7 +952,7 @@ triggerexplode:
 //-------------------------------------------------------------------
 	self waittill trigger
 	//dprintln "********triggerexplode got triggered"
-	if (parm.other == $player)
+	if (parm.other == $player) //MiaCosa @chrissstrahl
 	{
 		if (self.target != NIL)
 		{
@@ -932,7 +978,8 @@ check_truck_death:
 	radiusdamage local.offset 200 200
 	iprintln "The Supply Truck has been Destroyed - Mission Failed."
 	wait 3
-	missionfailed
+	//missionfailed //MiaCosa
+	exec coop_mod/replace.scr::missionfailed
 
 end
 //-------------------------------------------------------------------
