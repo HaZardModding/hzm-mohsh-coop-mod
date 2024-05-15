@@ -19,7 +19,7 @@ level waittill prespawn
 	level.enemytankspeed = 200
 	level.halftrakspeed = 300
 	level.lookahead = 256
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	level.flyplane = 1
 	level.aipronechance = 0
 	
@@ -33,22 +33,28 @@ level waittill prespawn
 	$playertank vehiclespeed level.slowspeed
 	level.currently_fast = 0
 
-	$player physics_off
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
 	//$player stufftext "ui_hud 0"
 	drawhud 0
 	//*** fade out
 	fadeout .001 0 0 0 1
 //	drawhud 2
 
-	$player takeall
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
 
 level waittill spawn
 
 	$world farclipoverride 5000
 	
-	$player takeall
-	$player holster
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
+	
+	//$player holster //MiaCosa
+	exec coop_mod/replace.scr::holster
 	$new_fire anim stop
 
 	thread global/friendly.scr::friendlygen
@@ -57,7 +63,8 @@ level waittill spawn
 	exec gags/t3l2_german_stickybomber.scr
 
 	setcvar g_mission 3
-	$player fullheal
+	//$player fullheal //MiaCosa
+	exec coop_mod/replace.scr::fullheal
 
 	thread sky_smoke
 	$rubblesmoke anim start
@@ -133,11 +140,16 @@ level waittill spawn
 	wait 0.5
 	fadein 3.5 0 0 0 1
 	wait 1.0
-	$player physics_on
-	$player stufftext "tmstop; tmstartloop sound/music/mus_Schmerzen_01a.mp3"
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
+	
+	$player stufftext "tmstop; tmstartloop sound/music/mus_Schmerzen_01a.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstartloop "sound/music/mus_Schmerzen_01a.mp3"
+	
 	drawhud 2
+	
 
-	local.usekey = getboundkey1 "+attacksecondary"
+	local.usekey = getboundkey1 "+attacksecondary" // MiaCosa @chrissstrahl
 	local.msg = (loc_convert_string "Press ") + local.usekey + (loc_convert_string " to control DTM machine gun.")
 	thread gags/t1l1_barn_crash.scr::throbtext local.msg 7
 
@@ -159,7 +171,9 @@ end
 endleveltrigger:
 //---------------------------------------------------------------------------------------------------------
 
-	$player holster
+	//$player holster //MiaCosa
+	exec coop_mod/replace.scr::holster
+	
 	waitexec global/award_medal.scr 3
 	setcvar "g_mission" "3"
 	missiontransition briefing/briefingd1 1	// 1 means skip fade...
@@ -728,12 +742,16 @@ truckpush local.side:
 		if(local.side == "left")
 		{
 			$truck followpath $truckrotateleft
-			$player playsound king_vehicle_crash
+			
+			//player playsound king_vehicle_crash //MiaCosa
+			exec coop_mod/replace.scr::playsound king_vehicle_crash
 		}
 		if(local.side == "right")
 		{
 			$truck followpath $truckrotateright
-			$player playsound king_vehicle_crash
+			
+			//$player playsound king_vehicle_crash //MiaCosa
+			exec coop_mod/replace.scr::playsound king_vehicle_crash
 		}
 		$truck waitmove
 	}
@@ -775,7 +793,7 @@ pole_fall:
 	local.ent playsound lightpole_fall_start
 	local.ent notsolid
 
-	local.angles = (vector_toangles ($player.origin - self.origin))
+	local.angles = (vector_toangles ($player.origin - self.origin)) //MiaCosa @chrissstrahl
 	local.ent.angles = (0 (local.angles[1] + 90) 0)
 
 	self remove
@@ -816,7 +834,7 @@ tree_fall:
 	local.ent playsound tree_fall_start
 	local.ent notsolid
 
-	local.angles = (vector_toangles ($player.origin - self.origin))
+	local.angles = (vector_toangles ($player.origin - self.origin)) //MiaCosa @chrissstrahl
 	local.ent.angles = (0 (local.angles[1] + 90) 0)
 
 	self remove
@@ -1019,7 +1037,7 @@ bridgecollapsetrigger:
 // modified exploder trigger for bridge collapse
 //---------------------------------------------------------------------------------------------------------
 
-	if ( parm.owner == $player && level.bridge_ready==1)
+	if ( parm.owner == $player && level.bridge_ready==1) //MiaCosa @chrissstrahl
 	{
 		local.set = self.set
 		self remove
@@ -1295,13 +1313,14 @@ captainmonroe_say1:
 // If you’re reading me, we need you to destroy the far bridge.
 // Repeat.  Destroy the far bridge." 
 waitthread global/items.scr::add_item "radio" nomessage
-$player playsound dfr_T3L2_AC4501 wait
+
+$player playsound dfr_T3L2_AC4501 wait //MiaCosa @chrissstrahl
 $player waittill sounddone
 
 // "There’s a Panzer division trying to flank our position, and the only way
 // we can hold them back is to drop that span into the river.  Out." 
 
-$player playsound dfr_T3L2_AC4502 wait
+$player playsound dfr_T3L2_AC4502 wait //MiaCosa @chrissstrahl
 $player waittill sounddone
 waitthread global/items.scr::remove_item "radio" nomessage
 	thread modifyobjective1
@@ -1314,18 +1333,18 @@ captainmonroe_say3:
 // "Sergeant Barnes, listen up." 
 
 waitthread global/items.scr::add_item "radio" nomessage
-$player playsound dfr_T3L2_AC4503 wait
+$player playsound dfr_T3L2_AC4503 wait //MiaCosa @chrissstrahl
 $player waittill sounddone
 
 // "Those tanks are sitting ducks from the air, but you must
 // engage the enemy and hold that line until our bombers reach your position." 
 
-$player playsound dfr_T3L2_AC4504 wait
+$player playsound dfr_T3L2_AC4504 wait//MiaCosa @chrissstrahl
 $player waittill sounddone
 
 // "ETA is two minutes.  Give 'em hell son. Out." 
 
-$player playsound dfr_T3L2_AC4505 wait
+$player playsound dfr_T3L2_AC4505 wait//MiaCosa @chrissstrahl
 $player waittill sounddone
 waitthread global/items.scr::remove_item "radio" nomessage
 end 
@@ -1336,12 +1355,12 @@ captainmonroe_say7:
 //---------------------------------------------------------------------------------------------------------
 
 // "Solid in the trenches, Barnes. The CP is anxiously awaiting for those documents." 
-$player playsound dfr_T3L2_AC4506 wait
+$player playsound dfr_T3L2_AC4506 wait//MiaCosa @chrissstrahl
 $player waittill sounddone
 // "Get back here ASAP.  Godspeed, Sergeant. Over and Out." 
 
 waitthread global/items.scr::add_item "radio" nomessage
-$player playsound dfr_T3L2_AC4507 wait
+$player playsound dfr_T3L2_AC4507 wait//MiaCosa @chrissstrahl
 $player waittill sounddone
 waitthread global/items.scr::remove_item "radio" nomessage
 end
@@ -1353,8 +1372,10 @@ endgamecamera:
 	drawhud 0
 
 	//MAC 9/08/02 - Must call this to stop looping music, or music at end mission screen will not play.
-	$player stufftext "tmstop"
 	
+	//$player stufftext "tmstop" //MiaCosa
+	exec coop_mod/replace.scr::tmstop
+		
 	forcemusic aux2 aux2
 	cuecamera $watch_camera	
 	$watch_camera watch $playertank 2
@@ -1491,7 +1512,9 @@ health_pickup_2:
 		break;
 	}
 
-	$player playsound tank_health
+	//$player playsound tank_health //MiaCosa
+	exec coop_mod/replace.scr::playsound tank_health
+	
 	$health_pickup_2 remove
 	dprintln "(after)T34 HEALTH=" $playertank.health
 
@@ -1524,7 +1547,9 @@ health_pickup_3:
 		break;
 	}
 
-	$player playsound tank_health
+	//$player playsound tank_health //MiaCosa
+	exec coop_mod/replace.scr::playsound tank_health
+	
 	$health_pickup_3 remove
 	dprintln "(after)T34 HEALTH=" $playertank.health
 
@@ -1540,7 +1565,9 @@ health_pickup_4:
 	$playertank.health = 5000
 	$health_pickup_4 remove
 	dprintln "(after)T34 HEALTH=" $playertank.health
-	$player playsound tank_health
+	
+	//$player playsound tank_health //MiaCosa
+	exec coop_mod/replace.scr::playsoundtank_health
 
 end
 
