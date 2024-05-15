@@ -51,16 +51,28 @@ level waittill spawn
 //	$removabletrigger solid
 	$world farplane_cull 2
 
-	$player takeall
-	$player item items/binoculars.tik
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
-	$player item weapons/Webley_Revolver.tik 
-	$player item weapons/enfield.tik 
-	$player item weapons/sten.tik 
-	$player item weapons/mills_grenade.tik   
-	$player item weapons/M18_smoke_grenade.tik  
+	//$player item items/binoculars.tik //MiaCosa
+	exec coop_mod/replace.scr::item items/binoculars.tik
 
-	$player ammo pistol 32
+	//$player item weapons/Webley_Revolver.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Webley_Revolver.tik 
+	
+	//$player item weapons/enfield.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/enfield.tik 
+	
+	//$player item weapons/sten.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/sten.tik 
+	
+	//$player item weapons/mills_grenade.tik //MiaCosa  
+	exec coop_mod/replace.scr::item weapons/mills_grenade.tik
+	
+	//$player item weapons/M18_smoke_grenade.tik //MiaCosa  
+	exec coop_mod/replace.scr::item weapons/M18_smoke_grenade.tik  
+
+	$player ammo pistol 32 //MiaCosa @chrissstrahl
 	$player ammo smg 128
 	$player ammo rifle 49
 	$player ammo smokegrenade 3
@@ -127,8 +139,9 @@ level waittill spawn
 
 	thread stayonpathguys
 
-	$player stufftext "tmstop; tmstart sound/music/mus_t1l3_playerstart.mp3"
-
+	//$player stufftext "tmstop; tmstart sound/music/mus_t1l3_playerstart.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/mus_t1l3_playerstart.mp3"
+	
 	$wallcharge triggered 1
 	$wallcharge thread wallchargedialog
 
@@ -138,7 +151,8 @@ level waittill spawn
 //	$deadtruck.collisionent = $deadtruck1.target
 	$truck_1.collisionent = $truck_1.target
 
-	$player fullheal
+	//$player fullheal //MiaCosa
+	exec coop_mod/replace.scr::fullheal
 
 	wait 2.5
 	fadein 3.5 0 0 0 1
@@ -148,7 +162,7 @@ level waittill spawn
 
 	releaseplayer
 
-	$player useweaponclass smg
+	$player useweaponclass smg //MiaCosa @chrissstrahl
 
 end
 
@@ -276,7 +290,7 @@ boatsounds:
 
 	if ( level.levelsounds != level.boatsounds )
 	{
-		if ( (self.link == NIL) || !(self.link istouching $player) )
+		if ( (self.link == NIL) || !(self.link istouching $player) ) //MiaCosa @chrissstrahl exec coop_mod/replace.scr::istouching
 		{
 			forcemusic aux1 aux1
 			level.levelsounds = level.boatsounds
@@ -291,7 +305,7 @@ docksounds:
 
 	if ( level.levelsounds != level.docksounds )
 	{
-		if ( (self.link == NIL) || !(self.link istouching $player) )
+		if ( (self.link == NIL) || !(self.link istouching $player) ) //MiaCosa @chrissstrahl exec coop_mod/replace.scr::istouching
 		{
 			forcemusic aux3 aux3
 			level.levelsounds = level.docksounds
@@ -306,7 +320,7 @@ exteriorsounds:
 
 	if ( level.levelsounds != level.exteriorsounds )
 	{
-		if ( (self.link == NIL) || !(self.link istouching $player) )
+		if ( (self.link == NIL) || !(self.link istouching $player) ) //MiaCosa @chrissstrahl exec coop_mod/replace.scr::istouching
 		{
 			forcemusic aux5 aux5
 			level.levelsounds = level.exteriorsounds
@@ -321,7 +335,7 @@ interiorsounds:
 
 	if ( level.levelsounds != level.interiorsounds )
 	{
-		if ( (self.link == NIL) || !(self.link istouching $player) )
+		if ( (self.link == NIL) || !(self.link istouching $player) ) //MiaCosa @chrissstrahl exec coop_mod/replace.scr::istouching
 		{
 			forcemusic aux6 aux6
 			level.levelsounds = level.interiorsounds
@@ -398,7 +412,7 @@ wallchargedialog:
 //		local.a = vector_length(self.origin - $player.origin)
 //		local.b = vector_length($player.origin - level.captain.origin)
 //		dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ wallchargedialog, chargetoplayer is " local.a ", playertocaptain is " local.b
-		if ( (vector_length(self.origin - $player.origin) < 300.0) && (vector_length($player.origin - level.captain.origin) < 300.0) )
+		if ( (vector_length(self.origin - $player.origin) < 300.0) && (vector_length($player.origin - level.captain.origin) < 300.0) ) //MiaCosa @chrissstrahl
 		{
 			if ( level.objective4 == 0 )
 			{
@@ -547,8 +561,9 @@ objective1:
 	waitthread global/objectives.scr::add_objectives 1 3
 	clear_objective_pos
 
-	$player stufftext "tmstop; tmstart sound/music/mus_t1l3_DeadOfficer.mp3"
-
+	//$player stufftext "tmstop; tmstart sound/music/mus_t1l3_DeadOfficer.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/mus_t1l3_DeadOfficer.mp3"
+	
 	while ( level.captrunning == 0 )
 	{
 		wait 0.5
@@ -605,7 +620,9 @@ objective4:
 
 	$objective5ontrig waittill trigger
 	wait .25
-	$player playsound explosives_pu
+	
+	//$player playsound explosives_pu //MiaCosa
+	exec coop_mod/replace.scr::playsound explosives_pu
 
 	for (local.demochargeleft = $demochargepickup.size; local.demochargeleft > 0; local.demochargeleft--)
 	{
