@@ -16,7 +16,7 @@ level waittill prespawn
 
 	level.enemytruckspeed = 175
 	level.lookahead = 256
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	level.aipronechance = 0
 	
 	level.fastspeed = 300
@@ -29,7 +29,7 @@ level waittill prespawn
 	setcvar "cg_rain_density" (level.raindensity)
 
 	// lock down player
-	level.playerangles = $player.angles
+	level.playerangles = $player.angles //MiaCosa @chrissstrahl
 	level.playerorigin = $player.origin
 	//*** fade out
 	fadeout .001 0 0 0 1
@@ -40,16 +40,28 @@ level waittill prespawn
 level waittill spawn
 
 
-	$player takeall
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
-	$player item weapons/Nagant_revolver.tik 
-	$player item weapons/Mosin_Nagant_Rifle.tik 
-	$player item weapons/ppsh_smg.tik 
-	$player item weapons/svt_rifle.tik 
-	$player item weapons/Russian_F1_grenade.tik
-	$player item weapons/RDG-1_Smoke_grenade.tik
+	//$player item weapons/Nagant_revolver.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Nagant_revolver.tik 
+	
+	//$player item weapons/Mosin_Nagant_Rifle.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Mosin_Nagant_Rifle.tik 
+	
+	//$player item weapons/ppsh_smg.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/ppsh_smg.tik 
+	
+	//$player item weapons/svt_rifle.tik //MiaCosa 
+	exec coop_mod/replace.scr::item weapons/svt_rifle.tik 
+	
+	//$player item weapons/Russian_F1_grenade.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Russian_F1_grenade.tik
+	
+	//$player item weapons/RDG-1_Smoke_grenade.tik //
+	exec coop_mod/replace.scr::item weapons/RDG-1_Smoke_grenade.tik
 
-	$player ammo pistol 28
+	$player ammo pistol 28 //MiaCosa @chrissstrahl
 	$player ammo smg 225
 	$player ammo rifle 80
 	$player ammo smokegrenade 3
@@ -57,7 +69,9 @@ level waittill spawn
 
 
 	setcvar g_mission 3
-	$player fullheal
+	
+	//$player fullheal //MiaCosa
+	exec coop_mod/replace.scr::fullheal
 
 //	exec gags/t3l1_fourrussians.scr
 //	exec global/pocketlight.scr::PocketLightsInit
@@ -282,11 +296,13 @@ intro_fade_in:
 
  	wait 0.75
 
-	$player.viewangles = "0 0 0"
+	$player.viewangles = "0 0 0" //MiaCosa @chrissstrahl
 
 
-	$player physics_off
-	$player.angles = level.playerangles
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
+	$player.angles = level.playerangles //MiaCosa @chrissstrahl
 	$player.origin = level.playerorigin
 
 	showmenu t3l1_1
@@ -313,7 +329,7 @@ intro_fade_in:
 
 	wait 1
 	releaseplayer
-	$player.viewangles = "0 -90 0"
+	$player.viewangles = "0 -90 0" //MiaCosa @chrissstrahl
 
 
 
@@ -616,7 +632,10 @@ objective7:
 	waitthread global/objectives.scr::add_objectives 7 3
 
 	// transition to next level
-	$player takeall
+	
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
+	
 	wait 0.1
 	exec global/missioncomplete.scr t3l2 1
 
@@ -653,7 +672,7 @@ pole_fall:
 	local.ent playsound lightpole_fall_start
 	local.ent notsolid
 
-	local.angles = (vector_toangles ($player.origin - self.origin))
+	local.angles = (vector_toangles ($player.origin - self.origin)) //MiaCosa @chrissstrahl
 	local.ent.angles = (0 (local.angles[1] + 90) 0)
 
 	self remove
@@ -848,7 +867,9 @@ end
 panzer4:
 //-------------------------------------------------------------------
 
-	$player playsound plane1
+	//$player playsound plane1 //MiaCosa
+	exec coop_mod/replace.scr::playsound plane1
+	
 	thread global/ai.scr::spawn 1007
 	if (isAlive $panzer_tank4)
 	{
@@ -962,7 +983,9 @@ end
 //-------------------------------------------------------------------
 document1:
 //-------------------------------------------------------------------
-	$player playsound pickup_papers
+	//$player playsound pickup_papers //MiaCosa
+	exec coop_mod/replace.scr::playsound pickup_papers
+	
 	$document1 remove
 //	dprintln "Instructions Located."
 end
@@ -974,7 +997,10 @@ document2:
 	if ( level.safelocated == 1 )
 	{
 		level.combination = 1
-		$player playsound pickup_papers
+		
+		//$player playsound pickup_papers //MiaCosa
+		exec coop_mod/replace.scr::playsound pickup_papers
+		
 		$document2 remove
 		//dprintln "Located Safe Combination."
 	}
@@ -987,8 +1013,12 @@ musicchange:
 
 	$player_flak88 show
 	$player_flak88_turret0 show
-	$player stufftext "tmstop"
-	$player stufftext "tmstartloop sound/music/mus_11a_surprise.mp3"
+	//$player stufftext "tmstop" //MiaCosa
+	exec coop_mod/replace.scr::tmstop
+	
+	//$player stufftext "tmstartloop sound/music/mus_11a_surprise.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstartloop "sound/music/mus_11a_surprise.mp3"
+	
 // autosave position 3
 exec global/autosave.scr 3
 end
@@ -1074,7 +1104,10 @@ ai_spawn_1002:
 //-------------------------------------------------------------------
 
 thread global/ai.scr::spawnset 1001 set1001
-$player playsound plane1
+
+//$player playsound plane1 //MiaCosa
+exec coop_mod/replace.scr::playsound plane1
+
 $player_flak88_1 show
 $player_flak88_1_turret0 show
 end
@@ -1118,7 +1151,8 @@ end
 dostuff:
 //-------------------------------------------------------------------
 
-$player playsound plane1
+//$player playsound plane1 //MiaCosa
+exec coop_mod/replace.scr::playsound plane1
 thread global/ai.scr::spawnset 80 set80
 end
 
@@ -1294,17 +1328,22 @@ sticky_pickup:
 	if ( self.set == 1 )
 	{
 		$sticky_reload_1 remove
-		$player playsound stickybomb_pickup
+		//$player playsound stickybomb_pickup //MiaCosa
+		exec coop_mod/replace.scr::playsound stickybomb_pickup
 	}
 	else if ( self.set == 2 )
 	{
 		$sticky_reload_2 remove
-		$player playsound stickybomb_pickup
+		
+		//$player playsound stickybomb_pickup //MiaCosa
+		exec coop_mod/replace.scr::playsound stickybomb_pickup
 	}
 	else if ( self.set == 3 )
 	{
 		$sticky_reload_3 remove
-		$player playsound stickybomb_pickup
+		
+		//$player playsound stickybomb_pickup //MiaCosa
+		exec coop_mod/replace.scr::playsound stickybomb_pickup
 	}
 
 	local.next = level.stickybombs + 4
