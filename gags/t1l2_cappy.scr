@@ -137,10 +137,9 @@ Briefing:
 	self thread global/LoopAnim.Scr::LoopAnim 12C101_Idle
 
 	//self turnto $player //MiaCosa 
-	exec coop_mod/replace.scr::turnto
-	
 	//self lookat $player //MiaCosa
-	exec coop_mod/replace.scr::lookat
+	self exec coop_mod/replace.scr::turntolookat 1
+	
 
 	fadein 2.5 0 0 0 1
 
@@ -872,7 +871,7 @@ TrainDialog:
 	self.distance = 275
 
 	//self runto $player //MiaCosa
-	exec coop_mod/replace.scr::runtoClosest
+	self exec coop_mod/replace.scr::runtoClosest
 	self waittill movedone
 
 //	self.movedoneradius = 6
@@ -992,7 +991,7 @@ DestroyFlak2:
 	level.longtermfriend thread gags/t1l2_friend.scr::GoWaitForJump2
 
 	//self waitthread WaitForPlayer //MiaCosa
-	waitthread coop_mod/replace.scr::waitForPlayer
+	self waitthread coop_mod/replace.scr::waitForPlayer
 
 	// Now, wait for the player to trigger us from here...
 	self thread PlayerUpstairs
@@ -1011,13 +1010,13 @@ PlayerUpstairs:
 	self waitthread CappyRunTo $CappyPlayerWait
 
 	//self lookat $player //MiaCosa
-	exec coop_mod/replace.scr::lookat
+	self exec coop_mod/replace.scr::lookat
 	
 	//self turnto $player //MiaCosa
-	exec coop_mod/replace.scr::turnto
+	self exec coop_mod/replace.scr::turnto
 
 	//self waitthread WaitForPlayer //MiaCosa
-	waitthread coop_mod/replace.scr::waitForPlayer
+	self waitthread coop_mod/replace.scr::waitForPlayer
 	
 	$FlakGerman4 takedamage
 	$FlakGerman5 takedamage
