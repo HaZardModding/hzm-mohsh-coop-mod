@@ -743,7 +743,7 @@ truckpush local.side:
 		{
 			$truck followpath $truckrotateleft
 			
-			//player playsound king_vehicle_crash //MiaCosa
+			//$player playsound king_vehicle_crash //MiaCosa
 			exec coop_mod/replace.scr::playsound king_vehicle_crash
 		}
 		if(local.side == "right")
