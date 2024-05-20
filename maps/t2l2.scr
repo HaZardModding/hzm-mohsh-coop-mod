@@ -631,7 +631,9 @@ end
 panzer3:
 //-------------------------------------------------------------------
 	//dprintln "STARTING panzer TANK3"
-	$player playsound dfr_call_ap4316
+	//$player playsound dfr_call_ap4316 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_call_ap4316
+	
 //"On your six!"
 	$panzer3.start_health = 500
 	$panzer3 thread global/vehicles_thinkers.scr::enemy_tank_think2 0 empty_panzer_winter
