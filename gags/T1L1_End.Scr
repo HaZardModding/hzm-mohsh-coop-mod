@@ -490,7 +490,7 @@ CappyWaitForPlayer:
 			level.brit2 physics_on
 
 			//self turnto $player //MiaCosa
-			exec coop_mod/replace.scr::turnto
+			self exec coop_mod/replace.scr::turnto //MiaCosa - self was missing
 			local.dist = vector_length($player.origin - self.origin) //MiaCosa @Chrissstrahl
 			if (local.dist < 256)	
 				local.done = 1
