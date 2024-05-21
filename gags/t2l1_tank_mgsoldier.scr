@@ -17,7 +17,10 @@
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//--------------------------------------------------------------------------------
 main:
+//--------------------------------------------------------------------------------
 end
 
 
@@ -39,8 +42,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-mgsoldier_spawn:
 
+//--------------------------------------------------------------------------------
+mgsoldier_spawn:
+//--------------------------------------------------------------------------------
 ////	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~ mgsoldier_spawn"
 
 	local.turret = self queryturretslotentity 0
@@ -108,8 +113,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-soldier_tank_attack local.turret:
 
+//--------------------------------------------------------------------------------
+soldier_tank_attack local.turret:
+//--------------------------------------------------------------------------------
 	local.lastaction = 0
 	local.attackcount = 0
 
@@ -134,13 +141,17 @@ soldier_tank_attack local.turret:
 			// attack 60%
 			local.lastaction = 1
 			local.attackcount++
-			self turnto $player
+			
+			//self turnto $player //MiaCosa
+			self exec coop_mod/replace.scr::turnto
 
 			// <TWEAK> select random aim and fire times
 			local.aimtime = 0.50 + (randomint(50) / 100)
 			local.firetime = 2 + (randomint(200) / 100)
 
-			self aimat $player
+			//self aimat $player //MiaCosa
+			self exec coop_mod/replace.scr::aimat //MiaCosa
+			
 			wait local.aimtime
 			level.tanksoldierusemg = 1
 			wait local.firetime
@@ -192,8 +203,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-soldier_tank_attack_firemg:
 
+//--------------------------------------------------------------------------------
+soldier_tank_attack_firemg:
+//--------------------------------------------------------------------------------
 	local.health = self.health
 
 	while ( isAlive self )

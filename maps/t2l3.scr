@@ -168,8 +168,9 @@ exec gags/t2l3_soldiers_talking.scr
 	$dude remove
 
 end
-
+//-------------------------------------------------------------------
 playertreethink:
+//-------------------------------------------------------------------
 	self nodamage
 	while (level.wave != 3)
 	{
@@ -181,8 +182,9 @@ playertreethink:
 	trigger $playertree1trigger
 
 end
-
+//-------------------------------------------------------------------
 triggersarg:
+//-------------------------------------------------------------------
 	thread sargetimerboost
 	if (level.barragerunning == 1)
 	{
@@ -214,8 +216,9 @@ triggersarg:
 	
 	exec global/autosave.scr 2	
 end
-
+//-------------------------------------------------------------------
 sargetimerboost:
+//-------------------------------------------------------------------
 	local.dist = 9999
 	while ( local.dist > 256 )
 	{
@@ -224,17 +227,19 @@ sargetimerboost:
 	}
 	level.captainlivetime += level.sargetimerboost
 end
-
+//-------------------------------------------------------------------
 triggermedic:
+//-------------------------------------------------------------------
 	
 end
-
+//-------------------------------------------------------------------
 removethemg:
+//-------------------------------------------------------------------
 	wait 7
 end
-
+//-------------------------------------------------------------------
 triggercaptainike:
-
+//-------------------------------------------------------------------
 	thread triggermaddash
 	waitthread gags/t2l3_captainruntoandtalk.scr::t2l3_triggercaptainruntalk
 	thread kommanderstartattack
@@ -261,8 +266,9 @@ triggercaptainike:
 	level.ambientbarrage = 0
 	
 end
-
+//-------------------------------------------------------------------
 captainike_wakeuptheplatoon:
+//-------------------------------------------------------------------
 	$mortar_turret0 show
 	$mortar_turret0 solid
 	
@@ -318,13 +324,15 @@ captainike_wakeuptheplatoon:
 	
 	$lamb exec global/crouch.scr
 end
-
+//-------------------------------------------------------------------
 triggermaddash:
+//-------------------------------------------------------------------
 	wait 10
 	thread gags/t2l3_soldiers_trench_dash.scr::cue_trench_dash
 end
-
+//-------------------------------------------------------------------
 begin:
+//-------------------------------------------------------------------
 //--------------------------------------
 // Fade-in
 //--------------------------------------
@@ -394,8 +402,9 @@ $player.viewangles = "0 90 0"
 end
 
 // First round of explosions.
+//-------------------------------------------------------------------
 artillery_barrage_1:
-
+//-------------------------------------------------------------------
 	//
 	// artillery fallout snow
 	//
@@ -445,27 +454,31 @@ artillery_barrage_1:
 
 	exec gags/t2l3_soldiers_trench_dash.scr::init	
 end
-
-fstart:    
+//-------------------------------------------------------------------
+fstart: 
+//-------------------------------------------------------------------   
 	self health 550
 	self.mins = 0
 	self.maxs = 50
 	self thread global/friendly.scr::friendlythink
 end
-
+//-------------------------------------------------------------------
 obj1:
+//-------------------------------------------------------------------
 	exec global/obj.scr 1 complete "Hold against first wave." 
 	exec global/obj.scr 2 current  "Hold against second wave." 
 	thread global/friendly.scr::chain_off 1
 	thread global/friendly.scr::chain_on 2
 	$friendly mindist 128
 end
-
+//-------------------------------------------------------------------
 threatbias:
+//-------------------------------------------------------------------
 	$player threatbias 0
 end
-
+//-------------------------------------------------------------------
 endthedemo:
+//-------------------------------------------------------------------
 	// Play the end of the wave ambience soundtrack
 	forcemusic aux5 aux5 
 	
@@ -475,15 +488,17 @@ endthedemo:
 	// fadeout 3.5 0 0 0 1
 	exec global/missioncomplete.scr t2l4 1
 end
-
+//-------------------------------------------------------------------
 deathcheck:
+//-------------------------------------------------------------------
 end
 
 //
 // Map Constraints
 //
-
+//-------------------------------------------------------------------
 initthemap:
+//-------------------------------------------------------------------
 	$captain_health notsolid
 	$captain_health hide
 	level.barrage_dialogue_time = 0
@@ -550,9 +565,9 @@ end
 //
 // Panzer
 //
-
+//-------------------------------------------------------------------
 panzer_shoot local.target:
-
+//-------------------------------------------------------------------
 		self.gun = self QueryTurretSlotEntity 0
 		self.gun2 = self QueryTurretSlotEntity 1
 			
@@ -570,9 +585,9 @@ panzer_shoot local.target:
 		self.attack_thread = parm.previousthread
 	
 end
-
+//-------------------------------------------------------------------
 panzertankdrive:
-
+//-------------------------------------------------------------------
 // dprintln ( "panzer start moving")
 	
 	$panzer.type = 0
@@ -595,17 +610,19 @@ panzertankdrive:
 	thread panzerthink
 	thread panzer_target_preference
 end
-
+//-------------------------------------------------------------------
 panzertankdrive2:
+//-------------------------------------------------------------------
 	$panzer thread drive_path $panzertank_path2 level.enemytankspeed
 	thread panzerthink
 end
-
+//-------------------------------------------------------------------
 tank_pain local.gun:
+//-------------------------------------------------------------------
 end
-
+//-------------------------------------------------------------------
 panzerthink:
-
+//-------------------------------------------------------------------
 	if !(isalive $panzer)
 	{
 		if ( parm.other.team == german )
@@ -615,7 +632,7 @@ panzerthink:
 
 		//	println ("run to s5!!!!!")
 		}
-		end
+end
 	}
 	else if ($panzer.health < $panzer.start_health)
 	{
@@ -627,8 +644,9 @@ panzerthink:
 	
 end
 
-
+//-------------------------------------------------------------------
 drive_path local.path local.speed local.remove:
+//-------------------------------------------------------------------
 	self.driving = 1
 	self drive local.path local.speed 30 50 level.lookahead
 	self waittill drive
@@ -641,20 +659,22 @@ drive_path local.path local.speed local.remove:
 			self remove
 	}
 end
-
+//-------------------------------------------------------------------
 panzercrossedtheline:
+//-------------------------------------------------------------------
 	level.axiswins = 1
 end
-
+//-------------------------------------------------------------------
 bazookaguysspawn:
+//-------------------------------------------------------------------
 	if ((level.skill == "0") || (level.skill == "1"))
 		thread bazookaguy1thread
 	if (level.skill == "0")
 		thread bazookaguy2thread
 end
-
+//-------------------------------------------------------------------
 bazookaguy1thread:
-	
+//-------------------------------------------------------------------	
 		// $panzer2activateguys waittill trigger
 		
 		local.ent = spawn models/human/1st-ranger_private.tik "$targetname" "friendly" "type_attack" "cover"			
@@ -703,9 +723,9 @@ bazookaguy1thread:
 
 		level.bazooka1guy = local.ent
 end
-
+//-------------------------------------------------------------------
 bazookaguy2thread:
-		
+//-------------------------------------------------------------------		
 		// $panzer2activateguys waittill trigger
 		
 		local.ent2 = spawn models/human/1st-ranger_private.tik "$targetname" "friendly" "type_attack" "cover"			
@@ -751,9 +771,9 @@ bazookaguy2thread:
 		
 		level.bazooka2guy = local.ent2
 end
-
+//-------------------------------------------------------------------
 panzer3_target_preference:
-	
+//-------------------------------------------------------------------	
 	$panzer3.notattacking = 1
 	level.playertanktarget = 0
 
@@ -793,9 +813,9 @@ panzer3_target_preference:
 	}
 		
 end
-
+//-------------------------------------------------------------------
 panzer_target_preference:
-
+//-------------------------------------------------------------------
 	$panzer.notattacking = 1
 	level.playertanktarget = 0
 	
@@ -823,9 +843,9 @@ panzer_target_preference:
 	}
 
 end
-
+//-------------------------------------------------------------------
 panzer2_target_preference:
-
+//-------------------------------------------------------------------
 	$panzer2.notattacking = 1
 	$panzer2tree takedamage
 	level.playertanktarget = 0
@@ -863,8 +883,9 @@ panzer2_target_preference:
 
 end
 
-//
+//-------------------------------------------------------------------
 panzer_attack_loop local.gun local.target:    //self is the tank
+//-------------------------------------------------------------------
 	if (isalive self)
 	{
 		local.trace_offset = local.gun.origin + (0 0 48)
@@ -883,15 +904,16 @@ panzer_attack_loop local.gun local.target:    //self is the tank
 		}
 	}	
 end
-
+//-------------------------------------------------------------------
 panzer_target local.target:
-
+//-------------------------------------------------------------------
 	if(isalive self)
 		self thread panzer_shoot local.target
 
 end
-
+//-------------------------------------------------------------------
 halftrack1isdead:
+//-------------------------------------------------------------------
 	while (isalive $halftrack1)
 		wait 1
 	
@@ -899,8 +921,9 @@ halftrack1isdead:
 	thread global/halftrack.scr::halftrack_killed $halftrack1
 	radiusdamage ( $halftrack1.origin + (0 0 128) ) 500 500 
 end
-
+//-------------------------------------------------------------------
 CheckGuyAndRun:
+//-------------------------------------------------------------------
 	if (isalive self)
 	{
 		local.dist = vector_length (self.origin - $anchor1.origin)
@@ -924,9 +947,9 @@ CheckGuyAndRun:
 		}
 	}
 end
-
+//-------------------------------------------------------------------
 halftrack1victory:
-	
+//-------------------------------------------------------------------	
 	if (isalive $halftrack1)
 	{
 		$halftrack1breakamericans waittill trigger
@@ -956,8 +979,9 @@ halftrack1victory:
 	}
 end
 
-
+//-------------------------------------------------------------------
 wave3_think local.ent local.type local.pathname local.speed local.startmovingdelay:
+//-------------------------------------------------------------------
 
 	level waittill spawn
 
@@ -1024,19 +1048,23 @@ end
 
 
 // TWEEK
+//-------------------------------------------------------------------
 tweekamericanaccuracy:
+//-------------------------------------------------------------------
 	level.americanwave1accuracy = 3
 	level.americanwave2accuracy = 2
 	level.americanwave3accuracy = 1
 end
-
+//-------------------------------------------------------------------
 tweekgermanhealth:
+//-------------------------------------------------------------------
 	level.enemy1health = 55
 	level.enemy2health = 60
 	level.enemy3health = 65
 end
-
+//-------------------------------------------------------------------
 AmericanRunToOtherFlank local.dest:
+//-------------------------------------------------------------------
 	wait 3
 	self health 100
 	self exec global/disable_ai.scr
@@ -1056,8 +1084,9 @@ AmericanRunToOtherFlank local.dest:
 	self.fixedleash = 1
 	self exec global/enable_ai.scr
 end
-
+//-------------------------------------------------------------------
 TwoAmericanGuysRunToLeftFlank:
+//-------------------------------------------------------------------
 // dprintln "TwoAmericanGuysRunToLeftFlank"
 	local.count = 0
 	for (local.i=1;local.i<$friendly.size+1;local.i++)
@@ -1086,9 +1115,9 @@ TwoAmericanGuysRunToLeftFlank:
 		}
 	}
 end
-
+//-------------------------------------------------------------------
 TwoAmericanGuysRunToRightFlank:
-
+//-------------------------------------------------------------------
 // dprintln "TwoAmericanGuysRunToRightFlank"
 
 	local.count = 0
@@ -1122,8 +1151,9 @@ end
 //
 //
 //
+//-------------------------------------------------------------------
 americansinit:
-	
+//-------------------------------------------------------------------	
 	for (local.i=1;local.i<$friendly.size+1;local.i++)
 	{
 		$friendly[local.i].accuracy = level.americanwave1accuracy
@@ -1190,9 +1220,9 @@ americansinit:
 
 	
 end
-
+//-------------------------------------------------------------------
 death_check_american:
-	
+//-------------------------------------------------------------------	
 	if (level.wave == 1)
 	{	
 
@@ -1321,9 +1351,9 @@ end
 //
 // German Kommander
 //
-
+//-------------------------------------------------------------------
 kommanderinit:
-
+//-------------------------------------------------------------------
 	level.initobjectivetwo = 0	
 	level.maxinfantryinwave1 = 15 
 	level.totalinfantrykilledinwave1 = 0
@@ -1413,9 +1443,9 @@ kommanderinit:
 	level.totalinfantrycount = level.group1
 
 end
-
+//-------------------------------------------------------------------
 kommanderinitwave2:
-
+//-------------------------------------------------------------------
 	$panzer rendereffects "-dontdraw"
 	$panzer_turret0 rendereffects "-dontdraw"
 	trigger $trigger9
@@ -1508,8 +1538,9 @@ kommanderinitwave2:
 	waitthread gags/t2l3_captainruntoandtalk.scr::t2l3_executecaptainwave2 
 	
 end
-
+//-------------------------------------------------------------------
 kommanderinitwave3:
+//-------------------------------------------------------------------
 	$bazookaguystrigger triggerable
 	// third wave
 	$panzer2 rendereffects "-dontdraw"
@@ -1664,9 +1695,9 @@ kommanderinitwave3:
 
 end
 
-
+//-------------------------------------------------------------------
 kommanderstartattack:
-
+//-------------------------------------------------------------------
 	for (local.i=1;local.i<$enemy.size+1;local.i++)
 	{
 		$enemy[local.i] rendereffects "-dontdraw"
@@ -1695,8 +1726,9 @@ kommanderstartattack:
 	thread enablegroup1ai
 
 end
- 
+//------------------------------------------------------------------- 
 kommanderstartattack2:
+//-------------------------------------------------------------------
 	// println( "kommander start attack II " )
 
 $artilleryleft turnoff
@@ -1727,9 +1759,9 @@ $artilleryright turnoff
 	wait 4
 	$artilleryleft turnon
 end
-
+//-------------------------------------------------------------------
 kommanderthink:
-
+//-------------------------------------------------------------------
 	if (level.retreat == 0)
     {
 		if (level.axiswins == 1)
@@ -1766,7 +1798,7 @@ kommanderthink:
 			waitframe
 			missionfailed
 			
-			end
+end
 		}
 
 		local.groupcount = 0
@@ -2090,9 +2122,9 @@ wait 0.1
 goto kommanderthink
 
 end
-
+//-------------------------------------------------------------------
 RemoveRetreatEnemy local.dest:
-	
+//-------------------------------------------------------------------	
 	self.movedoneradius = 1024
 	self runto local.dest
 	
@@ -2108,8 +2140,9 @@ end
 //
 // german group1
 //
-
+//-------------------------------------------------------------------
 death_check:
+//-------------------------------------------------------------------
 	// println( "death_check called " )
 	self waittill death
 	self.targetname = ""
@@ -2131,9 +2164,9 @@ death_check:
 		}
 	}
 end
-
+//-------------------------------------------------------------------
 runshoot:
-
+//-------------------------------------------------------------------
 	local.rval = randomint(100)
 
 	if (local.rval > 50)
@@ -2163,9 +2196,9 @@ runshoot:
 	}
 
 end
-
+//-------------------------------------------------------------------
 enablegroup1ai:
-	
+//-------------------------------------------------------------------	
 	local.distance = 1500
 	local.length = 0
 	
@@ -2177,7 +2210,7 @@ enablegroup1ai:
 		if (level.axiswins == 1)
 		{
 			wait 5
-			end
+end
 		}
 		if (level.wave == 1)
 		{
@@ -2532,9 +2565,9 @@ wait 0.1
 goto enablegroup1ai
 	
 end
- 
+//------------------------------------------------------------------- 
 enablegroup5ai:
-
+//-------------------------------------------------------------------
 	local.engageforthislong = 50 // must be less than 90	
 	local.distance = 512
 	local.length = 0
@@ -2544,7 +2577,7 @@ enablegroup5ai:
 		if (level.axiswins == 1)
 		{
 			wait 5
-			end
+end
 		}
 		if (level.wave == 2)
 		{
@@ -2709,9 +2742,9 @@ wait 0.1
 goto enablegroup5ai
 
 end
-
+//-------------------------------------------------------------------
 FleeRemoveGerman local.dest:
-
+//-------------------------------------------------------------------
 	local.dist = 9999
 	while (local.dist > 512)
 	{
@@ -2724,9 +2757,9 @@ FleeRemoveGerman local.dest:
 
 end
 
-
+//-------------------------------------------------------------------
 g1pathstart:
-
+//-------------------------------------------------------------------
 	while (level.group1activatetime > level.time)
 		wait 1
 
@@ -2753,9 +2786,9 @@ dprintln "go go go !"
 
 end
 
-
+//-------------------------------------------------------------------
 g5pathstart:
-
+//-------------------------------------------------------------------
 	while (level.group5activatetime > level.time)
 		wait 1
 
@@ -2780,8 +2813,9 @@ dprintln "go go go !"
 	level.enableassault = 1
 
 end
-
+//-------------------------------------------------------------------
 panzer1pathstart:
+//-------------------------------------------------------------------
 	if (level.panzer1 == 0)
 	{
 		if (level.panzer1activatetime < level.time)
@@ -2818,9 +2852,9 @@ panzer1pathstart:
 		
 	}
 end
-
+//-------------------------------------------------------------------
 g1pathd:
-	
+//-------------------------------------------------------------------	
 	if (level.wave == 1)
 	{
 		for (local.i=1;local.i<$enemy.size+1;local.i++)
@@ -2860,8 +2894,9 @@ g1pathd:
 
 	$trigger5 triggerable	
 end
-
+//-------------------------------------------------------------------
 g5pathd:
+//-------------------------------------------------------------------
 	while (isalive $panzer)
 	{
 		for (local.i=1;local.i<$enemy5.size+1;local.i++)
@@ -2889,7 +2924,9 @@ end
 //
 // group 2
 //
+//-------------------------------------------------------------------
 r1thread:
+//-------------------------------------------------------------------
 	for (local.i=1;local.i<$enemy.size+1;local.i++)
 	{
 		if (isalive $enemy[local.i])
@@ -2905,7 +2942,9 @@ end
 //
 // group 3
 //
+//-------------------------------------------------------------------
 r2thread:
+//-------------------------------------------------------------------
 	for (local.i=1;local.i<$enemy.size+1;local.i++)
 	{
 		if (isalive $enemy[local.i])
@@ -2921,7 +2960,10 @@ end
 //
 // group 4
 //
+//-------------------------------------------------------------------
 r3thread:
+//-------------------------------------------------------------------
+
 	for (local.i=1;local.i<$enemy.size+1;local.i++)
 	{
 		if (isalive $enemy[local.i])
@@ -2938,16 +2980,19 @@ end
 ////////////////////////////
 // barrage_dialogue
 ////////////////////////////
-
+//-------------------------------------------------------------------
 barrage_dialogue_init:
+//-------------------------------------------------------------------
+
 // make sure this matches the projectile generator max time key value pair
 	level.barrage_dialogue_time = level.time + 60
 end
-
+//-------------------------------------------------------------------
 barrage_dialogue:
+//-------------------------------------------------------------------
 
 	if (level.barrage_dialogue_time < level.time)
-		end
+end
 	
 	$player playsound dfr_T2L3_barrage
 
@@ -2960,16 +3005,22 @@ end
 //////////////////////////////
 //	wave dialogue
 //////////////////////////////
+//-------------------------------------------------------------------
 wavedialogueinit:
+//-------------------------------------------------------------------
+
 	level.wave_dialogue_time = level.time + 10
 end
-
+//-------------------------------------------------------------------
 waveleftdialogueinit:
+//-------------------------------------------------------------------
+
 	level.wave_dialogue_time = randomint(15) + 5
 	level.wave_dialogue = 0
 end
-
+//-------------------------------------------------------------------
 waveleftdialogue:
+//-------------------------------------------------------------------
 	
 	//$player playsound dfr_T2L3_AC9003 wait // - "Sereant, get down the line and find a bazooka. Dont let that tank breach our line!"
 	//$player waittill sounddone
@@ -2978,8 +3029,9 @@ waveleftdialogue:
 	// $player waittill sounddone
 
 end
-
+//-------------------------------------------------------------------
 wavedialogue:
+//-------------------------------------------------------------------
 
 	if (level.wave_dialogue_time < level.time)
 	{
@@ -3024,8 +3076,9 @@ end
 // threadkillbrush
 //////////////////////////////
 
-
+//-------------------------------------------------------------------
 takeoutplayer:
+//-------------------------------------------------------------------
 
 	local.killzone = level.time + 2
 
@@ -3054,8 +3107,10 @@ takeoutplayer:
 	// dprintln "player is inside killbrush"
 	
 end
-
+//-------------------------------------------------------------------
 killplayer:
+//-------------------------------------------------------------------
+
 	$player kill
 end
 
@@ -3063,8 +3118,9 @@ end
 ///////////////////////////////
 // artillerybombardment
 ///////////////////////////////
-
+//-------------------------------------------------------------------
 startartillerybombardment:
+//-------------------------------------------------------------------
 	wait 5
 	
 	$artilleryright turnon
@@ -3074,25 +3130,33 @@ end
 ////////////////////////////////
 // saythisline
 ////////////////////////////////
+//-------------------------------------------------------------------
 saythisline:
+//-------------------------------------------------------------------
 
 // println (" saythisline !! ")
 	// thread kommanderstartattack2
 	// thread sayleftflank
 end
 
+//-------------------------------------------------------------------
 sayleftflank:
+//-------------------------------------------------------------------
 	wait 5
 	$player playsound dfr_call_AP4356 // - "Infantry, left flank!"
 end
 
+//-------------------------------------------------------------------
 backgroundtalking:
+//-------------------------------------------------------------------
 	wait 2
 	$player playsound dfr_t2l3_as3201
 end
 
 ////THIS IS THE STRAFING PLANE GAG/////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------
 startstrafe1:
+//-------------------------------------------------------------------
 // println "bang bang bang bang"
 
 $stuka anim fire
@@ -3118,7 +3182,9 @@ $mp44trigger triggerable
 end
 
 
+//-------------------------------------------------------------------
 startstrafe2:
+//-------------------------------------------------------------------
 // println "bang bang bang bang"
 
 wait 1.5
@@ -3136,7 +3202,9 @@ end
 // remove wave 2
 //////////////////////////////////////
 
+//-------------------------------------------------------------------
 removewave2:
+//-------------------------------------------------------------------
 
 	if (level.wave == 3)
 	{
@@ -3203,7 +3271,9 @@ end
 // setobjective
 //////////////////////////////////////////////
 
+//-------------------------------------------------------------------
 setobjective local.num:
+//-------------------------------------------------------------------
 
 	local.numplus = local.num + 1
 	local.numminus = local.num - 1
@@ -3245,7 +3315,9 @@ setobjective local.num:
 					
 end
 
+//-------------------------------------------------------------------
 startscriptedguys:
+//-------------------------------------------------------------------
 
 	for (local.i=1;local.i<=$trigger_cue_death_move.size;local.i++)
 	{
@@ -3258,7 +3330,9 @@ startscriptedguys:
 
 end
 
+//-------------------------------------------------------------------
 lamb_explosion_fx:
+//-------------------------------------------------------------------
 	local.ent = spawn EffectEntity "model" $snow_crash.spawnmodel
 	local.ent.origin = $snow_crash.origin
 	local.ent notsolid
@@ -3267,7 +3341,9 @@ lamb_explosion_fx:
 	local.ent delete
 end
 
+//-------------------------------------------------------------------
 start_lamb:
+//-------------------------------------------------------------------
 	$lamb exec global/disable_ai.scr
 	$lamb takedamage
 	$lamb runto $lambdiehere
@@ -3278,7 +3354,9 @@ start_lamb:
 	$lamb damage $lamb 3000 $lamb (0 0 0) (0 0 0) (0 0 0) 0 9 0 0
 end
 
+//-------------------------------------------------------------------
 GermanNoDrawManager:
+//-------------------------------------------------------------------
 	
 	while (isalive self)
 	{
@@ -3297,14 +3375,18 @@ GermanNoDrawManager:
 	}
 end
 
+//-------------------------------------------------------------------
 mp44pickup:
+//-------------------------------------------------------------------
 	$player item models/weapons/mp44.tik
 	$webbers_mp44 remove
 	$player playsound mp44_snd_pickup
 	$player use "stg 44"
 end	
 
+//-------------------------------------------------------------------
 panzerschrek_pickup:
+//-------------------------------------------------------------------
 	$player use "Panzerschrek"
 end		
 

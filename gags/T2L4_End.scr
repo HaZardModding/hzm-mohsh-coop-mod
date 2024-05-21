@@ -28,7 +28,7 @@ DoEnding:
 //	$start_werfer waittill trigger
 //	thread DoPanzerWerfer
 	
-	end
+end
 
 //------------------------------------------------------------------------
 GuyDiveOutOfTheWay:
@@ -82,7 +82,7 @@ GuysDiveOutOfTheWay:
 			$EndGuys[local.i] thread GuyDiveOutOfTheWay
 		}
 	}
-	end
+end
 
 
 //------------------------------------------------------------------------
@@ -93,7 +93,7 @@ ShootAtPlane local.plane:
 	{
 		// then it's the crashed version...
 		self exec global/aimat.scr local.plane
-		end
+			end
 	}
 
 	if ( isAlive self && self.gun != "panzerschrek" )
@@ -122,7 +122,7 @@ ShootAtPlane local.plane:
 		}
 	}
 
-	end
+end
 
 //------------------------------------------------------------------------
 GuysShootPlane local.plane:
@@ -135,7 +135,7 @@ GuysShootPlane local.plane:
 
 	$cappy thread ShootAtPlane local.plane
 
-	end
+end
 
 //------------------------------------------------------------------------
 SetupEndGuys:
@@ -163,7 +163,7 @@ SetupEndGuys:
 		}
 	}
 
-	end
+end
 
 //------------------------------------------------------------------------
 DoWerferAttacks:
@@ -193,7 +193,7 @@ DoWerferAttacks:
 //	dprintln "werfer firing again"
 	$panzerwerfer.gun anim fire
 
-	end
+end
 
 //------------------------------------------------------------------------
 AttackWerfer:
@@ -227,7 +227,7 @@ AttackWerfer:
 	wait 0.2
 
 
-	end
+end
 
 //------------------------------------------------------------------------
 EndGuysAttackWerfer:
@@ -243,7 +243,7 @@ EndGuysAttackWerfer:
 	$cappy thread gags/t2l4_captain.scr::CappyShootAt $panzerwerfer
 
 
-	end
+end
 
 //------------------------------------------------------------------------
 DoPanzerWerfer:
@@ -253,7 +253,7 @@ DoPanzerWerfer:
 
 	if ( level.werfer_ready==0)
 	{
-		end
+			end
 	}
 
 	self delete
@@ -307,5 +307,5 @@ DoPanzerWerfer:
 	level.werfer_done = 1
 
 
-	end
+end
 

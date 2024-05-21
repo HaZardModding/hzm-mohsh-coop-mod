@@ -20,7 +20,9 @@
 end
 
 
+//------------------------------------------------------------------------------
 alert_others:
+//------------------------------------------------------------------------------
 
 	self waittill hasenemy
 
@@ -31,11 +33,13 @@ alert_others:
 		level.tankguard[3] attackplayer
 		}
 
-	end
+end
 
 
 // Spawn the guys in and play idle animations for them.
+//------------------------------------------------------------------------------
 three_germans_at_tank_init:
+//------------------------------------------------------------------------------
 
 	level.tank_guys_in = 1
 
@@ -78,7 +82,9 @@ end
 
 
 // See if any of the germans get hit. If they do, kick of their attack state and ignore all animations.
+//------------------------------------------------------------------------------
 three_germans_at_tank_waitforhit:
+//------------------------------------------------------------------------------
 
 	println ("Waiting for guys to get hit")
 /*
@@ -126,7 +132,9 @@ end
 //	31G413_laugh		31G413_laugh.skc
 //	31G405_transtoalert	31G405_transtoalert.skc
 //
+//------------------------------------------------------------------------------
 germantankguy_01:
+//------------------------------------------------------------------------------
 
 	while (level.germantankguys_dialog == 0)
 	{
@@ -149,7 +157,9 @@ germantankguy_01:
 
 end
 
+//------------------------------------------------------------------------------
 germantankguy_01_alert:
+//------------------------------------------------------------------------------
 
 	println ("German tank guy 1 attacks")
 	self anim 31G405_transtoalert
@@ -165,7 +175,9 @@ end
 //	31G414_laugh		31G414_laugh.skc
 //	31G408_transtoalert	31G408_transtoalert.skc
 //
+//------------------------------------------------------------------------------
 germantankguy_02:
+//------------------------------------------------------------------------------
 
 	while (level.germantankguys_dialog == 0)
 	{
@@ -188,7 +200,9 @@ germantankguy_02:
 
 end
 
+//------------------------------------------------------------------------------
 germantankguy_02_alert:
+//------------------------------------------------------------------------------
 
 	println ("German tank guy 2 attacks")
 	self anim 31G408_transtoalert
@@ -204,7 +218,9 @@ end
 //	31G415_laugh		31G415_laugh.skc
 //	31G411_transtoalert	31G411_transtoalert.skc
 //
+//------------------------------------------------------------------------------
 germantankguy_03:
+//------------------------------------------------------------------------------
 
 	while (level.germantankguys_dialog == 0)
 	{
@@ -226,7 +242,9 @@ germantankguy_03:
 
 end
 
+//------------------------------------------------------------------------------
 germantankguy_03_alert:
+//------------------------------------------------------------------------------
 
 	println ("German tank guy 3 attacks")
 	self anim 31G411_transtoalert

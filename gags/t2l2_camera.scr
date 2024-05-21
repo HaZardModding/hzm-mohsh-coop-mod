@@ -19,7 +19,10 @@
 ///////////////////////////////////////////
 // call durring prespawn
 ///////////////////////////////////////////
+
+//--------------------------------------------------------------------------------
 t2l2_initcamera:
+//--------------------------------------------------------------------------------
 	level.totalcameratime = 5
 	level.cameratime = 0
 	level.totaltreetime = 7
@@ -29,8 +32,10 @@ end
 /////////////////////////////////////////////////////////
 // call with trigger multiple using #setthread camera
 /////////////////////////////////////////////////////////
-t2l2_camera:
 
+//--------------------------------------------------------------------------------
+t2l2_camera:
+//--------------------------------------------------------------------------------
 	//centerprint "switching to camera"
 
 	level.cameratime = level.time + level.totalcameratime
@@ -50,7 +55,8 @@ t2l2_camera:
     
 	drawhud 0
 	cuecamera $watch_camera
-	$player hide
+	
+	$player hide //MiaCosa @chrissstrahl
 
 
 	while (level.cameratime > level.time)
@@ -59,13 +65,15 @@ t2l2_camera:
 	drawhud 2
 
 	// cueplayer causes us to switch back to the player
-	$player show
+	
+	$player show //MiaCosa @chrissstrahl
+	
 	cueplayer
 		
 end
-
+//--------------------------------------------------------------------------------
 t2l2_camerab:
-
+//--------------------------------------------------------------------------------
 	//centerprint "switching to camerab"
 
 	level.cameratime = level.time + 5//level.totalcameratime
@@ -85,7 +93,8 @@ t2l2_camerab:
 // cuecamera causes us to switch to a camera
 
     cuecamera $watchcamerab
-	$player hide
+	
+	$player hide //MiaCosa @chrissstrahl
 
 
 	while (level.cameratime > level.time)

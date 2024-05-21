@@ -51,16 +51,28 @@ level waittill spawn
 //	$removabletrigger solid
 	$world farplane_cull 2
 
-	$player takeall
-	$player item items/binoculars.tik
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
-	$player item weapons/Webley_Revolver.tik 
-	$player item weapons/enfield.tik 
-	$player item weapons/sten.tik 
-	$player item weapons/mills_grenade.tik   
-	$player item weapons/M18_smoke_grenade.tik  
+	//$player item items/binoculars.tik //MiaCosa
+	exec coop_mod/replace.scr::item items/binoculars.tik
 
-	$player ammo pistol 32
+	//$player item weapons/Webley_Revolver.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Webley_Revolver.tik 
+	
+	//$player item weapons/enfield.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/enfield.tik 
+	
+	//$player item weapons/sten.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/sten.tik 
+	
+	//$player item weapons/mills_grenade.tik //MiaCosa  
+	exec coop_mod/replace.scr::item weapons/mills_grenade.tik
+	
+	//$player item weapons/M18_smoke_grenade.tik //MiaCosa  
+	exec coop_mod/replace.scr::item weapons/M18_smoke_grenade.tik  
+
+	$player ammo pistol 32 //MiaCosa @chrissstrahl
 	$player ammo smg 128
 	$player ammo rifle 49
 	$player ammo smokegrenade 3
@@ -127,8 +139,9 @@ level waittill spawn
 
 	thread stayonpathguys
 
-	$player stufftext "tmstop; tmstart sound/music/mus_t1l3_playerstart.mp3"
-
+	//$player stufftext "tmstop; tmstart sound/music/mus_t1l3_playerstart.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/mus_t1l3_playerstart.mp3"
+	
 	$wallcharge triggered 1
 	$wallcharge thread wallchargedialog
 
@@ -138,7 +151,8 @@ level waittill spawn
 //	$deadtruck.collisionent = $deadtruck1.target
 	$truck_1.collisionent = $truck_1.target
 
-	$player fullheal
+	//$player fullheal //MiaCosa
+	exec coop_mod/replace.scr::fullheal
 
 	wait 2.5
 	fadein 3.5 0 0 0 1
@@ -148,7 +162,7 @@ level waittill spawn
 
 	releaseplayer
 
-	$player useweaponclass smg
+	$player useweaponclass smg //MiaCosa @chrissstrahl
 
 end
 
@@ -166,7 +180,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 stayonpathguys:
+//-------------------------------------------------------------------
 
 	thread triggerstayonpath $porchtrigger 3.0 waitporchtrigger
 	thread triggerstayonpath $diningroomguytrigger 1.5
@@ -183,19 +201,25 @@ stayonpathguys:
 end
 
 
+//-------------------------------------------------------------------
 firstautosave:
+//-------------------------------------------------------------------
 
 	exec global/autosave.scr 1
 end
 
 
+//-------------------------------------------------------------------
 thirdautosave:
+//-------------------------------------------------------------------
 
 	exec global/autosave.scr 3
 end
 
 
+//-------------------------------------------------------------------
 waitporchtrigger:
+//-------------------------------------------------------------------
 
 	self waittill trigger
 
@@ -216,7 +240,9 @@ waitporchtrigger:
 end
 
 
+//-------------------------------------------------------------------
 waitbazookatrigger:
+//-------------------------------------------------------------------
 
 	self waittill trigger
 
@@ -238,7 +264,9 @@ end
 
 
 //// ambient sound threads
+//-------------------------------------------------------------------
 initambienttriggers:
+//-------------------------------------------------------------------
 
 	if ( $ambient_trigger )
 	{
@@ -256,12 +284,13 @@ initambienttriggers:
 
 end
 
-
+//-------------------------------------------------------------------
 boatsounds:
+//-------------------------------------------------------------------
 
 	if ( level.levelsounds != level.boatsounds )
 	{
-		if ( (self.link == NIL) || !(self.link istouching $player) )
+		if ( (self.link == NIL) || !(self.link istouching $player) ) //MiaCosa @chrissstrahl exec coop_mod/replace.scr::istouching
 		{
 			forcemusic aux1 aux1
 			level.levelsounds = level.boatsounds
@@ -270,12 +299,13 @@ boatsounds:
 
 end
 
-
+//-------------------------------------------------------------------
 docksounds:
+//-------------------------------------------------------------------
 
 	if ( level.levelsounds != level.docksounds )
 	{
-		if ( (self.link == NIL) || !(self.link istouching $player) )
+		if ( (self.link == NIL) || !(self.link istouching $player) ) //MiaCosa @chrissstrahl exec coop_mod/replace.scr::istouching
 		{
 			forcemusic aux3 aux3
 			level.levelsounds = level.docksounds
@@ -284,12 +314,13 @@ docksounds:
 
 end
 
-
+//-------------------------------------------------------------------
 exteriorsounds:
+//-------------------------------------------------------------------
 
 	if ( level.levelsounds != level.exteriorsounds )
 	{
-		if ( (self.link == NIL) || !(self.link istouching $player) )
+		if ( (self.link == NIL) || !(self.link istouching $player) ) //MiaCosa @chrissstrahl exec coop_mod/replace.scr::istouching
 		{
 			forcemusic aux5 aux5
 			level.levelsounds = level.exteriorsounds
@@ -298,12 +329,13 @@ exteriorsounds:
 
 end
 
-
+//-------------------------------------------------------------------
 interiorsounds:
+//-------------------------------------------------------------------
 
 	if ( level.levelsounds != level.interiorsounds )
 	{
-		if ( (self.link == NIL) || !(self.link istouching $player) )
+		if ( (self.link == NIL) || !(self.link istouching $player) ) //MiaCosa @chrissstrahl exec coop_mod/replace.scr::istouching
 		{
 			forcemusic aux6 aux6
 			level.levelsounds = level.interiorsounds
@@ -312,11 +344,12 @@ interiorsounds:
 
 end
 
-
+//-------------------------------------------------------------------
 pushtankthread:
+//-------------------------------------------------------------------
 
 	if (parm.other.owner == $pushtank)
-		end
+end
 
 	$removableclip notsolid	
 	$pushtank moveanim 13P008_tankpushedaside
@@ -326,16 +359,18 @@ pushtankthread:
 
 end
 
-
+//-------------------------------------------------------------------
 flakblown:
+//-------------------------------------------------------------------
 
 	$flakcannon thread global/stationaryweapons.scr::SpawnCollision $flak88_destroyed_collision
 	exec gags/t1l3_flak_cannon.scr::flak_destroyed
 
 end
 
-
+//-------------------------------------------------------------------
 meetcaptain3:
+//-------------------------------------------------------------------
 
 	if ( level.tankdestroyed == 1 )
 	{
@@ -347,8 +382,9 @@ meetcaptain3:
 
 end
 
-
+//-------------------------------------------------------------------
 airdrop:
+//-------------------------------------------------------------------
 
 	if ( level.flakdestroyed == 1 )
 	{
@@ -358,15 +394,17 @@ airdrop:
 
 end
 
-
+//-------------------------------------------------------------------
 wallcharge:
+//-------------------------------------------------------------------
 
 	thread gags/t1l3_misc.scr::wallcharge $wallcharge 5 77
 
 end
 
-
+//-------------------------------------------------------------------
 wallchargedialog:
+//-------------------------------------------------------------------
 
 	local.spoken = 0
 	while ( self && ( local.spoken == 0 ) && (isAlive level.captain) )
@@ -374,7 +412,7 @@ wallchargedialog:
 //		local.a = vector_length(self.origin - $player.origin)
 //		local.b = vector_length($player.origin - level.captain.origin)
 //		dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ wallchargedialog, chargetoplayer is " local.a ", playertocaptain is " local.b
-		if ( (vector_length(self.origin - $player.origin) < 300.0) && (vector_length($player.origin - level.captain.origin) < 300.0) )
+		if ( (vector_length(self.origin - $player.origin) < 300.0) && (vector_length($player.origin - level.captain.origin) < 300.0) ) //MiaCosa @chrissstrahl
 		{
 			if ( level.objective4 == 0 )
 			{
@@ -396,8 +434,9 @@ wallchargedialog:
 
 end
 
-
+//-------------------------------------------------------------------
 initmg42s:
+//-------------------------------------------------------------------
 
 	local.count = $mg42.size
 	if ( local.count > 0 )
@@ -416,8 +455,9 @@ initmg42s:
 
 end
 
-
+//-------------------------------------------------------------------
 aihider:
+//-------------------------------------------------------------------
 
 	$bunkergunner thread gags/t1l3_misc.scr::aihider
 	$gunner1 thread gags/t1l3_misc.scr::aihider
@@ -428,8 +468,9 @@ aihider:
 
 end
 
-
+//-------------------------------------------------------------------
 shabbadoo:
+//-------------------------------------------------------------------
 
 	if ( (level.shabbadoo == NIL) || (level.shabbadoo == 0) )
 	{
@@ -448,9 +489,9 @@ shabbadoo:
 
 end
 
-
+//-------------------------------------------------------------------
 clickitem:
-
+//-------------------------------------------------------------------
 	self thread gags/t1l3_misc.scr::kalimbasays
 
 end
@@ -462,7 +503,12 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 initobjectives:
+//-------------------------------------------------------------------
+
 
 	// add the first objective - This is added at level start
 	waitthread global/objectives.scr::add_objectives 1 1 "Track and Eliminate the Colonel"
@@ -490,8 +536,9 @@ initobjectives:
 	level.objective5 = 0
 
 end
-
+//-------------------------------------------------------------------
 objective1:
+//-------------------------------------------------------------------
 
 	waitthread global/objectives.scr::add_objectives 1 2 //turns on obj 1
 	waitthread global/objectives.scr::current_objectives 1
@@ -514,8 +561,9 @@ objective1:
 	waitthread global/objectives.scr::add_objectives 1 3
 	clear_objective_pos
 
-	$player stufftext "tmstop; tmstart sound/music/mus_t1l3_DeadOfficer.mp3"
-
+	//$player stufftext "tmstop; tmstart sound/music/mus_t1l3_DeadOfficer.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/mus_t1l3_DeadOfficer.mp3"
+	
 	while ( level.captrunning == 0 )
 	{
 		wait 0.5
@@ -524,8 +572,9 @@ objective1:
 	thread objective2
 
 end
-
+//-------------------------------------------------------------------
 objective2:
+//-------------------------------------------------------------------
 
 	waitthread global/objectives.scr::add_objectives 2 2 //turns on obj 2
 	waitthread global/objectives.scr::current_objectives 2
@@ -542,8 +591,9 @@ objective2:
 	clear_objective_pos
 
 end
-
+//-------------------------------------------------------------------
 objective3:
+//-------------------------------------------------------------------
 
 	waitthread global/objectives.scr::add_objectives 3 2 //turns on obj 3
 	waitthread global/objectives.scr::current_objectives 3
@@ -561,15 +611,18 @@ objective3:
 	clear_objective_pos
 
 end
-
+//-------------------------------------------------------------------
 objective4:
+//-------------------------------------------------------------------
 
 	waitthread global/objectives.scr::add_objectives 4 2 //turns on obj 4
 	waitthread global/objectives.scr::current_objectives 4
 
 	$objective5ontrig waittill trigger
 	wait .25
-	$player playsound explosives_pu
+	
+	//$player playsound explosives_pu //MiaCosa
+	exec coop_mod/replace.scr::playsound explosives_pu
 
 	for (local.demochargeleft = $demochargepickup.size; local.demochargeleft > 0; local.demochargeleft--)
 	{
@@ -589,8 +642,9 @@ objective4:
 	}
 
 end
-
+//-------------------------------------------------------------------
 objective5:
+//-------------------------------------------------------------------
 
 	waitthread global/objectives.scr::add_objectives 5 2 //turns on obj 5
 	waitthread global/objectives.scr::current_objectives 5
@@ -632,15 +686,19 @@ end
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+//-------------------------------------------------------------------
 shoreguyswalk:
+//-------------------------------------------------------------------
 
 	$shoreguy1 thread walkonpath
 	wait 4
 	$shoreguy2 thread walkonpath
 
 end
-
+//-------------------------------------------------------------------
 walkonpath:
+//-------------------------------------------------------------------
 
 	self walkto $shoreguyspath
 	self waittill movedone
@@ -650,8 +708,9 @@ walkonpath:
 	}
 
 end
-
+//-------------------------------------------------------------------
 killshoreguys:
+//-------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ killshoreguys"
 	self remove
@@ -669,7 +728,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 officer_trig1:
+//-------------------------------------------------------------------
 
 //	dprintln "              hit officer trigger #1"
 	if ( level.nashtyboy == 1 )
@@ -680,55 +743,62 @@ officer_trig1:
 
 end
 
-
+//-------------------------------------------------------------------
 officer_trig2:
+//-------------------------------------------------------------------
 
 //	dprintln "              hit officer trigger #2"
 	thread gags/t1l3_colonel.scr::trigger2
 
 end
 
-
+//-------------------------------------------------------------------
 officer_runtrig2:
+//-------------------------------------------------------------------
 
 	self remove
 	level.runtrigger2 = 1
 
 end
 
-
+//-------------------------------------------------------------------
 officer_trig3:
+//-------------------------------------------------------------------
 
 //	dprintln "              hit officer trigger #3"
 	thread gags/t1l3_colonel.scr::trigger3
 
 end
 
-
+//-------------------------------------------------------------------
 officer_runtrig3:
+//-------------------------------------------------------------------
 
 	self remove
 	level.runtrigger3 = 1
 
 end
 
-
+//-------------------------------------------------------------------
 officer_trig4:
+//-------------------------------------------------------------------
 
 //	dprintln "              hit officer trigger #4"
 	thread gags/t1l3_colonel.scr::trigger4
 
 end
 
-
+//-------------------------------------------------------------------
 officer_runtrig4:
+//-------------------------------------------------------------------
 
 	self remove
 	level.runtrigger4 = 1
 
 end
-
+//-------------------------------------------------------------------
 officer_trig5:
+//-------------------------------------------------------------------
 
 //	dprintln "              hit officer trigger #5"
 	thread gags/t1l3_colonel.scr::trigger5
@@ -742,57 +812,58 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//-------------------------------------------------------------------
 private_trig1:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::private1
 
 end
-
+//-------------------------------------------------------------------
 private_trig2:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::private2
 
 end
-
+//-------------------------------------------------------------------
 private_trig3:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::private3
 
 end
-
+//-------------------------------------------------------------------
 tank_trig1:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::tank1
 
 end
-
+//-------------------------------------------------------------------
 wall_trig1:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::walltrigger1
 
 end
-
+//-------------------------------------------------------------------
 wall_trig2:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::walltrigger2
 
 end
-
+//-------------------------------------------------------------------
 wall_trig3:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::walltrigger3
 
 end
-
+//-------------------------------------------------------------------
 tank_3rd:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::tank_3rdshot
 
 end
 
-
+//-------------------------------------------------------------------
 flakcannon:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_tank.scr::returntrigger
 
 end
@@ -805,7 +876,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 placeexplosive1:
+//-------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~ explosive charge 1 placed"
 	level.charge1 = 1
@@ -814,8 +889,9 @@ placeexplosive1:
 
 end
 
-
+//-------------------------------------------------------------------
 placeexplosive2:
+//-------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~ explosive charge 2 placed"
 	level.charge2 = 1
@@ -824,8 +900,9 @@ placeexplosive2:
 
 end
 
-
+//-------------------------------------------------------------------
 placeexplosive3:
+//-------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~ explosive charge 3 placed"
 	level.charge3 = 1
@@ -834,8 +911,9 @@ placeexplosive3:
 
 end
 
-
+//-------------------------------------------------------------------
 placeexplosive4:
+//-------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~ explosive charge 4 placed"
 	level.charge4 = 1
@@ -843,8 +921,9 @@ placeexplosive4:
 	thread explosiveplaced
 
 end
-
+//-------------------------------------------------------------------
 explosiveplaced:
+//-------------------------------------------------------------------
 
 	if ( level.chargecount == 1 )
 	{
@@ -871,14 +950,16 @@ explosiveplaced:
 	}
 
 end
-
+//-------------------------------------------------------------------
 checkcharges:
+//-------------------------------------------------------------------
 
 	exec gags/t1l3_bridge.scr::bridge_gag_check
 
 end
-
+//-------------------------------------------------------------------
 blowbridge:
+//-------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ blowbridge"
 	if ( level.bridgestate == 0 )
@@ -907,15 +988,15 @@ blowbridge:
 	}
 
 end
-
+//-------------------------------------------------------------------
 bridgegunnerson:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_bridge.scr::gunnerson
 
 end
-
+//-------------------------------------------------------------------
 bridgegunnersoff:
-
+//-------------------------------------------------------------------
 	thread gags/t1l3_bridge.scr::gunnersoff
 
 end
@@ -936,7 +1017,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 balcony_death_nazi_deathcheck:
+//-------------------------------------------------------------------
 
 	self.health = 10000
 	self.nolongpain = 1
@@ -964,8 +1049,9 @@ balcony_death_nazi_deathcheck:
 	thread global/exploder.scr::explode 6
 
 end
-
+//-------------------------------------------------------------------
 balcony_death_nazi_deathanim:
+//-------------------------------------------------------------------
 
 	self exec global/disable_ai.scr
 	self anim 13A401_fall
@@ -982,7 +1068,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 trigger_captain_jump:
+//-------------------------------------------------------------------
 
 	exec gags/t1l3_captain_jump_balcony.scr::t1l3_captain_jump
 
@@ -995,7 +1085,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 stayonpath local.dumbdelay:
+//-------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ " self.targetname " waiting to stayonpath"
 	local.bias = self.threatbias
@@ -1027,7 +1121,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 groupstayonpath local.group local.dumbdelay:
+//-------------------------------------------------------------------
 
 	if ( local.group != NIL )
 	{
@@ -1050,7 +1148,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 triggerstayonpath local.trigger local.dumbdelay local.triggerthread:
+//-------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ triggerstayonpath " local.trigger
 	if ( local.trigger != NIL )

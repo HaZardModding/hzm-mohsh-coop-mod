@@ -27,7 +27,7 @@ Run_To local.dest local.anim:
 	if (local.dest==NIL)
 	{
 		// println "Invalid runto command in t2l3_friendly.scr!"
-		End
+			End
 	}
 
 	self exec global/disable_ai.scr
@@ -48,13 +48,15 @@ Run_To local.dest local.anim:
 	self exec global/enable_ai.scr
 
 
-	End
+End
 
 /////////////////////////
 // tree guys init
 /////////////////////////
-tree_guys_init:
 
+//--------------------------------------------------------------------------------
+tree_guys_init:
+//--------------------------------------------------------------------------------
 	$TreeGuy1 holster
 	$TreeGuy2 holster
 
@@ -75,11 +77,12 @@ tree_guys_init:
 
 end
 
+//--------------------------------------------------------------------------------
 //
 // Init the tree death guys.
 //
 tree_death_init:
-
+//--------------------------------------------------------------------------------
 
 	$TreeGuy1 exec global/disable_ai.scr
 	$TreeGuy2 exec global/disable_ai.scr
@@ -94,9 +97,9 @@ tree_death_init:
 	level.treeguy2thread = parm.previousthread
 
 end
-
+//--------------------------------------------------------------------------------
 tree_death_guy_1_idle:
-
+//--------------------------------------------------------------------------------
 	print( "tree death guy 1 idles" )
 	while (1)
 	{
@@ -105,9 +108,9 @@ tree_death_guy_1_idle:
 	}
 
 end
-
+//--------------------------------------------------------------------------------
 tree_death_guy_2_idle:
-
+//--------------------------------------------------------------------------------
 	print( "tree death guy 2 idles" )
 	while (1)
 	{
@@ -116,8 +119,9 @@ tree_death_guy_2_idle:
 	}
 
 end
-
+//--------------------------------------------------------------------------------
 removetheprop:
+//--------------------------------------------------------------------------------
 	local.time = level.time + 5
 	while (local.time > level.time)
 		wait 1
@@ -141,11 +145,11 @@ TreeDeath local.death_anim local.death_loop:
 //--------------------------------------------------------------------------------
 	
 	$TreeGuy1prop detach
-	$TreeGuy1prop throw $TreeGuy1 100 $player
+	$TreeGuy1prop throw $TreeGuy1 100 $player //MiaCosa @chrissstrahl
 	$TreeGuy1prop thread removetheprop
 
 	$TreeGuy2prop detach
-	$TreeGuy2prop throw $TreeGuy2 120 $player
+	$TreeGuy2prop throw $TreeGuy2 120 $player //MiaCosa @chrissstrahl
 	$TreeGuy2prop thread removetheprop
 
 	print( "tree death guy dies" )
@@ -153,7 +157,7 @@ TreeDeath local.death_anim local.death_loop:
 	self waittill animdone
 	self ai_off
 
-	End
+End
 
 
 
@@ -174,13 +178,14 @@ DoTreeFallGag:
 	$TreeGuy1 thread TreeDeath 23A701_FoxHoleDeath 23A703_deathloop
 	$TreeGuy2 thread TreeDeath 23A702_FoxHoleDeath 23A704_deathloop
 
-	End
+End
 
 
-//
+//--------------------------------------------------------------------------------
 // Init the foxhole guys.
 //
 foxhole_guys_init:
+//--------------------------------------------------------------------------------
 
 	level.FoxholeGuy1Spawner = waitthread global/spawner.scr::spawner_create $FoxholeGuy1
 	level.FoxholeGuy2Spawner = waitthread global/spawner.scr::spawner_create $FoxholeGuy2
@@ -224,7 +229,7 @@ DoFoxholeJump:
 	local.foxguy1 exec global/enable_ai.scr
 	
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 DoFoxholeDive:
@@ -250,7 +255,7 @@ DoFoxholeDive:
 
 	local.foxguy2 exec global/enable_ai.scr
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 DoFoxholeSlide:
@@ -276,4 +281,4 @@ DoFoxholeSlide:
 
 	local.foxguy3 exec global/enable_ai.scr
 	
-	End
+End

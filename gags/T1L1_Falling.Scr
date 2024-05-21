@@ -21,9 +21,9 @@
 //				
 //---------------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 PlayerFall:
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 /// 	thread DisplayYawPitch
 
@@ -56,8 +56,10 @@ PlayerFall:
 
 	thread RestrictView
 
-	$player glue $playerspot_plane 0
-	$player solid
+	//$player glue $playerspot_plane 0 //MiaCosa
+	exec coop_mod/replace.scr::glue $playerspot_plane 0
+	
+	$player solid //MiaCosa @Chrissstrahl
 
 	thread PlayerParachute
 
@@ -95,7 +97,8 @@ PlayerFall:
 	level.player_chute hide
 	$barn_parachute show
 
-	$player unglue
+	//$player unglue //MiaCosa
+	exec coop_mod/replace.scr::unglue
 
 	// Now use Tom's fogging value.
 	//println ("Using preset fog value")
@@ -114,9 +117,9 @@ PlayerFall:
 
 	// get rid of the guys on the tiger tank...
 	
-	End
+End
 
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 change_fog:
 //
 // Thread monitors the player's position and alters the fog accordingly.
@@ -124,7 +127,7 @@ change_fog:
 // ground, as opposed to making it look like the player is falling through
 // uniform fog.
 //
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	println ("starting fogging changes")
 
@@ -148,12 +151,12 @@ change_fog:
 
 end
 
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 change_lod:
 //
 // Put changes to the LOD of the world here.
 //
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	println ("starting lod changes")
 
@@ -185,7 +188,7 @@ change_lod:
 */
 end
 
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 DoPocketFlashes:
 //
 //	Start up all the pocket flashes that are in the level...
@@ -195,7 +198,7 @@ DoPocketFlashes:
 //
 //	Note: Name all your pocket flashes: pocketflash
 //
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	level.pocketFlashMinTime = 3
 	level.pocketFlashMaxTime = 8
@@ -206,14 +209,14 @@ DoPocketFlashes:
 	}
 
 
-	End
+End
 
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 StopPocketFlashes:
 //
 //	Call this to stop/delete all pocket flashes...
 //
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	for (local.i=$pocketflash.size;local.i>0;local.i--)
 	{
@@ -222,11 +225,11 @@ StopPocketFlashes:
 	}
 
 
-	End
+End
 
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 DoPocketFlash:
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	self.flashthread = local
 
@@ -243,9 +246,10 @@ DoPocketFlash:
 		wait 1
 	}
 
-	End
-
-	parachute_guy_near local.trackobject local.falltime local.delta_x local.delta_y local.guyscale:
+End
+//------------------------------------------------------------------------------------------------------------------
+parachute_guy_near local.trackobject local.falltime local.delta_x local.delta_y local.guyscale:
+//------------------------------------------------------------------------------------------------------------------
 
 	// Open the guy's chute.
 	local.chute = spawn static/parachute_actors "classname" "scriptmodel" "origin" local.trackobject.origin "angles" local.trackobject.angles
@@ -303,9 +307,9 @@ DoPocketFlash:
 	local.guy delete
 
 end
-
+//------------------------------------------------------------------------------------------------------------------
 parachute_guy_mid local.trackobject local.falltime local.delta_x local.delta_y local.guyscale:
-
+//------------------------------------------------------------------------------------------------------------------
 	// Open the guy's chute.
 	local.chute = spawn static/parachute_actors "classname" "scriptmodel" "origin" local.trackobject.origin
 	local.guy = spawn human/allied_airborne_soldier "origin" local.trackobject.origin "scale" local.guyscale
@@ -344,9 +348,9 @@ parachute_guy_mid local.trackobject local.falltime local.delta_x local.delta_y l
 	local.guy delete
 
 end
-
+//------------------------------------------------------------------------------------------------------------------
 parachute_guy_far local.trackobject local.falltime local.delta_x local.delta_y local.guyscale:
-
+//------------------------------------------------------------------------------------------------------------------
 	// Open the guy's chute.
 	local.chute = spawn static/parachute_actors "classname" "scriptmodel" "origin" local.trackobject.origin
 	local.guy = spawn human/allied_airborne_soldier "origin" local.trackobject.origin "scale" local.guyscale
@@ -378,26 +382,26 @@ parachute_guy_far local.trackobject local.falltime local.delta_x local.delta_y l
 
 end
 
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 Showpos:
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	while (self)
 	{
 		dprintln "I'm at" self.origin[0] " " self.origin[1] " " self.origin[2]
-		dprintln "Player's at" $player.origin[0] " " $player.origin[1] " " $player.origin[2]
+		dprintln "Player's at" $player.origin[0] " " $player.origin[1] " " $player.origin[2] //MiaCosa @Chrissstrahl
 
 		wait 0.5
 	}
 
-	end
+end
 
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 noparachute_guy local.trackobject local.movetoobject:
 //	
 //	Oops, where'd my parachute go?
 //
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	local.falltime	= 11.5
 	local.waittime	= 3
@@ -409,8 +413,8 @@ noparachute_guy local.trackobject local.movetoobject:
 
 	if ( local.guy==NIL || local.guy==NULL || local.trackobject==NIL )
 	{
-		dprintln "error spawning guy falling!
-		end
+		dprintln "error spawning guy falling!" //MiaCosa - Fixed Missing Double-Quote
+			end
 	}
 
 	// Make the guy into a dummy.
@@ -440,32 +444,34 @@ noparachute_guy local.trackobject local.movetoobject:
 	// Remove this from the entity count.
 	local.guy delete
 
-	End
+End
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 DoYell:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 ////	wait 6
 	// jsl--> play the sound from the player so we can actually hear it!
 //	self playsound dfr_death_AS2871
-	$player playsound dfr_death_AS2871
 
-	end
+	//$player playsound dfr_death_AS2871 //MiaCosa
+	exec coop_mod/replace.scr::playsound dfr_death_AS2871
 
-//--------------------------------------------------------------
+end
+
+//------------------------------------------------------------------------------------------------------------------
 TurnOnAAGuns:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 	for (local.i=1;local.i<=$aa_guns.size;local.i++)
 	{
 		$aa_guns[local.i] thread AAGunTurnOn
 	}
 
-	end
+end
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 AAGunTurnOn:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 	self Accuracy 40
 	self FakeBullets 1
 	
@@ -473,38 +479,38 @@ AAGunTurnOn:
 	wait local.random
 	self TurnOn
 
-	End
+End
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 TurnOffAAGuns:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 	for (local.i=1;local.i<=$aa_guns.size;local.i++)
 	{
 		$aa_guns[local.i] TurnOff
 //		$aa_guns[local.i] delete
 	}
-	end
+end
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 ShowAngles:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	while ( 1 )
 	{
 		dprintln self.targetname " angles=" self.angles[0] " " self.angles[1] " " self.angles[2]
 		wait 0.2
 	}
-	end
+end
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 PlayerParachute:
 //
 //
 //	Add two script origins:
 //		player_parachute_spot
 //		hitme_parachute
-//--------------------------------------------------------------
-	level.player_chute = spawn static/parachute "classname" "scriptmodel" "origin" $player.origin
+//------------------------------------------------------------------------------------------------------------------
+	level.player_chute = spawn static/parachute "classname" "scriptmodel" "origin" $player.origin //MiaCosa @Chrissstrahl
 	level.player_chute notsolid
 	level.player_chute hide
 
@@ -536,15 +542,15 @@ PlayerParachute:
 	$hitme_parachute delete
 	$player_parachute_spot delete
 
-	End
+End
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 	// FIXME: DISABLED
 JiggleCamera local.time:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 	local.jiggletime = level.time + local.time
 	
-	local.angles = $player.angles
+	local.angles = $player.angles //MiaCosa @Chrissstrahl
 	
 	local.pitch = 0
 	local.yaw = 0
@@ -569,12 +575,12 @@ JiggleCamera local.time:
 				
 		local.yaw = local.yaw + ( local.animspeed * 4)
 		
-		$player.viewangles = (local.pitch local.yaw 0)
+		$player.viewangles = (local.pitch local.yaw 0) //MiaCosa @Chrissstrahl
 		
 		waitframe
 	}
 
-	$player.viewangles = local.angles
+	$player.viewangles = local.angles //MiaCosa @Chrissstrahl
 /*
 	local.jiggletime = level.time + 1
 
@@ -611,54 +617,54 @@ JiggleCamera local.time:
 */
 	
 end
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 // FIXME: DISABLED
 ClampYaw local.amount:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 	
 	local.clamptime = level.time + local.amount
-	local.angles = $player.angles
-	local.yaw = $player.angles[1]
+	local.angles = $player.angles //MiaCosa @Chrissstrahl
+	local.yaw = $player.angles[1] //MiaCosa @Chrissstrahl
 	local.oldyaw = local.yaw
 	while (local.clamptime > level.time)
 	{
-		local.y = $player.angles[1]
-		local.pitch = $player.angles[0]
+		local.y = $player.angles[1] //MiaCosa @Chrissstrahl
+		local.pitch = $player.angles[0] //MiaCosa @Chrissstrahl
 				
 		local.yaw = local.y
 
-		$player.viewangles = (local.pitch local.yaw 0)
+		$player.viewangles = (local.pitch local.yaw 0) //MiaCosa @Chrissstrahl
 
 		local.oldyaw = local.yaw
 		
 		waitframe
 	}
 
-	$player.viewangles = local.angles
+	$player.viewangles = local.angles //MiaCosa @Chrissstrahl
 
 end
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 DisplayYawPitch:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	while (1)
 	{
-		dprintln "Yaw=" $player.viewangles[0] " Pitch=" $player.viewangles[1]
+		dprintln "Yaw=" $player.viewangles[0] " Pitch=" $player.viewangles[1] //MiaCosa @Chrissstrahl
 		wait 0.2
 	}
 
-	end
+end
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 PlayerFaceYawPitch local.yaw_dest local.pitch_dest local.yaw_speed local.pitch_speed:
 //
 //	Forces the player's head to turn to the passed yaw and pitch
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 
-	local.yaw = $player.viewangles[0]
-	local.pitch = $player.viewangles[1]
+	local.yaw = $player.viewangles[0] //MiaCosa @Chrissstrahl
+	local.pitch = $player.viewangles[1] //MiaCosa @Chrissstrahl
 
 	if ( local.yaw_dest==NIL )
 		local.yaw_dest = local.yaw
@@ -725,28 +731,28 @@ PlayerFaceYawPitch local.yaw_dest local.pitch_dest local.yaw_speed local.pitch_s
 			}
 		}
 
-		$player.viewangles = ( local.yaw local.pitch $player.viewangles[2] )
+		$player.viewangles = ( local.yaw local.pitch $player.viewangles[2] ) //MiaCosa @Chrissstrahl
 
 		waitframe
 	}
 
-	end
+end
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 doEQ:
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 //	wait 0.2
 	exec global/earthquake.scr .35 10 0 0
 	exec global/earthquake.scr .23 6 0 0
 	exec global/earthquake.scr 1 1 0 0
 	exec global/earthquake.scr 1.25 .3 0 1
 
-	end
-//--------------------------------------------------------------
+end
+//------------------------------------------------------------------------------------------------------------------
 RestrictView:
 //
 //	Make sure player can't look behind him...
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	// don't let player mess with the mouse while we do this...
 	freezeplayer
@@ -759,7 +765,7 @@ RestrictView:
 	releaseplayer
 
 	level.turret = spawn models/statweapons/camera_restrict.tik
-	level.turret.origin = $player.origin
+	level.turret.origin = $player.origin //MiaCosa @Chrissstrahl
 
 	level.turret notsolid
 	level.turret.angles = "90 0 0"
@@ -775,7 +781,7 @@ RestrictView:
 
 	level.turret setPlayerUsable 1
 	level.turret maxuseangle 180	// make sure the doUse command works!
-	level.turret doUse $player
+	level.turret doUse $player //MiaCosa @Chrissstrahl
 	level.turret setPlayerUsable 0
 
 	level.turret glue $playerspot_plane
@@ -784,27 +790,27 @@ RestrictView:
 
 	level.player_chute show
 
-	end
+end
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 UnrestrictView:
 //	allow player to look normally when they detach from the
 //	parachute...
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	level.turret setPlayerUsable 1
-	level.turret doUse $player
+	level.turret doUse $player //MiaCosa @Chrissstrahl
 	level.turret setPlayerUsable 0
 	level.turret delete
 	level.turret = NULL
 
 
-	end
+end
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 RockTurretSequence:
 //	rock the turret using this script
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	//                     +-------------- duration of constant jitter
 	//                     |
@@ -818,13 +824,13 @@ RockTurretSequence:
 	//dprintln "switching to heavy shake"
 	waitthread RockTurret 15.0 3.0 5.0
 
-	end
+end
 
 
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 RockTurret local.duration local.lomag local.himag:
 //	single turret rock
-//--------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 
 	local.expire = level.time + local.duration
 
@@ -835,4 +841,4 @@ RockTurret local.duration local.lomag local.himag:
 		wait 0.15
 	}
 
-	end
+end

@@ -11,7 +11,10 @@
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//--------------------------------------------------------------------------------
 main:
+//--------------------------------------------------------------------------------
 end
 
 
@@ -21,8 +24,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-shoreguy_run local.delay:
 
+//--------------------------------------------------------------------------------
+shoreguy_run local.delay:
+//--------------------------------------------------------------------------------
 	if ( local.delay == NIL )
 	{
 		local.delay = 0.5
@@ -43,8 +48,10 @@ end
 // 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-wallcharge local.charge local.timer local.exploder:
 
+//--------------------------------------------------------------------------------
+wallcharge local.charge local.timer local.exploder:
+//--------------------------------------------------------------------------------
 	if ( level.objective4 == 1 )
 	{
 		self remove
@@ -84,8 +91,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-gazebosafety:
 
+//--------------------------------------------------------------------------------
+gazebosafety:
+//--------------------------------------------------------------------------------
 	wait 2.0
 
 	while (1)
@@ -131,7 +140,7 @@ gazebosafety:
 					if ( !(isAlive $gazebogunner) )
 					{
 						self waitthread global/friendly.scr::friendlythink
-						end
+			end
 					}
 				}
 			}
@@ -153,8 +162,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-fix_exploders:
 
+//--------------------------------------------------------------------------------
+fix_exploders:
+//--------------------------------------------------------------------------------
 	if ( $t1l3explodertrigger )
 	{
 		local.fixes = $t1l3explodertrigger.size
@@ -176,8 +187,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-t1l3_exploder:
 
+//--------------------------------------------------------------------------------
+t1l3_exploder:
+//--------------------------------------------------------------------------------
 	if ( (self.set == 4) && (level.wall1destroyed == 0) )
 	{
 		thread global/exploder.scr::explode self.set
@@ -204,8 +217,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-initcommfloor:
 
+//--------------------------------------------------------------------------------
+initcommfloor:
+//--------------------------------------------------------------------------------
 	local.count = $commfloorafter.size
 	for ( local.i = 1; local.i <= local.count; local.i++ )
 	{
@@ -221,8 +236,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-swapcommfloor:
 
+//--------------------------------------------------------------------------------
+swapcommfloor:
+//--------------------------------------------------------------------------------
 	local.count = $commfloorafter.size
 	for ( local.i = 1; local.i <= local.count; local.i++ )
 	{
@@ -244,8 +261,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-behealthy local.delay:
 
+//--------------------------------------------------------------------------------
+behealthy local.delay:
+//--------------------------------------------------------------------------------
 	if ( local.delay != NIL )
 	{
 		wait local.delay
@@ -285,16 +304,18 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-kalimbasays:
 
+//--------------------------------------------------------------------------------
+kalimbasays:
+//--------------------------------------------------------------------------------
 	if ( (level.kalimbasays == NIL) || (level.kalimbasays == 0) )
 	{
 		level.kalimbasays = 1
 		fadeout 0.25 0 0 0 1
 		drawhud 0
 
-		local.viewangles = $player.viewangles
-		local.origin = $player.origin
+		local.viewangles = $player.viewangles //MiaCosa @chrissstrahl
+		local.origin = $player.origin //MiaCosa @chrissstrahl
 
 		local.strlen = 70
 		local.str = ""
@@ -351,7 +372,7 @@ kalimbasays:
 
 		local.hudelement = 255
 
-		huddraw_virtualsize local.hudelement 1
+		huddraw_virtualsize local.hudelement 1 //MiaCosa @chrissstrahl
 		huddraw_string local.hudelement local.str
 		huddraw_align local.hudelement left top
 		huddraw_font local.hudelement handle-22
@@ -360,14 +381,14 @@ kalimbasays:
 
 		for (local.i = 0 ; local.i <= 1 ; local.i += .04)
 		{
-			huddraw_alpha local.hudelement local.i
+			huddraw_alpha local.hudelement local.i //MiaCosa @chrissstrahl
 			waitframe
 		}
 		huddraw_alpha local.hudelement 1.0
 
-		while ( $player.fireheld == 0 )
+		while ( $player.fireheld == 0 ) //MiaCosa @chrissstrahl
 		{
-			$player.viewangles = local.viewangles
+			$player.viewangles = local.viewangles//MiaCosa @chrissstrahl
 			$player.origin = local.origin
 			waitframe
 		}
@@ -375,7 +396,7 @@ kalimbasays:
 		fadein 1.5 0 0 0 1
 		for (local.i = 1 ; local.i >= 0 ; local.i -= .04)
 		{
-			huddraw_alpha local.hudelement local.i
+			huddraw_alpha local.hudelement local.i //MiaCosa @chrissstrahl
 			waitframe
 		}
 		drawhud 1
@@ -391,7 +412,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//--------------------------------------------------------------------------------
 pushfarplane local.min local.max local.time local.wait:
+//--------------------------------------------------------------------------------
 
 //	dprintln "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ setting farplane to " local.min
 	$world farplane local.min
@@ -433,8 +457,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-aihider:
 
+//--------------------------------------------------------------------------------
+aihider:
+//--------------------------------------------------------------------------------
 	local.bias = self.threatbias
 
 	self notsolid
@@ -459,8 +485,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-captainsafety:
 
+//--------------------------------------------------------------------------------
+captainsafety:
+//--------------------------------------------------------------------------------
 	self say 13C207_CaptDial08
 	wait 2.5
 

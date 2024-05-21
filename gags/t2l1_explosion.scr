@@ -25,7 +25,7 @@ main:
 	level.nTreeDeathWaitTime = 4
 	level.nCrashTruckSpawnTime = 5
 
-	End
+End
 
 
 
@@ -69,7 +69,7 @@ fuel_tank_death:
 
 		// kill the nebelwerfer operator...
 	if ( isAlive $nebeller2 )
-		$nebeller2 damage $player 15000 $world (0 0 0) (0 0 0) (0 0 0) 0 9 0 0
+		$nebeller2 damage $player 15000 $world (0 0 0) (0 0 0) (0 0 0) 0 9 0 0 //MiaCosa @chrissstrahl
 
 end
 
@@ -88,7 +88,7 @@ DoCrashingTruck:
 	// Time to spawn...
 	thread global/ai.scr::spawn 17
 
-	End
+End
 
 // --------------------------------------------------------------------------------
 CrashTruck:
@@ -101,7 +101,7 @@ CrashTruck:
 	
 	self stop
 
-	End
+End
 
 // --------------------------------------------------------------------------------
 DestroyTree:

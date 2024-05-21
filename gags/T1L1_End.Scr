@@ -48,7 +48,7 @@ InitWindmill:
 	$windmillguy physics_off
 	$windmillguy.origin = $windmillguyorigin.origin
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 InitNazi:
@@ -67,7 +67,7 @@ InitNazi:
 	self rendereffects "+dontdraw"
 	self ai_off
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 StartGag:
@@ -100,13 +100,13 @@ StartGag:
 
 	$windmillguy thread global/LoopAnim.Scr::LoopAnim 11A001_DeadParaHanging
 
-	end
+end
 
-//-------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 DeathCheck:
 //
 // death check for the captain...
-//-------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 	
 	self waittill death
 
@@ -114,9 +114,10 @@ DeathCheck:
 	iprintlnbold "You failed the mission."
 //	fadeout 3 0 0 0 1
 	wait 3
-	missionfailed
+	//missionfailed //MiaCosa
+	exec coop_mod/replace.scr::missionfailed
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 NaziPainCheck:
@@ -126,7 +127,7 @@ NaziPainCheck:
 	self waittill pain
 	thread DoBritishAttack 1
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 NaziDeathCheck:
@@ -140,7 +141,7 @@ NaziDeathCheck:
 
 	thread DoBritishAttack 1
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 NaziEnemyCheck:
@@ -150,7 +151,7 @@ NaziEnemyCheck:
 	self waittill hasenemy
 	thread DoBritishAttack 1
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 ProximityCheck:
@@ -163,7 +164,7 @@ ProximityCheck:
 	// spawn the attack if it hasn't already started...
 	thread DoBritishAttack 0
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 WindmillGuyShot:
@@ -183,11 +184,12 @@ WindmillGuyShot:
 	// go back to our hanging anim..
 	$windmillguy thread global/LoopAnim.Scr::LoopAnim 11A001_DeadParaHanging
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 ShootAtWindmillGuy:
 //---------------------------------------------------------------------------------
+
 	self.shooting_thread = local
 
 //	self thread global/LoopAnim.Scr::LoopAnim 11G011_Nazi02LookIdle
@@ -202,7 +204,7 @@ ShootAtWindmillGuy:
 		$windmillguy thread WindmillGuyShot
 	}
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 DoBritishAttack local.player_did_it:
@@ -250,7 +252,7 @@ DoBritishAttack local.player_did_it:
 		thread NaziSmokeReaction
 	}
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 BritishSmoke:
@@ -299,12 +301,13 @@ NaziSmokeReaction:
 		}
 	}
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 NaziReaction local.anim:
 // play reaction anim and enable ai...
 //---------------------------------------------------------------------------------
+
 //	self anim local.anim
 //	self waittill animdone
 	
@@ -314,12 +317,13 @@ NaziReaction local.anim:
 	wait 0.5
 	
 	self exec global/enable_ai.scr
-	end
+end
 
 //---------------------------------------------------------------------------------
 Nazi3Reaction:
 // run to our weapon pile, pickup the anim, do a reaction anim, and enable ai...
 //---------------------------------------------------------------------------------
+
 //	if ( level.player_did_it==0 )
 //		wait 0.5
 
@@ -339,7 +343,7 @@ Nazi3Reaction:
 //	self anim 11G022_Nazi03React
 //	self waittill animdone
 	self exec global/enable_ai.scr
-	end
+end
 
 //---------------------------------------------------------------------------------
 BritishGo:
@@ -370,11 +374,12 @@ BritishGo:
 
 //	level.cappy thread CappyWaitForPlayer
 	
-	end
+end
 
 //---------------------------------------------------------------------------------
 BritEnableAI local.time local.start local.fire_delay local.maxshots:
 //---------------------------------------------------------------------------------
+
 	self.ainododge = 1
 	self.ainostrafe = 1
 	self.ainobackward = 1
@@ -384,7 +389,7 @@ BritEnableAI local.time local.start local.fire_delay local.maxshots:
 	
 	self waitthread AttackNazis local.start local.fire_delay local.maxshots
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 BritPickTarget:
@@ -403,16 +408,16 @@ BritPickTarget:
 	for ( local.i=local.rand;local.i<=5;local.i++ )
 	{
 		if ( isAlive level.nazi[local.i] )
-			end local.i
+		end local.i
 	}
 
 	for ( local.i=1;local.i<=local.rand;local.i++ )
 	{
 		if ( isAlive level.nazi[local.i] )
-			end local.i
+		end local.i
 	}
 
-	end 0
+end 0
 
 //---------------------------------------------------------------------------------
 AttackNazi local.nazi local.fire_pause local.maxshots:
@@ -439,7 +444,7 @@ AttackNazi local.nazi local.fire_pause local.maxshots:
 //		wait local.fire_pause
 	}
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 AttackNazis local.start local.fire_pause local.maxshots:
@@ -461,7 +466,7 @@ AttackNazis local.start local.fire_pause local.maxshots:
 	self.no_idle = 0
 	self aimat NULL
 
-	end
+end
 
 
 //---------------------------------------------------------------------------------
@@ -469,6 +474,7 @@ CappyWaitForPlayer:
 //
 //	wait for the player and tell them hello.  (when all germans are dead)
 //---------------------------------------------------------------------------------
+
 	local.done = 0
 
 	while(local.done == 0)
@@ -483,9 +489,10 @@ CappyWaitForPlayer:
 			level.brit1 physics_on
 			level.brit2 physics_on
 
-			self turnto $player
-			local.dist = vector_length($player.origin - self.origin)
-			if (local.dist < 256)
+			//self turnto $player //MiaCosa
+			self exec coop_mod/replace.scr::turnto //MiaCosa - self was missing
+			local.dist = vector_length($player.origin - self.origin) //MiaCosa @Chrissstrahl
+			if (local.dist < 256)	
 				local.done = 1
 		}
 		wait 0.25
@@ -497,7 +504,7 @@ CappyWaitForPlayer:
 	self waittill animdone
 	thread DoEndTank
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 BritRunTo local.dest:
@@ -509,7 +516,7 @@ BritRunTo local.dest:
 	if ( self==level.cappy )
 		self thread CappyWaitForPlayer
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 SpawnBrit local.type local.origin local.gun local.targetname:
@@ -521,7 +528,7 @@ SpawnBrit local.type local.origin local.gun local.targetname:
 	local.guy.origin = local.origin
 	local.guy gun local.gun
 
-	end local.guy
+end local.guy
 
 //---------------------------------------------------------------------------------
 ShootAt local.target:
@@ -529,7 +536,7 @@ ShootAt local.target:
 
 	self setaimtarget local.target 1
 
-	end
+end
 
 
 //------------------------------------------------------------------------------
@@ -543,7 +550,7 @@ InitEndTank:
 
 	level.end_tank_destroyed = 0
 
-	End
+End
 
 //------------------------------------------------------------------------------
 DoEndTank:
@@ -606,7 +613,7 @@ DoEndTank:
 	wait 2.0
 	level.cappy thread CappyFireAtTank $end_tank
 
-	End
+End
 
 //------------------------------------------------------------------------------
 TakeCover local.time local.dest:
@@ -616,7 +623,7 @@ TakeCover local.time local.dest:
 	self waitthread RunTo local.dest
 	self thread FireAtTank $end_tank
 
-	end
+end
 
 //------------------------------------------------------------------------------
 EndTankGo:
@@ -642,7 +649,7 @@ EndTankGo:
 	self waittill drive
 	self stop
 
-	End
+End
 
 //------------------------------------------------------------------------------
 EndTankAttack0:
@@ -668,7 +675,7 @@ EndTankAttack0:
 	}
 
 	$tree_collsion_gag notsolid
-	End
+End
 
 
 //------------------------------------------------------------------------------
@@ -694,13 +701,14 @@ EndTankAttack1:
 		}
 	}
 
-	End
+End
 
 //------------------------------------------------------------------------------
 EndTankAttack2:
 //
 //	Fire third shot that takes out the captain...
 //------------------------------------------------------------------------------
+
 	$tiger anim temp_smoke
 	$tiger anim sizzle
 //	$tiger vehicleanim sizzle
@@ -726,14 +734,14 @@ EndTankAttack2:
 		//level.brit2 damage self 3000 self (0 0 0) (0 0 0) (0 0 0) 0 9 0 0
 	}
 
-	End
+End
 
 //------------------------------------------------------------------------------
 CappyFireAtTank local.tank:
 //------------------------------------------------------------------------------
 
 	if ( level.shoot_at_end_tank==0 )
-		end
+			end
 
 	self exec global/crouch.scr
 
@@ -765,13 +773,13 @@ CappyFireAtTank local.tank:
 		self aimat local.tank
 	}
 
-	End
+End
 //------------------------------------------------------------------------------
 FireAtTank local.tank:
 //------------------------------------------------------------------------------
 
 	if ( level.shoot_at_end_tank==0 )
-		end
+			end
 
 	self exec global/crouch.scr
 
@@ -803,7 +811,7 @@ FireAtTank local.tank:
 		self aimat local.tank
 	}
 
-	End
+End
 
 //------------------------------------------------------------------------------
 FireAtTankDone:
@@ -822,7 +830,7 @@ FireAtTankDone:
 	wait 0.5
 //	self exec global/enable_ai.scr
 
-	End
+End
 
 //------------------------------------------------------------------------------
 EndTankDestroyed:
@@ -854,7 +862,7 @@ EndTankDestroyed:
 
 	level.cappy thread CappyFinishLevel
 
-	End
+End
 
 //------------------------------------------------------------------------------
 Regroup local.time local.dest:
@@ -862,13 +870,16 @@ Regroup local.time local.dest:
 
 	wait local.time
 	self waitthread RunTo local.dest
-	self lookat $player
-	self turnto $player
+	//self lookat $player //MiaCosa
+	//self turnto $player //MiaCosa
+	self exec coop_mod/replace.scr::turntolookat 1
+	
+
 	wait 0.4 
 	self turnto NULL
 	self lookat NULL
 
-	End
+End
 
 //------------------------------------------------------------------------------
 CappyFinishLevel:
@@ -886,14 +897,35 @@ CappyFinishLevel:
 		wait 1
 	}
 
+
+	//Chrissstrahl - updated to make this waiting loop work with coop
 	local.done = 0
 	while(local.done == 0)
 	{
-		self turnto $player
-		local.dist = vector_length($player.origin - self.origin)
-		if (local.dist < 250)
-			local.done = 1
-		wait 0.25
+		//self turnto $player //MiaCosa
+		local.player = exec coop_mod/replace.scr::player_closestTo self NIL //Chrissstrahl - grab closest player to self
+		
+		//Chrissstrahl - if returned player does exist
+		if(local.player){
+			self turnto local.player
+			
+			//Chrissstrahl - get distance between local.player and self
+			local.dist = vector_length(local.player.origin - self.origin)
+			
+			//Chrissstrahl - if distance between local.player and self is less or equal 250
+			if(local.dist <= 250){
+				local.done = 1
+			}else{
+				wait 2
+			}
+			
+			//wait a quarter sec each iteration
+			wait 0.25
+		}
+		//Chrissstrahl - no player on server, wait longer to reduce usage of compute resources
+		else{
+			wait 2
+		}
 	}
 
 	waitthread global/objectives.scr::add_objectives 3 3
@@ -916,40 +948,57 @@ CappyFinishLevel:
 	wait 4
 	exec global/missioncomplete.scr t1l2 1	
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 LockDownPlayer:
 //---------------------------------------------------------------------------------
-	$player takeall
-	$player physics_off
+
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
+	
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
 	drawhud 0
 	thread ForcedEnd
-	end
+end
 
 //---------------------------------------------------------------------------------
 UnlockPlayer:
 //---------------------------------------------------------------------------------
+
 	drawhud 1
-	$player physics_on
-	$player takeall
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
+	
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
 	// give him his weapons here..
-	$player item weapons/Webley_Revolver.tik 
-	$player item weapons/enfield.tik 
-	$player item weapons/sten.tik 
-	$player item weapons/mills_grenade.tik   
-	$player item weapons/M18_smoke_grenade.tik  
+	//$player item weapons/Webley_Revolver.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Webley_Revolver.tik
+	
+	//$player item weapons/enfield.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/enfield.tik
+	
+	//$player item weapons/sten.tik //MiaCosa 
+	exec coop_mod/replace.scr::item weapons/sten.tik
+	
+	//$player item weapons/mills_grenade.tik //MiaCosa 
+	exec coop_mod/replace.scr::item weapons/mills_grenade.tik
+	
+	//$player item weapons/M18_smoke_grenade.tik //MiaCosa  
+	exec coop_mod/replace.scr::item weapons/M18_smoke_grenade.tik
 
-	$player ammo pistol 32
+	$player ammo pistol 32 //MiaCosa @Chrissstrahl
 	$player ammo smg 128
 	$player ammo rifle 50
 	$player ammo smokegrenade 3
 	$player ammo grenade 3
 
-	$player useweaponclass smg
+	$player useweaponclass smg //MiaCosa @Chrissstrahl
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 DeleteWeapons:
@@ -960,7 +1009,7 @@ DeleteWeapons:
 	for (local.i=1;local.i<$pickup_delete.size+1;local.i++)
 		$pickup_delete[local.i] remove
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 GetWeapons:
@@ -988,10 +1037,15 @@ GetWeapons:
 
 	wait 0.2
 
-	self turnto $player
-	self lookat $player
+	//self turnto $player //MiaCosa
+	//self lookat $player //MiaCosa
+	self exec coop_mod/replace.scr::turntolookat 1
+	
+	
 	self.movedoneradius = 90
-	self runto $player
+	//self runto $player //MiaCosa
+	self exec coop_mod/replace.scr::runtoClosest
+	
 	self waittill movedone
 
 
@@ -1009,11 +1063,12 @@ GetWeapons:
 
 	exec global/missioncomplete.scr t1l2 1	
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 Brit2FinishLevel:
 //---------------------------------------------------------------------------------
+
 	self exec global/disable_ai.scr
 
 	//how long before Billy runs for the level end
@@ -1025,7 +1080,7 @@ Brit2FinishLevel:
 	wait 4
 	exec global/missioncomplete.scr t1l2 1	
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 RunTo local.ent local.movedoneradius:
@@ -1035,7 +1090,7 @@ RunTo local.ent local.movedoneradius:
 	if ( local.ent==NIL || local.ent==NULL )
 	{
 		dprintln "RunTo: entity is NULL: " local.ent
-		End
+			End
 	}
 
 	if ( local.movedoneradius==NIL )
@@ -1064,7 +1119,7 @@ RunTo local.ent local.movedoneradius:
 	self.movedoneradius	= 250
 	self.distance = 250
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 ForcedEnd:
@@ -1073,4 +1128,4 @@ ForcedEnd:
 	wait 17
 	exec global/missioncomplete.scr t1l2 1	
 
-	end
+end

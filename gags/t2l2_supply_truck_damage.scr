@@ -17,8 +17,10 @@
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-main local.truck:
 
+//--------------------------------------------------------------------------------
+main local.truck:
+//--------------------------------------------------------------------------------
 	local.truck thread supply_truck_health_check
 
 end
@@ -30,8 +32,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-supply_truck_health_check:
 
+//--------------------------------------------------------------------------------
+supply_truck_health_check:
+//--------------------------------------------------------------------------------
 	// set the thresholds between damage states
 	local.thresh1 = 1500		// apply first damage state below this level
 	local.thresh2 = 1000		// apply second damage state below this level
@@ -76,8 +80,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-create_smoke local.org:
 
+//--------------------------------------------------------------------------------
+create_smoke local.org:
+//--------------------------------------------------------------------------------
 	// local.smoke = spawn "models/emitters/firesmoke.tik"
 	local.smoke = spawn "models/fx/SupplyTruck_dmg.tik"
 	local.smoke notsolid

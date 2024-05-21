@@ -39,8 +39,11 @@ DoBoatRide:
 	level.cappy.no_idle = 1
 
 	freezeplayer
-	$player physics_off
-	$player.viewangles = "0 270 0"
+	
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
+	$player.viewangles = "0 270 0" //MiaCosa @chrissstrahl
 
 	thread SpawnGun
 
@@ -54,10 +57,13 @@ DoBoatRide:
 
 	$playerspot_boat bind $boat
 
-	$player glue $playerspot_boat 0
-	$player notsolid
+	//$player glue $playerspot_boat 0 //MiaCosa
+	exec coop_mod/replace.scr::glue $playerspot_boat 0
+	
+	$player notsolid //MiaCosa @chrissstrahl
 
-	$player physics_on
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
 
 	wait 2
 	level.cappy thread DoCappy
@@ -279,8 +285,10 @@ AtDock:
 	$playerspot_boat move
 	wait local.uptime
 
-	$player unglue
-	$player solid
+	//$player unglue //MiaCosa
+	exec coop_mod/replace.scr::unglue
+	
+	$player solid //MiaCosa @chrissstrahl
 
 end
 

@@ -15,8 +15,10 @@
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-main local.flakcannon local.flakcharge:
 
+//--------------------------------------------------------------------------------
+main local.flakcannon local.flakcharge:
+//--------------------------------------------------------------------------------
 	level.flakcannon = local.flakcannon
 	level.flakcharge = local.flakcharge
 
@@ -34,8 +36,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-charge_used:
 
+//--------------------------------------------------------------------------------
+charge_used:
+//--------------------------------------------------------------------------------
 	thread global/democharge.scr::charge_switch 1 0
 
 end
@@ -46,9 +50,13 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-lock_cannon:
 
-	level.flakcannon lock
+//--------------------------------------------------------------------------------
+lock_cannon:
+//--------------------------------------------------------------------------------
+
+	level.flakcannon lock //MiaCosa @chrissstrahl
+	
 
 end
 
@@ -58,8 +66,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-enable_charge:
 
+//--------------------------------------------------------------------------------
+enable_charge:
+//--------------------------------------------------------------------------------
 	level.flakcharge show
 
 end
@@ -70,18 +80,20 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-flak_destroyed:
 
+//--------------------------------------------------------------------------------
+flak_destroyed:
+//--------------------------------------------------------------------------------
 	level.flakdestroyed = 1
 	if ( level.captain && (isAlive level.captain) )
 	{
 		level.captain waitthread global/friendly.scr::friendlythink
 		level.captain exec global/enable_ai.scr
 
-		local.dist = vector_length(level.captain.origin - $player.origin)
+		local.dist = vector_length(level.captain.origin - $player.origin) //MiaCosa @chrissstrahl
 		while ( (isAlive level.captain) && (local.dist > 160) )
 		{
-			local.dist = vector_length(level.captain.origin - $player.origin)
+			local.dist = vector_length(level.captain.origin - $player.origin) //MiaCosa @chrissstrahl
 			waitframe
 		}
 		thread airdropdialog
@@ -95,8 +107,10 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-airdropdialog:
 
+//--------------------------------------------------------------------------------
+airdropdialog:
+//--------------------------------------------------------------------------------
 	if ( level.airdropgag == 0 )
 	{
 		level.airdropgag = 1

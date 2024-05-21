@@ -50,7 +50,8 @@ $Flak88A_turret0 maxyawoffset 20.0
 $Flak88A_turret0 pitchcaps "20 10 0"
 $Flak88A.collisionent = $flak88_collision
 $Flak88A_turret0.collisionent = $flak88_turret_collision
-$Flak88A lock
+$Flak88A lock //MiaCosa @chrissstrahl
+
 
 $Flak88B_turret0 turnspeed 15
 $Flak88B_turret0 pitchspeed 7.5
@@ -59,7 +60,7 @@ $Flak88B_turret0 firedelay 4
 $Flak88B_turret0 pitchcaps "20 10 0"
 $Flak88B.collisionent = $flak88_collision
 $Flak88B_turret0.collisionent = $flak88_turret_collision
-$Flak88B lock
+$Flak88B lock //MiaCosa @chrissstrahl
 
 // update damage for the flak88 throbbing boxes...
 $Flak1ThrobbingBox SetDamage 2000
@@ -88,7 +89,8 @@ level.friendly2.targetname = Friendly2
 level.friendly3.targetname = Friendly3
 
 
-$player stufftext "tmstart sound/music/Emmerich.mp3"
+//$player stufftext "tmstart sound/music/Emmerich.mp3" //MiaCosa
+exec coop_mod/replace.scr::tmstart "sound/music/Emmerich.mp3"
 
 // make sure our friendlies don't die....
 /*
@@ -111,7 +113,8 @@ $FlakGerman4 thread WaitForFlakDeath2
 $FlakGerman5 thread WaitForFlakDeath2
 $FlakGerman6 thread WaitForFlakDeath2
 
-$player item items/binoculars.tik
+//$player item items/binoculars.tik //MiaCosa
+exec coop_mod/replace.scr::item items/binoculars.tik
 
 $MG42Guy type_idle machinegunner
 $MG42Guy type_attack machinegunner
@@ -138,10 +141,11 @@ $biggate_lockedtrigger thread global/door_locked.scr::door_locked_barn
 $lastdoor_lockedtrigger thread global/door_locked.scr::door_locked_wood1
 $lastgate_lockedtrigger thread global/door_locked.scr::door_locked_barn
 
-$player fullheal
+//$player fullheal //MiaCosa
+exec coop_mod/replace.scr::fullheal
 
 	freezeplayer
-	$player.viewangles = "0 160 0"
+	$player.viewangles = "0 160 0" //MiaCosa @chrissstrahl
 	//dprintln "camera should be frozen"
 	wait 3
 	releaseplayer
@@ -209,8 +213,9 @@ End
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+//-------------------------------------------------------------------
 Patrol1Go:
-
+//-------------------------------------------------------------------
 	wait 2
 	$Patrol1 thread Patrol1walking
 	$Patrol1b thread Patrol1bwalking
@@ -218,7 +223,9 @@ Patrol1Go:
 
 end
 
+//-------------------------------------------------------------------
 Patrol1walking:
+//-------------------------------------------------------------------
 
 	self walkto $Patrol1Path2
 	self waittill movedone
@@ -235,7 +242,9 @@ Patrol1walking:
 
 end
 
+//-------------------------------------------------------------------
 Patrol1bwalking:
+//-------------------------------------------------------------------
 
 	self walkto $Patrol1Path2b
 	self waittill movedone
@@ -261,8 +270,9 @@ end
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-
+//-------------------------------------------------------------------
 Patrol2walking:
+//-------------------------------------------------------------------
 
 	wait 25
 	self walkto $Patrol2Path
@@ -279,49 +289,64 @@ end
 // FIRST HOUSE TRIGGERS
 //_____________________
 
+//-------------------------------------------------------------------
 spawnset01:
+//-------------------------------------------------------------------
+
 //	iprintln "T01: WINDMILL SNIPER A CREATED, SNIPER B DELETED"
 	thread global/ai.scr::spawn 01
 	$triggerset02 delete
 end
 
-
+//-------------------------------------------------------------------
 spawnset02:
+//-------------------------------------------------------------------
+
 //	iprintln "T02: WINDMILL SNIPER B CREATED, SNIPER A DELETED"
 	thread global/ai.scr::spawn 02
 	$triggerset01 delete
 end
 
-
+//-------------------------------------------------------------------
 spawnset03:
+//-------------------------------------------------------------------
+
 //	iprintln "T03: FIRST HOUSE GERMANS CREATED, CROSSFIRE DELETED"
 	thread global/ai.scr::spawn 03
 	$triggerset05 delete
 end
 
-
+//-------------------------------------------------------------------
 spawnset04:
+//-------------------------------------------------------------------
+
 //	iprintln "T04: FIRST GARAGE GERMANS CREATED, CROSSFIRE DELETED"
 	thread global/ai.scr::spawn 04
 	$triggerset06 delete
 end
 
-
+//-------------------------------------------------------------------
 spawnset05:
+//-------------------------------------------------------------------
+
 //	iprintln "T05: FIRST HOUSE CROSSFIRE GERMANS CREATED, FIRST HOUSE DELETED"
 	thread global/ai.scr::spawn 05
 	$triggerset03 delete
 end
 
-
+//-------------------------------------------------------------------
 spawnset06:
+//-------------------------------------------------------------------
+
 //	iprintln "T06: FIRST GARAGE CROSSFIRE GERMANS CREATED, FIRST GARAGE DELETED"
 	thread global/ai.scr::spawn 06
 	$triggerset04 delete
 end
 
-
+//-------------------------------------------------------------------
 spawnset07:
+//-------------------------------------------------------------------
+
 //	iprintln "T07: FIRST HOUSE GERMAN PATROLLERS CREATED"
 	thread global/ai.scr::spawn 07
 end
@@ -330,21 +355,30 @@ end
 // FIRST ARTILLERY GUN TRIGGERS
 //_____________________________
 
+//-------------------------------------------------------------------
 spawnset08:
+//-------------------------------------------------------------------
+
 //	iprintln "T08: ARTILLERY BARN SQUAD 1-3 CREATED, AMBUSH DELETED"
 	thread global/ai.scr::spawnset 08 "barn_outside_guys"
 	$triggerset10 delete
 end
 
-
+//-------------------------------------------------------------------
 spawnset09:
+//-------------------------------------------------------------------
+
+
 //	iprintln "T09: ARTILLERY BARN SQUAD 4-6 HOUSE REAR CREATED, FRONT DELETED"
 	thread global/ai.scr::spawnset 09 "barn_outside_guys"
 	$triggerset11 delete
 end
 
 
+//-------------------------------------------------------------------
 spawnset10:
+//-------------------------------------------------------------------
+
 //	iprintln "T10: ARTILLERY BARN SQUAD AMBUSH CREATED, 1-3 & 4-6 DELETED"
 	thread global/ai.scr::spawnset 10 "barn_outside_guys"
 	$triggerset08 delete
@@ -352,7 +386,10 @@ spawnset10:
 end
 
 
+//-------------------------------------------------------------------
 spawnset11:
+//-------------------------------------------------------------------
+
 //	iprintln "T11: ARTILLERY BARN SQUAD 4-6 HOUSE FRONT CREATED, REAR DELETED"
 	thread global/ai.scr::spawnset 11 "barn_outside_guys"
 	$triggerset09 delete
@@ -362,47 +399,68 @@ end
 // AMBUSH BARN TRIGGERS
 //_____________________
 
+//-------------------------------------------------------------------
 spawnset12:
+//-------------------------------------------------------------------
+
 //	iprintln "T12: BARN CARDTABLE GERMANS CREATED"
 	thread global/ai.scr::spawn 12
 end
 
 
+//-------------------------------------------------------------------
 spawnset13:
+//-------------------------------------------------------------------
+
 //	iprintln "T13: BARN INTERIOR - CARDTABLE ENTRANCE GERMANS CREATED, MAIN DELETED"
 	thread global/ai.scr::spawn 13
 	$triggerset14 delete
 end
 
 
+//-------------------------------------------------------------------
 spawnset14:
+//-------------------------------------------------------------------
+
 //	iprintln "T14: BARN INTERIOR - MAIN ENTRANCE GERMANS CREATED, CARDTABLE DELETED"
 	thread global/ai.scr::spawn 14
 	$triggerset13 delete
 end
 
 
+//-------------------------------------------------------------------
 spawnset15:
+//-------------------------------------------------------------------
+
 //	iprintln "T15: BARN UPPER LEVEL - BARN TRIGGER GERMANS CREATED, OUTSIDE DELETED"
 	thread global/ai.scr::spawn 15
 	$triggerset16 delete
 end
 
+//-------------------------------------------------------------------
 spawnset16:
+//-------------------------------------------------------------------
+
 //	iprintln "T16: BARN UPPER LEVEL - OUTSIDE TRIGGER GERMANS CREATED, BARN DELETED"
 	thread global/ai.scr::spawn 16
 	$triggerset15 delete
 end
 
 
+//-------------------------------------------------------------------
 spawnset17:
+//-------------------------------------------------------------------
+
 //	iprintln "T17: BARN YARD GERMANS - INSIDE CREATED, HOUSE SIDE DELETED "
 	thread global/ai.scr::spawn 17
 	$triggerset18 delete
 end
 
 
+//-------------------------------------------------------------------
 spawnset18:
+//-------------------------------------------------------------------
+
 //	iprintln "T18: BARN YARD GERMANS - OUTSIDE CREATED, BARN SIDE DELETED"
 	thread global/ai.scr::spawn 18
 	$triggerset17 delete
@@ -413,7 +471,10 @@ end
 // FINAL COMPOUND TRIGGERS
 //________________________
 
+//-------------------------------------------------------------------
 spawnset19:
+//-------------------------------------------------------------------
+
 	exec global/autosave.scr 3
 //	iprintln "T19: COMPOUND WINDOW GERMANS CREATED"
 	wait 1.5
@@ -421,68 +482,96 @@ spawnset19:
 end
 
 
+//-------------------------------------------------------------------
 spawnset20:
+//-------------------------------------------------------------------
+
 //	iprintln "T20: COMPOUND BARN GERMANS CREATED"
 	thread global/ai.scr::spawn 20
 end
 
 
+//-------------------------------------------------------------------
 spawnset21:
+//-------------------------------------------------------------------
+
 //	iprintln "T21: COMPOUND HOUSE 1 GROUND GERMANS CREATED"
 	thread global/ai.scr::spawn 21
 end
 
 
+//-------------------------------------------------------------------
 spawnset22:
+//-------------------------------------------------------------------
+
 //	iprintln "T22: COMPOUND HOUSE 1 UPPER GERMANS CREATED"
 	thread global/ai.scr::spawn 22
 end
 
 
+//-------------------------------------------------------------------
 spawnset23:
+//-------------------------------------------------------------------
+
 //	iprintln "T23: COMPOUND HOUSE 2 GROUND GERMANS CREATED"
 	thread global/ai.scr::spawn 23
 end
 
 
+//-------------------------------------------------------------------
 spawnset24:
+//-------------------------------------------------------------------
+
 //	iprintln "T24: COMPOUND LIBRARY A GERMANS CREATED, B DELETED"
 	thread global/ai.scr::spawn 24
 	$triggerset25 delete
 end
 
+//-------------------------------------------------------------------
 spawnset25:
+//-------------------------------------------------------------------
+
 //	iprintln "T25: COMPOUND LIBRARY B GERMANS CREATED, A DELETED"
 	thread global/ai.scr::spawn 25
 	$triggerset24 delete
 end
 
 
+//-------------------------------------------------------------------
 spawnset26:
+//-------------------------------------------------------------------
 //	iprintln "T26: COMPOUND HOUSE 2 STAIRS GERMAN CREATED"
 	thread global/ai.scr::spawnset 26 upstairs_guys
 end
 
 
+//-------------------------------------------------------------------
 spawnset27:
+//-------------------------------------------------------------------
 //	iprintln "T27: COMPOUND HOUSE 2 UPPER GERMANS CREATED"
 	thread global/ai.scr::spawnset 27 upstairs_guys
 end
 
 
+//-------------------------------------------------------------------
 spawnset28:
+//-------------------------------------------------------------------
 //	iprintln "T28: COMPOUND HOUSE 2 CATWALK GERMANS CREATED"
 	thread global/ai.scr::spawnset 28 upstairs_guys
 end
 
 
+//-------------------------------------------------------------------
 spawnset29:
+//-------------------------------------------------------------------
 //	iprintln "T29: COMPOUND TENT GERMANS CREATED"
 	thread global/ai.scr::spawn 29
 end
 
 
+//-------------------------------------------------------------------
 spawnset00:
+//-------------------------------------------------------------------
 //	iprintln "spawnset00 trigger fired"
 	thread global/ai.scr::spawn 00
 	// $triggername delete
@@ -493,11 +582,12 @@ end
 // Jeff's Threads //
 ///////////////////
 
-//------------------------------------------------------------------
+
+//-------------------------------------------------------------------
 SpawnOutsideBarn:
 //
 //	tell cappy to do the spawn, then remove this trigger...
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 //	iprintln "SECOND HOUSE GERMANS CREATED"	
 
@@ -505,13 +595,13 @@ SpawnOutsideBarn:
 
 	self delete
 	
-	End
+End
 
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 WaitForFlakDeath:
 //
 // tells cappy to blow the flak88 when all these guys are dead...
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	level.nFlakGermans++
 
@@ -524,13 +614,12 @@ WaitForFlakDeath:
 		level.cappy thread gags/t1l2_cappy.scr::BlowFlak88
 	}
 
-	End
-
-//------------------------------------------------------------------
+End
+//-------------------------------------------------------------------
 WaitForFlakDeath2:
 //
 // tells cappy to stop covering fire when they're all dead...
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 
 	level.nFlakGermans2++
@@ -544,25 +633,30 @@ WaitForFlakDeath2:
 		level.cappy thread gags/t1l2_cappy.scr::CoverFireStop
 	}
 
-	End
+End
 
 //------------------------------------------------------------------
 Flak88GonnaGoBoom:
 //------------------------------------------------------------------
 
-	$player stufftext "tmstart sound/music/Gotha.mp3"
+	//$player stufftext "tmstart sound/music/Gotha.mp3" //MiaCosa
+	//exec coop_mod/replace.scr::tmstart "sound/music/Gotha.mp3" //Chrissstrahl - deactivated, looks like a dublicated command in the same frame
 
 	level.cappy thread gags/t1l2_cappy.scr::SpawnInvestigators
 	
 
-	$player stufftext "tmstart sound/music/Gotha.mp3"
+	//$player stufftext "tmstart sound/music/Gotha.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/Gotha.mp3"
+	
 	thread DeadFlakCollision
 	wait 10
 	thread global/exploder.scr::explode 7
 	earthquake 1 1 0 0
-	End
+End
 
+//-------------------------------------------------------------------
 DeadFlakCollision:
+//-------------------------------------------------------------------
 
 	wait 9.9
 	$Flak88A thread global/stationaryweapons.scr::SpawnCollision $flak88_destroyed_collision
@@ -575,14 +669,13 @@ DeadFlakCollision:
 	local.hurt_brush damage 37.5	// 5 % of 750
 	local.hurt_brush wait 1
 
-	end
+end
 
-
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 Objective1Complete:
 //
 //	Trigger sent via ThrobbingBox
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 //	$Objective1 text "Locate and Destroy Artillery Emplacements[1 remaining]"
 	$Objective1.target = $Objective2.target
@@ -593,13 +686,13 @@ Objective1Complete:
 
 	level.nRequiredObjectives--
 		
-	End
+End
 
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 Objective2Complete:
 //
 //	Trigger sent via ThrobbingBox
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	$Flak88B thread global/stationaryweapons.scr::SpawnCollision $flak88_destroyed_collision
 	$Objective2 text "Locate and Destroy Artillery Emplacements[0 remaining]"
@@ -622,18 +715,18 @@ Objective2Complete:
 
 
 
-	End
+End
 
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 Objective3Complete:
 //
 //	Trigger sent via trigger_multiple
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	if ( level.nRequiredObjectives!=0 )
 	{
 //		dprintln "Not all objectives are complete!"
-		End
+End
 	}
 
 	self delete
@@ -641,13 +734,13 @@ Objective3Complete:
 	$Objective3 Complete
 	exec global/missioncomplete.scr t1l3 1
 
-	end
+end
 
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 runandjumpguy:
 //
 //	This trigger tells friendly2 to go and jump over the wall.
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	if ( level.bJumpOverWall==1 )
 	{
@@ -660,9 +753,9 @@ runandjumpguy:
 	}
 
 
-	End
+End
 
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 UnderBridgeTrigger:
 //
 //	Just tell the captain to run to his grenade spot...
@@ -688,7 +781,7 @@ UnderBridgeTrigger:
 
 	self delete
 
-	End
+End
 
 //------------------------------------------------------------------
 MG42Trigger:
@@ -700,7 +793,7 @@ MG42Trigger:
 
 	if (parm.other!=level.friendly3 && parm.other!=level.friendly2)
 	{
-		End
+End
 	}
 
 	self delete
@@ -714,7 +807,8 @@ MG42Trigger:
 	$machinegun turnon
 	level.cappy thread gags/t1l2_cappy.scr::DoFlushOut
 
-	$player stufftext "tmstart sound/music/Labyrinth.mp3"
+	//$player stufftext "tmstart sound/music/Labyrinth.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/Labyrinth.mp3"
 
 	wait 0.4
 	if ( level.friendly3dead==0 && level.friendly2dead==0 )
@@ -733,14 +827,15 @@ MG42Trigger:
 
 
 
-	End
+End
 
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 CappyPlayFlushout:
+
 //
 //	Trigger setup in the spot where the captain should say his thing.
 //
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 /*
 	if ( parm.other==level.cappy )
@@ -750,14 +845,15 @@ CappyPlayFlushout:
 	}
 	*/
 
-	End
+End
 
-//------------------------------------------------------------------
+
+//-------------------------------------------------------------------
 DoTrain:
 //
 //		Send the train by and have cappy say his dialog...
 //
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	// testtest
 	if ( level.bTrainReady==1 )
@@ -769,15 +865,16 @@ DoTrain:
 		self delete
 	}
 
-	End
+End
 
-//------------------------------------------------------------------
+
+//-------------------------------------------------------------------
 DestroyFlak2:
 //
 //		Have the captain say his thing and head into clearing the
 //		final house and checking out the last flak88
 //
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	// start up the 2nd FLAK88....
 	thread gags/T1L2_Flak88.Scr::DoFlak88Guys
@@ -787,11 +884,12 @@ DestroyFlak2:
 	self delete
 
 
-	End
+End
 
 //------------------------------------------------------------------
 PlayerUpstairs:
 //------------------------------------------------------------------
+
 	// get rid of these guys because they break the gag...
 	if ( $outsideguy_1!=NIL )
 	{
@@ -816,11 +914,12 @@ PlayerUpstairs:
 	}
 	*/
 
-	End
+End
 
-//------------------------------------------------------------------
+
+//-------------------------------------------------------------------
 PlayerAtWindow:
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	if (level.nWaitingForPlayer==2)
 	{
@@ -828,26 +927,29 @@ PlayerAtWindow:
 		self delete
 	}
 
-	End
+End
 
-//------------------------------------------------------------------
+
+//-------------------------------------------------------------------
 PlayerOutside:
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
+
 	if (level.nWaitingForPlayer==3)
 	{
 		level.cappy thread gags/t1l2_cappy.scr::PlayerOutside
 		self delete
 	}
 	
-	End
+End
 
-//------------------------------------------------------------------
+
+//-------------------------------------------------------------------
 Flak88_2_GonnaGoBoom:
-//------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 	level.cappy thread gags/t1l2_cappy.scr::Flak88_2_GonnaGoBoom
 
-	End
+End
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -856,7 +958,10 @@ Flak88_2_GonnaGoBoom:
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 stayonpath local.dumbdelay:
+//-------------------------------------------------------------------
 
 	local.bias = self.threatbias
 
@@ -887,7 +992,11 @@ end
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 triggerstayonpath local.trigger local.dumbdelay local.triggerthread:
+//-------------------------------------------------------------------
+
 
 	if ( local.trigger != NIL )
 	{
@@ -922,9 +1031,9 @@ triggerstayonpath local.trigger local.dumbdelay local.triggerthread:
 end
 
 
-// ---------------------------------------------------------------
+//-------------------------------------------------------------------
 windmill_dialog:
-// ---------------------------------------------------------------
+// ------------------------------------------------------------------
 
 // delete the trigger
 	self delete
@@ -947,26 +1056,29 @@ windmill_dialog:
 		dprintln "SNIPER not around for his dialog!"
 	}
 
-	end
+end
 
 
 
-// ---------------------------------------------------------------
+
+//-------------------------------------------------------------------
 artillery_dialog:
-// ---------------------------------------------------------------
+//-------------------------------------------------------------------
+
 
 	self delete
 	
 	level.cappy say dfr_T1L2_BC6960
 
-	end
+end
 
-// ---------------------------------------------------------------
+
+//-------------------------------------------------------------------
 stick_together_dialog:
-// ---------------------------------------------------------------
+// ------------------------------------------------------------------
 
 	self delete
 	level.cappy say dfr_T1L2_BC6964
 
-	end
+end
 

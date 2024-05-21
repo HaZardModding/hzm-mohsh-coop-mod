@@ -16,7 +16,7 @@ level waittill prespawn
 
 	level.enemytruckspeed = 175
 	level.lookahead = 256
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
 	level.aipronechance = 0
 	
 	level.fastspeed = 300
@@ -29,7 +29,7 @@ level waittill prespawn
 	setcvar "cg_rain_density" (level.raindensity)
 
 	// lock down player
-	level.playerangles = $player.angles
+	level.playerangles = $player.angles //MiaCosa @chrissstrahl
 	level.playerorigin = $player.origin
 	//*** fade out
 	fadeout .001 0 0 0 1
@@ -40,16 +40,28 @@ level waittill prespawn
 level waittill spawn
 
 
-	$player takeall
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
-	$player item weapons/Nagant_revolver.tik 
-	$player item weapons/Mosin_Nagant_Rifle.tik 
-	$player item weapons/ppsh_smg.tik 
-	$player item weapons/svt_rifle.tik 
-	$player item weapons/Russian_F1_grenade.tik
-	$player item weapons/RDG-1_Smoke_grenade.tik
+	//$player item weapons/Nagant_revolver.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Nagant_revolver.tik 
+	
+	//$player item weapons/Mosin_Nagant_Rifle.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Mosin_Nagant_Rifle.tik 
+	
+	//$player item weapons/ppsh_smg.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/ppsh_smg.tik 
+	
+	//$player item weapons/svt_rifle.tik //MiaCosa 
+	exec coop_mod/replace.scr::item weapons/svt_rifle.tik 
+	
+	//$player item weapons/Russian_F1_grenade.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/Russian_F1_grenade.tik
+	
+	//$player item weapons/RDG-1_Smoke_grenade.tik //
+	exec coop_mod/replace.scr::item weapons/RDG-1_Smoke_grenade.tik
 
-	$player ammo pistol 28
+	$player ammo pistol 28 //MiaCosa @chrissstrahl
 	$player ammo smg 225
 	$player ammo rifle 80
 	$player ammo smokegrenade 3
@@ -57,7 +69,9 @@ level waittill spawn
 
 
 	setcvar g_mission 3
-	$player fullheal
+	
+	//$player fullheal //MiaCosa
+	exec coop_mod/replace.scr::fullheal
 
 //	exec gags/t3l1_fourrussians.scr
 //	exec global/pocketlight.scr::PocketLightsInit
@@ -250,14 +264,15 @@ $mg42 convergetime 0.25
 
 
 end
-
+//-------------------------------------------------------------------
 MakeImmune:
+//-------------------------------------------------------------------
 	self immune bullet
 	self immune fast_bullet
 	self immune grenade
 //	self immune explosion
 //	self immune rocket
-	end
+end
 
 
 
@@ -267,7 +282,11 @@ MakeImmune:
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//-------------------------------------------------------------------
 intro_fade_in:
+//-------------------------------------------------------------------
 
 	// Start the four russian recon team members talking.
 //	exec gags/t3l1_fourrussians.scr::russian_startdialog
@@ -277,11 +296,13 @@ intro_fade_in:
 
  	wait 0.75
 
-	$player.viewangles = "0 0 0"
+	$player.viewangles = "0 0 0" //MiaCosa @chrissstrahl
 
 
-	$player physics_off
-	$player.angles = level.playerangles
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
+	$player.angles = level.playerangles //MiaCosa @chrissstrahl
 	$player.origin = level.playerorigin
 
 	showmenu t3l1_1
@@ -308,7 +329,7 @@ intro_fade_in:
 
 	wait 1
 	releaseplayer
-	$player.viewangles = "0 -90 0"
+	$player.viewangles = "0 -90 0" //MiaCosa @chrissstrahl
 
 
 
@@ -337,7 +358,9 @@ end
 //
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//-------------------------------------------------------------------
 initobjectives:
+//-------------------------------------------------------------------
 
 	waitthread global/objectives.scr::add_objectives 1 1 "Cross the Bridge and Enter Berlin" $beacon_bridge.origin
 	waitthread global/objectives.scr::add_objectives 2 1 "Locate Downed Aircraft and Map to Chancellery" $beacon_piperplane.origin
@@ -358,8 +381,10 @@ end
 // - Cross the bridge and enter the city
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-objective1:
 
+//-------------------------------------------------------------------
+objective1:
+//-------------------------------------------------------------------
 	// enable objective
 	waitthread global/objectives.scr::add_objectives 1 2
 	waitthread global/objectives.scr::current_objectives 1
@@ -384,8 +409,10 @@ end
 // - Locate your instructions at the downed aircraft
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-objective2:
 
+//-------------------------------------------------------------------
+objective2:
+//-------------------------------------------------------------------
 	// enable objective
 	waitthread global/objectives.scr::add_objectives 2 2
 	waitthread global/objectives.scr::current_objectives 2
@@ -409,7 +436,10 @@ end
 // - Locate the Chancellery Building
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 objective3:
+//-------------------------------------------------------------------
 
 	// enable objective
 	waitthread global/objectives.scr::add_objectives 3 2
@@ -431,7 +461,10 @@ end
 // - Locate the safe
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 objective4:
+//-------------------------------------------------------------------
 
 	// enable objective
 	waitthread global/objectives.scr::add_objectives 4 2
@@ -455,7 +488,10 @@ end
 // - Locate the combination to the safe
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 objective5:
+//-------------------------------------------------------------------
 
 	// enable objective
 	waitthread global/objectives.scr::add_objectives 5 2
@@ -479,7 +515,10 @@ end
 // thread that runs on the use trigger for the safe
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 usetrigger5:
+//-------------------------------------------------------------------
 
 	if ( level.combination == 1 )
 	{
@@ -519,7 +558,10 @@ end
 // - Use the combination to open the safe
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 objective6:
+//-------------------------------------------------------------------
 	
 	// enable objective
 	waitthread global/objectives.scr::add_objectives 6 2
@@ -541,7 +583,10 @@ end
 // thread that runs on the tankguards when they respawn
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 activatetankguard local.ent:
+//-------------------------------------------------------------------
 
 	local.ent forceactivate
 	local.ent thread global/ai.scr::enemyspawned
@@ -554,7 +599,10 @@ end
 // - Eliminate Enemies and Commandeer a Tank
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//-------------------------------------------------------------------
 objective7:
+//-------------------------------------------------------------------
 
 	// enable objective
 	waitthread global/objectives.scr::add_objectives 7 2
@@ -584,7 +632,10 @@ objective7:
 	waitthread global/objectives.scr::add_objectives 7 3
 
 	// transition to next level
-	$player takeall
+	
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
+	
 	wait 0.1
 	exec global/missioncomplete.scr t3l2 1
 
@@ -598,8 +649,10 @@ end
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-
+//-------------------------------------------------------------------
 sky_smoke:
+//-------------------------------------------------------------------
+
     	for(local.i = 1;local.i <= $skysmoke.size; local.i ++)
 	{
         //	$skysmoke[local.i].origin = ($skysmoke[local.i].origin + ( 0 0 -64 ))
@@ -610,14 +663,16 @@ sky_smoke:
 	}
 end
 
+//-------------------------------------------------------------------
 pole_fall:
+//-------------------------------------------------------------------
 
 	local.ent = self.target
 
 	local.ent playsound lightpole_fall_start
 	local.ent notsolid
 
-	local.angles = (vector_toangles ($player.origin - self.origin))
+	local.angles = (vector_toangles ($player.origin - self.origin)) //MiaCosa @chrissstrahl
 	local.ent.angles = (0 (local.angles[1] + 90) 0)
 
 	self remove
@@ -649,7 +704,10 @@ pole_fall:
 
 end
 
+//-------------------------------------------------------------------
 bench_smash:
+//-------------------------------------------------------------------
+
 	if(self.smashed != 1)
 	{
         	self.smashed = 1
@@ -668,7 +726,10 @@ bench_smash:
 	}
 end
 
+//-------------------------------------------------------------------
 FirstStaticDie:
+//-------------------------------------------------------------------
+
 	self waittill death
 	$s10_truck show
 	$s10_truck solid
@@ -678,10 +739,11 @@ FirstStaticDie:
 	local.random += 65
 	$s10_truck thread gags/t3l1_enemyspawn.scr::DoTruck 400 2 1 local.random							// 30deg 45deg
 	$s10_truck thread gags/t3l1_enemyspawn.scr::TruckDrive $s10_truck_path 512 level.enemytruckspeed 0 0.866 0.707
-	end
+end
 
-
+//-------------------------------------------------------------------
 s10_1:
+//-------------------------------------------------------------------
 	//called by the BSP
 	thread global/ai.scr::spawnset 1002 set1002
 	if (isAlive $s10_truck1)	
@@ -692,9 +754,12 @@ s10_1:
 	local.random += 65
 	$s10_truck1 thread gags/t3l1_enemyspawn.scr::DoTruck 180 2 1 local.random						// 30deg 45deg
 	$s10_truck1 thread gags/t3l1_enemyspawn.scr::TruckDrive $s10_truck1_path 512 level.enemytruckspeed 0 0.866 0.707
-	end
+end
 
+//-------------------------------------------------------------------
 s10_2:
+//-------------------------------------------------------------------
+
 	//called by the BSP	
 	if (isAlive $s10_truck2)
 	$s10_truck2 show
@@ -705,9 +770,12 @@ s10_2:
 	$s10_truck2 thread gags/t3l1_enemyspawn.scr::DoTruck 400 2	1 local.random
 	$s10_truck2 thread gags/t3l1_enemyspawn.scr::TruckDrive $s10_truck2_path 512 level.enemytruckspeed 0 0.866 0.707
 	thread static_tank_new
-	end
+end
 
+//-------------------------------------------------------------------
 s10_3:
+//-------------------------------------------------------------------
+
 	//called by the BSP
 	$s10_truck3 show
 	local.random = randomint ( 10 )
@@ -716,14 +784,20 @@ s10_3:
 	$s10_truck3 thread gags/t3l1_enemyspawn.scr::TruckDrive $s10_truck3_path 512 220 1 0.866 0.707
 	thread global/ai.scr::spawnset 1000 set1000
 	$player stufftext "tmstop; tmstart sound/music/Kleveburg.mp3"
-	end
+end
 
+//-------------------------------------------------------------------
 s10_3remove:
+//-------------------------------------------------------------------
+
 	//called by the BSP
 	$s10_truck3 hide
-	end
+end
 
+//-------------------------------------------------------------------
 panzer1:
+//-------------------------------------------------------------------
+
 	$statictruck2 show
 	$statictruck3 show
 	thread gags/T3L1_enemyspawn.scr::DeleteGermanWaves
@@ -747,9 +821,12 @@ panzer1:
 		}
 	}
 
-	end
+end
 
+//-------------------------------------------------------------------
 panzer2:
+//-------------------------------------------------------------------
+
 	if (isAlive $panzer_tank2)
 	{
 		thread global/stickybomb.scr::StickyBombInit $stickybomb_tankmove2 level.script::stickybomb_use
@@ -763,9 +840,12 @@ panzer2:
 			$panzer_tank2 thread global/vehicles_thinkers.scr::enemy_tank_think 0 empty_panzer_desert
 		}
 	}
-	end
+end
 
+//-------------------------------------------------------------------
 panzer3:
+//-------------------------------------------------------------------
+
 	thread weatherchange
 	thread global/ai.scr::spawn 1004
 	if (isAlive $panzer_tank3)
@@ -781,10 +861,15 @@ panzer3:
 		}
 	}
 	thread weatherchange
-	end
+end
 
+//-------------------------------------------------------------------
 panzer4:
-	$player playsound plane1
+//-------------------------------------------------------------------
+
+	//$player playsound plane1 //MiaCosa
+	exec coop_mod/replace.scr::playsound plane1
+	
 	thread global/ai.scr::spawn 1007
 	if (isAlive $panzer_tank4)
 	{
@@ -800,9 +885,12 @@ panzer4:
 			$panzer_tank4 thread global/vehicles_thinkers.scr::enemy_tank_think 0 empty_panzer_desert
 		}
 	}
-	end
+end
 
+//-------------------------------------------------------------------
 panzer5:
+//-------------------------------------------------------------------
+
 	if (isAlive $panzer_tank5)
 	{
 		thread global/stickybomb.scr::StickyBombInit $stickybomb_tankmove5 level.script::stickybomb_use
@@ -815,9 +903,12 @@ panzer5:
 			$panzer_tank5 thread global/vehicles_thinkers.scr::enemy_tank_think 0 empty_panzer_desert
 		}
 	}
-	end
+end
 
+//-------------------------------------------------------------------
 panzer6:
+//-------------------------------------------------------------------
+
 	if (isAlive $panzer_tank6)
 	{
 		thread global/stickybomb.scr::StickyBombInit $stickybomb_tankmove6 level.script::stickybomb_use
@@ -830,9 +921,12 @@ panzer6:
 			$panzer_tank6 thread global/vehicles_thinkers.scr::enemy_tank_think 0 empty_panzer_desert
 		}
 	}
-	end
+end
 
+//-------------------------------------------------------------------
 panzer7:
+//-------------------------------------------------------------------
+
 	if (isAlive $panzer_tank7)
 	{
 		thread global/stickybomb.scr::StickyBombInit $stickybomb_tankmove7 level.script::stickybomb_use
@@ -847,9 +941,12 @@ panzer7:
 			$panzer_tank7 thread global/vehicles_thinkers.scr::enemy_tank_think 0 empty_panzer_desert
 		}
 	}
-	end
+end
 
+//-------------------------------------------------------------------
 static_tank_new:
+//-------------------------------------------------------------------
+
 	if (isAlive $static_tank)
 	{
 		thread global/stickybomb.scr::StickyBombInit $stickybomb_tankstatic1 level.script::stickybomb_use
@@ -864,128 +961,204 @@ static_tank_new:
 			$static_tank thread global/vehicles_thinkers.scr::enemy_tank_think 0 empty_panzer_desert
 		}
 	}
-	end
+end
 
+//-------------------------------------------------------------------
 panzer_parade:
+//-------------------------------------------------------------------
+
 	thread panzer5
 	thread panzer6
 	thread panzer7
-	end
+end
 
+//-------------------------------------------------------------------
 t34_drive:
+//-------------------------------------------------------------------
+
 		$t34_tank thread gags/T3L2_KingTiger.scr::ShowTank
 		$t34_tank thread tank_drive_path $t34_path level.enemytruckspeed
-	end
+end
 
+//-------------------------------------------------------------------
 document1:
-	$player playsound pickup_papers
+//-------------------------------------------------------------------
+	//$player playsound pickup_papers //MiaCosa
+	exec coop_mod/replace.scr::playsound pickup_papers
+	
 	$document1 remove
 //	dprintln "Instructions Located."
 end
 
+//-------------------------------------------------------------------
 document2:
+//-------------------------------------------------------------------
 
 	if ( level.safelocated == 1 )
 	{
 		level.combination = 1
-		$player playsound pickup_papers
+		
+		//$player playsound pickup_papers //MiaCosa
+		exec coop_mod/replace.scr::playsound pickup_papers
+		
 		$document2 remove
 		//dprintln "Located Safe Combination."
 	}
 
 end
 
+//-------------------------------------------------------------------
 musicchange:
+//-------------------------------------------------------------------
+
 	$player_flak88 show
 	$player_flak88_turret0 show
-	$player stufftext "tmstop"
-	$player stufftext "tmstartloop sound/music/mus_11a_surprise.mp3"
+	//$player stufftext "tmstop" //MiaCosa
+	exec coop_mod/replace.scr::tmstop
+	
+	//$player stufftext "tmstartloop sound/music/mus_11a_surprise.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstartloop "sound/music/mus_11a_surprise.mp3"
+	
 // autosave position 3
 exec global/autosave.scr 3
-	end
+end
 
+//-------------------------------------------------------------------
 weatherchange:
+//-------------------------------------------------------------------
+
 	println "weather change"
 	level.rain_width = ".6"
 	level.rain_min_dist = 512
 	level.rain_density = 10
 end
 
+//-------------------------------------------------------------------
 pilarexplode:
+//-------------------------------------------------------------------
+
 thread global/exploder.scr::explode 28
 end
 
+//-------------------------------------------------------------------
 spawnenemies_outsidesaferoom:
+//-------------------------------------------------------------------
+
 println "hit enemy spawn trigger"
 thread global/ai.scr::spawn 81
 println "activating grenade launcher"
 $Grenadeshot turnon
 end
 
+//-------------------------------------------------------------------
 spawnenemies_building:
+//-------------------------------------------------------------------
+
 println "hit enemy spawn trigger"
 thread global/ai.scr::spawn 82
 end
 
+//-------------------------------------------------------------------
 spawnenemies_building_2:
-thread global/ai.scr::spawn 83
-end
+//-------------------------------------------------------------------
 
+thread global/ai.scr::spawn 83
+
+end
+//-------------------------------------------------------------------
 spawnenemies_building_3:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 84
 end
 
+//-------------------------------------------------------------------
 spawnenemies_building_4:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 85
 end
 
+//-------------------------------------------------------------------
 spawnenemies_building_5:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 88
 end
 
+//-------------------------------------------------------------------
 spawnenemies_building_frontdoor:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 86
 end
 
+//-------------------------------------------------------------------
 spawnenemies_building_frontdoor2:
+//-------------------------------------------------------------------
 thread global/ai.scr::spawn 87
 end
 
+//-------------------------------------------------------------------
 ai_spawn_1002:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawnset 1001 set1001
-$player playsound plane1
+
+//$player playsound plane1 //MiaCosa
+exec coop_mod/replace.scr::playsound plane1
+
 $player_flak88_1 show
 $player_flak88_1_turret0 show
 end
 
+//-------------------------------------------------------------------
 ai_spawn_1003:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 1003 set1003
 end
 
+//-------------------------------------------------------------------
 ai_spawn_1005:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 1005
 end
 
+//-------------------------------------------------------------------
 ai_spawn_1006:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 1006
 end
 
+//-------------------------------------------------------------------
 ai_spawn_1010:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 1010
 end
 
+//-------------------------------------------------------------------
 ai_spawn_1011:
+//-------------------------------------------------------------------
+
 thread global/ai.scr::spawn 1011
 end
 
+//-------------------------------------------------------------------
 dostuff:
-$player playsound plane1
+//-------------------------------------------------------------------
+
+//$player playsound plane1 //MiaCosa
+exec coop_mod/replace.scr::playsound plane1
 thread global/ai.scr::spawnset 80 set80
 end
 
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 TurnOffAi local.name:
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 
 for (local.i=1;local.i<=local.name.size;local.i++)
 {
@@ -995,9 +1168,9 @@ for (local.i=1;local.i<=local.name.size;local.i++)
 
 end
 
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 TurnOnAi local.name:
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 
 for (local.i=1;local.i<=local.name.size;local.i++)
 {
@@ -1007,38 +1180,43 @@ for (local.i=1;local.i<=local.name.size;local.i++)
 
 end
 
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 TankTurnOff:
-//-------------------------------------------------------
+//-------------------------------------------------------------------
+
 	self.paused = 1
 	self waitthread gags/T3L2_KingTiger.scr::HideTank
 
 end
 
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 TankTurnOn:
-//-------------------------------------------------------
+//-------------------------------------------------------------------
+
 	self.paused = 0
 	self waitthread gags/T3L2_KingTiger.scr::ShowTank
 
 end
 
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 fire_on:
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 	$new_fire anim start
 	$new_fire_1 anim stop
 
 end
 
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 fire_off:
-//-------------------------------------------------------
+//-------------------------------------------------------------------
 	$new_fire anim stop
 	$new_fire_1 anim start
 end
 
+//-------------------------------------------------------------------
 stopgermans:
+//-------------------------------------------------------------------
+
 	$new_fire_1 anim stop
 	thread TurnOffAi $set80
 	thread TurnOffAi $set1000
@@ -1053,7 +1231,10 @@ stopgermans:
 		$panzer_tank2 thread TankTurnOff
 end
 
+//-------------------------------------------------------------------
 restartgermans:
+//-------------------------------------------------------------------
+
 	$new_fire_1 anim start
 	thread TurnOnAi $set80
 	thread TurnOnAi $set1000
@@ -1069,7 +1250,11 @@ restartgermans:
 end
 
 /////////////////////////
+
+//-------------------------------------------------------------------
 tank_drive_path local.path local.speed local.remove:
+//-------------------------------------------------------------------
+
 // drive Vector position, speed, acceleration, reach_distance, look_ahead
 
 self thread global/vehicles_thinkers.scr::TankExplodeOnDeath
@@ -1105,7 +1290,10 @@ if (self)
 }
 end
 
+//-------------------------------------------------------------------
 doorlocked:
+//-------------------------------------------------------------------
+
 	self playsound door_wood_locked1
 end
 
@@ -1113,7 +1301,9 @@ end
 // Stickybomb use code
 //////////////////////
 
+//-------------------------------------------------------------------
 stickybomb_use:
+//-------------------------------------------------------------------
 
 	if ( (level.stickybombs > 0) && (level.stickybombs < 10) )
 	{
@@ -1127,7 +1317,10 @@ stickybomb_use:
 
 end
 
+//-------------------------------------------------------------------
 sticky_pickup:
+//-------------------------------------------------------------------
+
 // #set 1 = sticky_reload_1
 // #set 2 = sticky_reload_2
 // #set 3 = sticky_reload_3
@@ -1135,17 +1328,22 @@ sticky_pickup:
 	if ( self.set == 1 )
 	{
 		$sticky_reload_1 remove
-		$player playsound stickybomb_pickup
+		//$player playsound stickybomb_pickup //MiaCosa
+		exec coop_mod/replace.scr::playsound stickybomb_pickup
 	}
 	else if ( self.set == 2 )
 	{
 		$sticky_reload_2 remove
-		$player playsound stickybomb_pickup
+		
+		//$player playsound stickybomb_pickup //MiaCosa
+		exec coop_mod/replace.scr::playsound stickybomb_pickup
 	}
 	else if ( self.set == 3 )
 	{
 		$sticky_reload_3 remove
-		$player playsound stickybomb_pickup
+		
+		//$player playsound stickybomb_pickup //MiaCosa
+		exec coop_mod/replace.scr::playsound stickybomb_pickup
 	}
 
 	local.next = level.stickybombs + 4
@@ -1162,7 +1360,10 @@ sticky_pickup:
 end
 
 // enable all stickybombs
+
+//-------------------------------------------------------------------
 sticky_enableall:
+//-------------------------------------------------------------------
 
 	thread global/stickybomb.scr::StickyBombEnable $stickybomb_static
 	thread global/stickybomb.scr::StickyBombEnable $stickybomb_static1
@@ -1182,7 +1383,10 @@ sticky_enableall:
 end
 
 // disable all stickybombs
+
+//-------------------------------------------------------------------
 sticky_disableall:
+//-------------------------------------------------------------------
 
 	thread global/stickybomb.scr::StickyBombDisable $stickybomb_static
 	thread global/stickybomb.scr::StickyBombDisable $stickybomb_static1
@@ -1201,11 +1405,13 @@ sticky_disableall:
 
 end
 
+//-------------------------------------------------------------------
 DeleteYourself:
+//-------------------------------------------------------------------
 
 	if ( self==NULL || self==NIL )
-		end
+end
 
 	self delete
 
-	end
+end

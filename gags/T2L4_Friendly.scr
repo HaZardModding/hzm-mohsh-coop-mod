@@ -27,7 +27,7 @@ Run_To local.dest local.anim:
 	if (local.dest==NIL)
 	{
 //		println "Invalid runto command in t2l4_friendly.scr!"
-		End
+			End
 	}
 
 	self exec global/disable_ai.scr
@@ -48,13 +48,15 @@ Run_To local.dest local.anim:
 	self exec global/enable_ai.scr
 
 
-	End
+End
 
 
 //
 // Init the diver guys.
 //
+//--------------------------------------------------------------------------------
 diver_guys_init:
+//--------------------------------------------------------------------------------
 	level.DiverGuy1Spawner = waitthread global/spawner.scr::spawner_create $Diverguy1
 	level.DiverGuy2Spawner = waitthread global/spawner.scr::spawner_create $Diverguy2
 	level.DiverGuy3Spawner = waitthread global/spawner.scr::spawner_create $Diverguy3
@@ -90,7 +92,7 @@ DoDiverJump:
 	local.diverguy1 runto $captain_start_path
 	local.diverguy1 waittill movedone
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 DoDiverDive:
@@ -122,7 +124,7 @@ DoDiverDive:
 	local.diverguy2 runto $captain_start_path
 	local.diverguy2 waittill movedone
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 DoDiverSlide:
@@ -145,4 +147,4 @@ DoDiverSlide:
 	local.diverguy3 runto $captain_start_path
 	local.diverguy3 waittill movedone
 		
-	End
+End

@@ -23,7 +23,7 @@ main:
 	// hide the parachute that's on the barn.
 	$barn_parachute hide
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 SkipPlaneRide:
@@ -33,16 +33,16 @@ SkipPlaneRide:
 	
 	fadein 0.1 0 0 0 1
 
-	$player notsolid
+	$player notsolid //MiaCosa @Chrissstrahl
 
 	waitthread SetupPlayer
 	waitthread PlayerStandUp
 	waitthread PlayerMoveForward
 	waitthread PlayerJump
 
-	$player solid
+	$player solid //MiaCosa @Chrissstrahl
 
-	End
+End
 //---------------------------------------------------------------------------------
 PlayStartSounds:
 //---------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ PlayStartSounds:
 	$jumpmaster playsound t1_planefront
 	$airborne[12] playsound t1_planeback
 	
-	end
+end
 
 //---------------------------------------------------------------------------------
 DoPlaneRide:
@@ -134,7 +134,7 @@ DoPlaneRide:
 	if ( level.bSkipPlaneRide==1 )
 	{
 		thread SkipPlaneRide
-		End
+			End
 	}
 
 	thread global/fadein.scr::DoFadeIn t1l1_1 t1l1_2 t1l1_3 t1l1_4 0
@@ -143,12 +143,12 @@ DoPlaneRide:
 	$jumpmaster thread DoJumpMaster
 
 	freezeplayer
-	$player.viewangles = "0 0 0"
+	$player.viewangles = "0 0 0" //MiaCosa @Chrissstrahl
 	wait 13
 	releaseplayer
-	$player.viewangles = "0 0 0"
+	$player.viewangles = "0 0 0" //MiaCosa @Chrissstrahl
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 Cleanup:
@@ -167,9 +167,9 @@ Cleanup:
 		$airborne[local.i] delete
 	}
 
-	$player physics_on
-
-	end
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
+end
 
 //---------------------------------------------------------------------------------
 DoJumpMaster:
@@ -251,7 +251,7 @@ DoJumpMaster:
 	self waitthread DoJump_Trigger
 
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 JumpLightRed:
@@ -259,7 +259,7 @@ JumpLightRed:
 
 	$jumplight_red anim on
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 JumpLightGreen:
@@ -270,7 +270,7 @@ JumpLightGreen:
 	$searchlights show
 	$clouds delete
 
-	End
+End
 
 
 //---------------------------------------------------------------------------------
@@ -319,7 +319,7 @@ LookAtFrance:
 	self thread global/LoopAnim.scr::LoopAnim self.idle
 
 
-	end
+end
 //---------------------------------------------------------------------------------
 Lookat_Jumpmaster:
 //---------------------------------------------------------------------------------
@@ -330,7 +330,9 @@ Lookat_Jumpmaster:
 	
 End
 
-	Lookat_Jumpmaster1:
+//---------------------------------------------------------------------------------
+Lookat_Jumpmaster1:
+//---------------------------------------------------------------------------------
 		wait 0.5
 		$airborne[4] lookat $lookat_marker_passengerside
 		$airborne[7] lookat $lookat_marker_passengerside
@@ -338,9 +340,11 @@ End
 		$airborne[4] lookat NULL
 		wait 2
 		$airborne[7] lookat NULL
-	End
-	
-	Lookat_Jumpmaster2:
+End
+
+//---------------------------------------------------------------------------------	
+Lookat_Jumpmaster2:
+//---------------------------------------------------------------------------------
 		wait 0.75
 		$airborne[5] lookat $lookat_marker_passengerside
 		$airborne[9] lookat $lookat_marker_passengerside
@@ -351,9 +355,11 @@ End
 		wait 4
 		$airborne[5] lookat NULL
 	
-	End
-	
-	Lookat_Jumpmaster3:
+End
+
+//---------------------------------------------------------------------------------	
+Lookat_Jumpmaster3:
+//---------------------------------------------------------------------------------
 		wait 0.5
 		$airborne[3] lookat $airborne[2]
 		$airborne[6] lookat $airborne[2]
@@ -365,13 +371,17 @@ End
 		$airborne[8] lookat NULL
 		$airborne[10] lookat NULL
 	
-	End
+End
 
 //---------------------------------------------------------------------------------
 SetupPlayer:
 //---------------------------------------------------------------------------------
-	$player physics_off
-	$player glue $playerspot_plane 0
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
+	
+	//$player glue $playerspot_plane 0 //MiaCosa
+	exec coop_mod/replace.scr::glue $playerspot_plane 0
+	
 	$playerspot_plane time 0.001
 	$playerspot_plane movedown 64
 	$playerspot_plane move
@@ -397,17 +407,18 @@ SetupPlayer:
 
 	thread camerashake 0 68 0.1 1 1
 	thread camerashake 68.5 11.5 1 1 1
-	end
+end
 
-	camerashake local.delay local.duration local.magnitude local.no_rampup local.no_rampdown:
-
+//---------------------------------------------------------------------------------
+camerashake local.delay local.duration local.magnitude local.no_rampup local.no_rampdown:
+//---------------------------------------------------------------------------------
 	// wait for this long before you enable the effect
 	if (local.delay > 0)
 		wait local.delay
 
 	exec global/earthquake.scr local.duration local.magnitude local.no_rampup local.no_rampdown
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 PlayerStandUp:
@@ -423,7 +434,7 @@ PlayerStandUp:
 	$playerspot_plane movesouth 15
 	$playerspot_plane move
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 PlayerMoveForward:
@@ -434,7 +445,7 @@ PlayerMoveForward:
 	$playerspot_plane movenorth 18
 	$playerspot_plane move
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 PlayerJump:
@@ -462,7 +473,9 @@ PlayerJump:
 
 
 	// PlayerFall will glue us back...
-	$player unglue
+	
+	//$player unglue //MiaCosa
+	exec coop_mod/replace.scr::unglue
 
 	thread gags/T1L1_Falling.Scr::noparachute_guy $noparachute_guy_start $noparachute_guy_dest
 
@@ -473,7 +486,7 @@ PlayerJump:
 
 	// wait a couple of seconds and send the no parachute guy out...
 	
-	End
+End
 
 //---------------------------------------------------------------------------------
 Setup1 local.idle local.standup local.stand_idle local.hookup local.startcheck local.seat:
@@ -492,7 +505,7 @@ Setup1 local.idle local.standup local.stand_idle local.hookup local.startcheck l
 
 	self.check_anim_attach = 0
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 Setup2 local.checkcycle local.soundoff local.walk local.jump local.balance:
@@ -503,7 +516,7 @@ Setup2 local.checkcycle local.soundoff local.walk local.jump local.balance:
 	self.jump			= local.jump
 	self.balance		= local.balance
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 Setup3 local.react local.hell_yes local.trans_look local.look_idle local.stand_hook:
@@ -518,7 +531,7 @@ Setup3 local.react local.hell_yes local.trans_look local.look_idle local.stand_h
 	// startoff looping out sitting down idle...
 	self thread global/LoopAnim.Scr::LoopAnim self.idle
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 AirborneTest:
@@ -529,8 +542,8 @@ AirborneTest:
 		$airborne[local.i] waitthread AirborneTestAnim
 	}
 	
-	End
-	
+End
+
 //---------------------------------------------------------------------------------
 AirborneTestAnim:
 //---------------------------------------------------------------------------------
@@ -539,7 +552,7 @@ AirborneTestAnim:
 	self waittill animdone
 	wait 0.2
 	
-	End
+End
 
 //---------------------------------------------------------------------------------
 GetReady_Trigger:
@@ -550,14 +563,14 @@ GetReady_Trigger:
 		$airborne[local.i] thread GetReady
 	}
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 GetReady:
 //---------------------------------------------------------------------------------
 
 	if ( self.trans_look==NIL )
-		End
+			End
 
 	wait (randomfloat 0.5)
 
@@ -568,7 +581,7 @@ GetReady:
 
 	self waitthread global/LoopAnim.Scr::LoopAnim self.look_idle
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 StandUp_Trigger:
@@ -583,9 +596,9 @@ StandUp_Trigger:
 		$airborne[local.i] thread StandUp
 	}
 
-	$player thread PlayerStandUp
+	$player thread PlayerStandUp //MiaCosa @Chrissstrahl
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 StandUp:
@@ -602,7 +615,7 @@ StandUp:
 	self thread global/LoopAnim.Scr::LoopAnim self.stand_idle
 
 	
-	End
+End
 
 //---------------------------------------------------------------------------------
 HookUp_Trigger:
@@ -617,7 +630,7 @@ HookUp_Trigger:
 		$airborne[local.i] thread HookUp
 	}
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 HookUp:
@@ -633,7 +646,7 @@ HookUp:
 	self thread global/LoopAnim.Scr::LoopAnim self.stand_hook
 
 	
-	End
+End
 
 //---------------------------------------------------------------------------------
 CheckGear_Trigger:
@@ -647,7 +660,7 @@ CheckGear_Trigger:
 	}
 
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 CheckGear:
@@ -669,7 +682,7 @@ CheckGear:
 	else
 		self thread global/LoopAnim.Scr::LoopAnim self.checkcycle
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 SoundOff_Trigger:
@@ -688,7 +701,7 @@ SoundOff_Trigger:
 			wait 0.8
 	}
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 SoundOff:
@@ -705,7 +718,7 @@ SoundOff:
 
 	self thread global/LoopAnim.Scr::LoopAnim self.stand_hook
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 HellYes_Trigger:
@@ -719,7 +732,7 @@ HellYes_Trigger:
 	}
 
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 HellYes:
@@ -734,7 +747,7 @@ HellYes:
 
 	self thread global/LoopAnim.Scr::LoopAnim self.stand_hook
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 FlakExplosion_Trigger:
@@ -742,12 +755,16 @@ FlakExplosion_Trigger:
 //	Do the flak explosion effect and animation on the squad..
 //---------------------------------------------------------------------------------
 //	$plane_explosion1 anim start
-	$player playsound explode_truck
+
+	//$player playsound explode_truck //MiaCosa
+	exec coop_mod/replace.scr::playsound explode_truck
 
 	wait 0.25
 
 	$plane_explosion2 anim start
-	$player playsound explode_truck
+	
+	//$player playsound explode_truck //MiaCosa
+	exec coop_mod/replace.scr::playsound explode_truck
 
 	thread boom
 
@@ -759,8 +776,9 @@ FlakExplosion_Trigger:
 	// stop our idle
 	//$the_plane thread global/LoopAnim.Scr::LoopAnimStop
 
-	$player playsound skydive
-
+	//$player playsound skydive //MiaCosa
+	exec coop_mod/replace.scr::playsound skydive
+	
 	// rock the plane
 	//$the_plane anim rock
 	//$the_plane waittill animdone
@@ -770,8 +788,7 @@ FlakExplosion_Trigger:
 	// go back to idle...
 	//$the_plane thread global/LoopAnim.Scr::LoopAnim idle
 
-	End
-
+End
 
 
 //---------------------------------------------------------------------------------
@@ -806,7 +823,7 @@ FlakExplosion:
 
 	self thread global/LoopAnim.Scr::LoopAnim self.stand_hook
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 DoJump_Trigger:
@@ -846,7 +863,7 @@ DoJump_Trigger:
 
 	}
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 Walk_Trigger local.start:
@@ -857,7 +874,7 @@ Walk_Trigger local.start:
 		$airborne[local.i] thread Walk
 	}
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 Walk:
@@ -872,7 +889,7 @@ Walk:
 
 	self thread global/LoopAnim.Scr::LoopAnim self.stand_hook
 
-	End
+End
 //---------------------------------------------------------------------------------
 DoGoGoGo:
 //---------------------------------------------------------------------------------
@@ -894,7 +911,7 @@ DoGoGoGo:
 	// wait for them to go...
 	self thread global/LoopAnim.Scr::LoopAnim2 11J905_JumpmasterGoCycle
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 KickMe:
@@ -911,7 +928,7 @@ KickMe:
 	// back to idle...
 	self thread global/LoopAnim.Scr::LoopAnim 11J803_JumpmasterStandIdle
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 Jump:
@@ -934,7 +951,7 @@ Jump:
 	self hide
 //	self delete
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 Fly local.path local.speed local.scale:
@@ -946,7 +963,7 @@ Fly local.path local.speed local.scale:
 	self waitmove
 	self delete
 
-	end
+end
 
 //---------------------------------------------------------------------------------
 FlyC47s:
@@ -995,7 +1012,7 @@ FlyC47s:
 	$c47_bank thread Fly $c47_bank_path 260 0.3
 	thread C47_DoBank
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 Parchuteguys:
@@ -1008,7 +1025,7 @@ Parchuteguys:
 	thread gags/T1L1_Falling.Scr::parachute_guy_near $trooper_near_5 30 0 0 0.7
 	thread gags/T1L1_Falling.Scr::parachute_guy_near $trooper_near_6 32 0 0 0.5
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 C47_DoBank:
@@ -1036,7 +1053,7 @@ C47_DoBank:
 //	fadeout .001 0 0 0 1
 
 
-	End
+End
 	
 //---------------------------------------------------------------------------------
 C47_AAGotYou:
@@ -1065,7 +1082,7 @@ C47_AAGotYou:
 
 	self delete
 
-	End
+End
 
 //---------------------------------------------------------------------------------
 C47_GetCrashedInto:
@@ -1093,7 +1110,7 @@ C47_GetCrashedInto:
 	self waittill animdone
 	self delete
 
-	End
+End
 
 //-------------------------------------------------------------------
 Flak_on: 
@@ -1144,7 +1161,10 @@ End
 // Obscuring Flak System
 //-------------------------------------------------------------------
 
+//---------------------------------------------------------------------------------
 Obscure:
+//---------------------------------------------------------------------------------
+
 	thread gags/box_effects.scr::execute_target_flak models/fx/exp_flak_near.tik $flakspot1 35
 	thread gags/box_effects.scr::execute_target_flak models/fx/exp_flak_near.tik $flakspot2 36
 	thread gags/box_effects.scr::execute_target_flak models/fx/exp_flak_near.tik $flakspot3 36.5

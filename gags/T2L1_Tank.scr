@@ -20,7 +20,7 @@ main:
 
 	level.friendly3 thread MedicThink
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 DoTank1:
@@ -37,7 +37,7 @@ DoTank1:
 	level.bTreeGuyReady	= 0
 	level.bDialogSpoken = 0
 
-	End
+End
 
 
 //--------------------------------------------------------------------------------
@@ -45,7 +45,8 @@ Tank1Go:
 //--------------------------------------------------------------------------------
 
 	level.enemytankspeed = 200
-	level.playertanktarget = $player
+	level.playertanktarget = $player //MiaCosa @chrissstrahl
+	
 	level.lookahead = 256
 	level.sightdistance = 16000
 	self setcollisionentity $panzertank_mask
@@ -190,11 +191,12 @@ Tank1Go:
 	if ( level.friendly3!=NIL && isAlive level.friendly3 )
 		level.friendly3 thread RestoreHealth
 
-	End
+End
+
 
 //--------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------
 target_delay_fire local.targ local.delay:
+//--------------------------------------------------------------------------------
 
 	if ( isAlive self )
 		self.gun setAimTarget local.targ
@@ -204,10 +206,10 @@ target_delay_fire local.targ local.delay:
 
 end
 
-//--------------------------------------------------------------------------------
+
 //--------------------------------------------------------------------------------
 target_waittill_fire local.targ:
-
+//--------------------------------------------------------------------------------
 	if ( isAlive self )
 	{
 		self.gun setAimTarget local.targ
@@ -228,18 +230,19 @@ GoAfterPlayer:
 
 	while ( self.bAttackPlayer==1 )
 	{
-		self.gun setAimTarget $player
-		self.gun waittill ontarget
+		self.gun setAimTarget $player //MiaCosa @chrissstrahl
+		self.gun waittill ontarget //MiaCosa @chrissstrahl
 
 		if (self == NULL)
 			end
 
 		// should probably be targeting the player or something...
-		if !(vector_within $player.origin self.origin 16000)
+		
+		if !(vector_within $player.origin self.origin 16000) //MiaCosa @chrissstrahl
 		{		
 			wait 1
 		}
-		else if (!(sighttrace $player.origin (self.gun.origin + (0 0 64)) 1))
+		else if (!(sighttrace $player.origin (self.gun.origin + (0 0 64)) 1)) //MiaCosa @chrissstrahl
 		{
 			wait 1
 		}
@@ -248,11 +251,11 @@ GoAfterPlayer:
 			wait 3
 			if ( self.bAttackPlayer==1 )
 			{
-				self.gun setAimTarget $player
+				self.gun setAimTarget $player //MiaCosa @chrissstrahl
 				self.gun waittill ontarget
 
 				if (self == NULL)
-					end
+			end
 
 ////this causes the bug where the cannon doesnt shoot in the Z direction...				self.gun setAimTarget NULL
 				self.gun anim fire
@@ -265,7 +268,7 @@ GoAfterPlayer:
 	}	
 
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 DoFriendly2RunAway:
@@ -278,7 +281,7 @@ DoFriendly2RunAway:
 		level.attackthread2 = parm.previousthread
 	}
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 DoFriendly1RunAway:
@@ -295,7 +298,7 @@ DoFriendly1RunAway:
 		level.attackthread1 = parm.previousthread
 	}
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 Friendly2RunAway:
@@ -316,21 +319,21 @@ Friendly2RunAway:
 		self waittill animdone
 	}
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 BeHealthy:
 //	temporarily crank up our health to do the tank gag...
 //--------------------------------------------------------------------------------
 	if ( self==NIL )
-		end
+			end
 
 	if ( isAlive self )
 	{
 		self.save_health = self.health
 		self.health = self.maxhealth * 0.75
 	}
-	end
+end
 
 //--------------------------------------------------------------------------------
 RestoreHealth:
@@ -339,13 +342,13 @@ RestoreHealth:
 //--------------------------------------------------------------------------------
 
 	if ( self==NIL )
-		end
+			end
 
 	if ( isAlive self )
 	{
 		self.health = self.save_health
 	}
-	end
+end
 
 
 //--------------------------------------------------------------------------------
@@ -426,7 +429,7 @@ Tank1Dead:
 		// level.friendly3 exec global/enable_ai.scr
 	}
 
-	End
+End
 
 	
 //--------------------------------------------------------------------------------
@@ -446,7 +449,7 @@ TankDialogDeathCheck:
 
 	//waitthread ShowStickyBomb
 	exec global/obj.scr 3 current "Use Sticky Bomb to Destroy Tank" $tigertank1.origin
-	End
+End
 
 //--------------------------------------------------------------------------------
 ShowStickyBomb:
@@ -457,7 +460,7 @@ ShowStickyBomb:
 		exec global/obj.scr 3 current "Use Sticky Bomb to Destroy Tank" $tigertank1.origin
 	}
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 DoTank1Dialog:
@@ -494,7 +497,7 @@ DoTank1Dialog:
 		self thread FriendlyAttackTank $friendly2_rally 1
 		level.attackthread2 = parm.previousthread
 	}
-	End
+End
 
 
 //--------------------------------------------------------------------------------
@@ -570,7 +573,7 @@ FriendlyAttackTank local.dest local.attack:
 	}
 	
 
-	End
+End
 
 //-------------------------------------------------------------------
 FriendStart:
@@ -588,7 +591,7 @@ FriendStart:
 		self.friendtype = 5
 
 	self thread global/friendly.scr::friendlythink
-	End
+End
 
 
 //--------------------------------------------------------------------------------
@@ -596,7 +599,7 @@ FriendStop:
 //--------------------------------------------------------------------------------
 	self thread global/friendly.scr::friendlystop
 
-	End
+End
 
 //--------------------------------------------------------------------------------
 mg42_guy_death_check:
@@ -607,7 +610,7 @@ mg42_guy_death_check:
 	// now that the mg42 guy is dead... Have the turret go after the player...
 	$tigertank1 thread GoAfterPlayer
 	
-	end
+end
 
 //--------------------------------------------------------------------------------
 MedicRunForCover:
@@ -653,7 +656,7 @@ MedicRunForCover:
 	}
 
 
-	end
+end
 
 //--------------------------------------------------------------------------------
 AreFriendliesFighting:
@@ -667,7 +670,7 @@ AreFriendliesFighting:
 	if ( isAlive level.friendly2 && level.friendly2.has_enemy==1 )
 		local.bFighting = 1
 
-	end local.bFighting
+end local.bFighting
 
 //--------------------------------------------------------------------------------
 WaitForFightingToStop:
@@ -690,7 +693,8 @@ WaitForFightingToStop:
 
 			local.bNeedMedic = 0
 
-			local.health = ($player.health * 100) / $player.maxhealth
+			local.health = ($player.health * 100) / $player.maxhealth //MiaCosa @chrissstrahl
+			
 			if (local.health < level.medicmin)
 				local.bNeedMedic = 1
 
@@ -735,7 +739,7 @@ WaitForFightingToStop:
 		}
 	}
 
-	end
+end
 
 //--------------------------------------------------------------------------------
 MedicThink:
@@ -774,7 +778,7 @@ MedicThink:
 	}
 
 
-	end
+end
 //--------------------------------------------------------------------------------
 FriendlyEnemyCheck:
 //--------------------------------------------------------------------------------
@@ -798,4 +802,4 @@ FriendlyEnemyCheck:
 
 	self.hasenemy = 0
 
-	end
+end

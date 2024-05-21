@@ -8,8 +8,8 @@ main:
 	level.bTrainReady	= 0
 	level.mg42_gag = 0
 
-	$player takeall
-
+	//$player takeall //MiaCosa
+	exec coop_mod/replace.scr::takeAll
 
 	self waitthread Init
 
@@ -37,7 +37,7 @@ main:
 	$Patrol1b thread IgnoreEnemy
 	$Patrol2 thread IgnoreEnemy
 
-	level.cappy.destination = $player
+	level.cappy.destination = $player //MiaCosa @Chrissstrahl
 	level.friendly2.destination = level.friendly3
 	level.friendly3.destination = level.cappy
 
@@ -61,7 +61,7 @@ IgnoreEnemy:
 //-------------------------------------------------------------------
 	self threatbias ignoreme
 	self thread OnEnemyIgnoreStop
-	end
+end
 
 //-------------------------------------------------------------------
 OnEnemyIgnoreStop:
@@ -69,7 +69,7 @@ OnEnemyIgnoreStop:
 	self waittill hasenemy
 	self threatbias 5000
 
-	end
+end
 //-------------------------------------------------------------------
 Init:
 //-------------------------------------------------------------------
@@ -97,7 +97,7 @@ Init:
 	$FlakGerman3 nodamage
 
 
-	End
+End
 
 
 //-------------------------------------------------------------------
@@ -123,19 +123,23 @@ Briefing:
 	self.no_idle = 1
 
 
-	$player stufftext "tmstart sound/music/Emmerich.mp3"
+	//$player stufftext "tmstart sound/music/Emmerich.mp3" //MiaCosa
+	exec coop_mod/replace.scr::tmstart "sound/music/Emmerich.mp3"
 
 
 	// lock player down here...
 
-	$player physics_off
+	//$player physics_off //MiaCosa
+	exec coop_mod/replace.scr::physics_off
 
 	drawhud 0
 
 	self thread global/LoopAnim.Scr::LoopAnim 12C101_Idle
 
-	self turnto $player
-	self lookat $player
+	//self turnto $player //MiaCosa 
+	//self lookat $player //MiaCosa
+	self exec coop_mod/replace.scr::turntolookat 1
+	
 
 	fadein 2.5 0 0 0 1
 
@@ -182,7 +186,9 @@ Briefing:
 	self waittill sounddone
 
 	wait 0.2
+//------------------------------------------------------------------------------------------------------------------
 testskip:
+//------------------------------------------------------------------------------------------------------------------
 
 	// "Copy that motherbird, over and out." maps "t "
 	self waitthread global/LoopAnim.Scr::LoopAnimStop
@@ -197,7 +203,9 @@ testskip:
 //	self waitthread say_to dfr_T1L2_BC6905 12C105_Dialogue03 $player 0
 //	self waitthread global/LoopAnim.Scr::LoopAnimStop
 
-	$player physics_on
+	//$player physics_on //MiaCosa
+	exec coop_mod/replace.scr::physics_on
+	
 	drawhud 1
 
 
@@ -205,7 +213,9 @@ testskip:
 	// save game here so they don't have to keep hearing the briefing....
 	exec global/autosave.scr 1
 
+//------------------------------------------------------------------------------------------------------------------
 skip:
+//------------------------------------------------------------------------------------------------------------------
 //	fadein 0.1 0 0 0 1
 
 	self waitthread FriendStart
@@ -215,27 +225,39 @@ skip:
 	self.health_pickup = FALSE
 
 	// give him his weapons here..
-	$player item weapons/Webley_Revolver.tik 
-	$player item weapons/enfield.tik 
-	$player item weapons/sten.tik 
-	$player item weapons/mills_grenade.tik   
-	$player item weapons/M18_smoke_grenade.tik  
+	
+	//$player item weapons/Webley_Revolver.tik //MiaCosa
+	exec coop_mod/replace.scr::item	weapons/Webley_Revolver.tik
+	
+	//$player item weapons/enfield.tik //MiaCosa
+	exec coop_mod/replace.scr::item weapons/enfield.tik
 
-	$player ammo pistol 32
+	//$player item weapons/sten.tik //MiaCosa 
+	exec coop_mod/replace.scr::item weapons/sten.tik
+	
+	//$player item weapons/mills_grenade.tik //MiaCosa  
+	exec coop_mod/replace.scr::item	weapons/mills_grenade.tik
+
+	//$player item weapons/M18_smoke_grenade.tik //MiaCosa  
+	exec coop_mod/replace.scr::item weapons/M18_smoke_grenade.tik
+
+	$player ammo pistol 32 //MiaCosa @Chrissstrahl
 	$player ammo smg 128
 	$player ammo rifle 50
 	$player ammo smokegrenade 3
 	$player ammo grenade 3
 
-	$player useweaponclass smg
+	$player useweaponclass smg //MiaCosa @Chrissstrahl
 
-	$player item items/binoculars.tik
+	//$player item items/binoculars.tik //MiaCosa
+	exec coop_mod/replace.scr::item	items/binoculars.tik
+	
 	waitthread global/items.scr::add_item "binoculars" noprint	// Show binoculars inventory icon
 	waitthread global/items.scr::add_item "explosive"	noprint // Show explosive inventory icon
 
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 DeleteGrenade:
@@ -244,7 +266,7 @@ DeleteGrenade:
 	wait 2.7
 	$projectile[$projectile.size] delete
 
-	end
+end
 
 //-------------------------------------------------------------------
 GotoBarn:
@@ -265,8 +287,10 @@ GotoBarn:
 	wait 2.5
 
 	// "Here we go.  Barnes, you're with me.  Wait for my order." maps "t "
-	self waitthread say_to dfr_T1L2_BC6906 12C106_Dialogue04 $player
-
+	
+	self waitthread say_to dfr_T1L2_BC6906 12C106_Dialogue04 $player //MiaCosa @Chrissstrahl Klärung!
+	waitthread coop_mod/replace.scr::waitForPlayer
+	
 	self.movedoneradius		= 6
 	
 	level.friendly2 thread gags/t1l2_Friend.scr::RunForGrenadeCover $grenade_run1
@@ -355,7 +379,7 @@ GotoBarn:
 	level.friendly3 exec global/enable_ai.scr
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 BlowFlak88:
@@ -366,7 +390,8 @@ BlowFlak88:
 	self waitthread FriendStop
 
 	// "Sergeant, get a demo charge on this Flak cannon!  Set the charge and meet up with the rest of the squad outside." maps "t "
-	self waitthread say_to dfr_T1L2_BC6908 12C110_Dialogue06 $player
+	
+	self waitthread say_to dfr_T1L2_BC6908 12C110_Dialogue06 $player //MiaCosa @Chrissstrahl Klärung!
 
 	$Flak1ThrobbingBox show
 
@@ -389,7 +414,7 @@ BlowFlak88:
 //	level.friendly3 thread gags/t1l2_friend.scr::FollowCappy
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 SpawnInvestigators:
@@ -432,7 +457,7 @@ SpawnInvestigators:
 
 	self waitthread FriendStop
 
-	self waitthread CappyRunTo $player 250
+	self waitthread CappyRunTo $player 250 //MiaCosa @Chrissstrahl Klärung!
 
 	// if we're too close to the train, then don't do this...
 	local.temp = vector_length($player.origin - $grate_demonode.origin)
@@ -448,7 +473,7 @@ SpawnInvestigators:
 
 	self thread FriendStart
 
-	End
+End
 
 //------------------------------------------------------------------
 SpawnOutsideBarn:
@@ -466,7 +491,7 @@ SpawnOutsideBarn:
 	self waitthread global/ai.scr::spawnset 100 "barn_outside_guys"
 	self thread WaitForBarnClear
 
-	End
+End
 
 //------------------------------------------------------------------
 WaitTillCount local.name local.count:
@@ -492,7 +517,7 @@ WaitTillCount local.name local.count:
 	}
 
 
-	End
+End
 
 
 //------------------------------------------------------------------
@@ -506,7 +531,7 @@ WaitForBarnClear:
 	self waitthread FriendStop
 	self thread GotoBarn
 
-	End
+End
 
 
 
@@ -562,7 +587,7 @@ ThrowGrenade local.hint local.velocity local.toss:
 	}
 	else
 	{
-		dprintln "failed grenade test...
+		dprintln "failed grenade test..." //MiaCosa - Fixed Missing Double-Quote
 	}
 
 End
@@ -612,9 +637,9 @@ DeathCheck:
 	iprintlnbold "You failed the mission."
 //	fadeout 3 0 0 0 1
 	wait 3
-	missionfailed
-
-	End
+	//missionfailed //MiaCosa
+	exec coop_mod/replace.scr::missionfailed
+End
 
 //------------------------------------------------------------------
 SpawnHouseAI:
@@ -637,7 +662,7 @@ SpawnHouseAI:
 
 	level.disableAI = 0
 
-	End
+End
 
 //-------------------------------------------------------------------
 TellPlayerFlushout:
@@ -648,10 +673,12 @@ TellPlayerFlushout:
 	// "Cover!  Barnes, get to the back of the house!  We'll flush them, and you take them out.  Go now!" maps "t "
 	self say dfr_T1L2_BC6909
 
-	End
+End
 
-
+//-------------------------------------------------------------------
 FakeGrenadeThrow:
+//-------------------------------------------------------------------
+
 	wait 3.25
 
 	$fake_grenade projectile models/projectiles/mills_grenade.tik
@@ -743,18 +770,18 @@ DoFlushOut:
 		self thread DownToThree
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 WaitForPlayer:
 //-------------------------------------------------------------------
 
-	while ( vector_length($player.origin - self.origin) < 80 )
+	while ( vector_length($player.origin - self.origin) < 80 ) //MiaCosa @Chrissstrahl
 	{
 		wait 1
 	}
 
-	End
+End
 		
 
 //-------------------------------------------------------------------
@@ -795,7 +822,7 @@ DoTrain:
 //	local.soundent delete
 	$train delete
 
-	End
+End
 
 //-------------------------------------------------------------------
 hidetrain:
@@ -806,7 +833,7 @@ hidetrain:
 	// give it a few more seconds to play the rest of its sound
 	$train hide
 	$train notsolid
-	end
+end
 
 //-------------------------------------------------------------------
 DoTrainSound:
@@ -825,7 +852,7 @@ DoTrainSound:
 
 	self delete
 
-	End
+End
 //-------------------------------------------------------------------
 TrainDialog:
 //-------------------------------------------------------------------
@@ -843,7 +870,8 @@ TrainDialog:
 	self.movedoneradius = 275
 	self.distance = 275
 
-	self runto $player
+	//self runto $player //MiaCosa
+	self exec coop_mod/replace.scr::runtoClosest
 	self waittill movedone
 
 //	self.movedoneradius = 6
@@ -874,7 +902,7 @@ TrainDialog:
 	}
 
 	// "Galloway, demo this drainage grate!  Barnes, take cover over here with me! Move!" maps "t "
-	self waitthread say_to dfr_T1L2_BC6956 12C119_Capdialog14 $player 1
+	self waitthread say_to dfr_T1L2_BC6956 12C119_Capdialog14 $player 1 //MiaCosa @Chrissstrahl
 
 	self lookat $demotrain
 	self turnto $demotrain
@@ -891,7 +919,7 @@ TrainDialog:
 	self lookat NULL
 	self turnto NULL
 
-	End
+End
 
 //-------------------------------------------------------------------
 DestroyFlak2:
@@ -913,7 +941,7 @@ DestroyFlak2:
 
 	// "Let's clear this house and see if we can't get a better vantage point of the bridge.  Follow me." maps "t "
 //	self waitthread global/say_to.scr::main dfr_T1L2_BC6912 $player	200 0 0
-	self waitthread say_to dfr_T1L2_BC6912 12C114_Dialogue10 $player
+	self waitthread say_to dfr_T1L2_BC6912 12C114_Dialogue10 $player //MiaCosa @Chrissstrahl
 
 	$biggate_lockedtrigger delete
 	///testtest self waitthread BeHealthy
@@ -962,12 +990,13 @@ DestroyFlak2:
 	// tell our buddy to go to his spot...
 	level.longtermfriend thread gags/t1l2_friend.scr::GoWaitForJump2
 
-	self waitthread WaitForPlayer
+	//self waitthread WaitForPlayer //MiaCosa
+	self waitthread coop_mod/replace.scr::waitForPlayer
 
 	// Now, wait for the player to trigger us from here...
 	self thread PlayerUpstairs
 
-	End
+End
 
 //-------------------------------------------------------------------
 PlayerUpstairs:
@@ -980,11 +1009,15 @@ PlayerUpstairs:
 	self.movedoneradius = 6
 	self waitthread CappyRunTo $CappyPlayerWait
 
-	self lookat $player
-	self turnto $player
+	//self lookat $player //MiaCosa
+	self exec coop_mod/replace.scr::lookat
+	
+	//self turnto $player //MiaCosa
+	self exec coop_mod/replace.scr::turnto
 
-	self waitthread WaitForPlayer
-
+	//self waitthread WaitForPlayer //MiaCosa
+	self waitthread coop_mod/replace.scr::waitForPlayer
+	
 	$FlakGerman4 takedamage
 	$FlakGerman5 takedamage
 	$FlakGerman6 takedamage
@@ -994,7 +1027,7 @@ PlayerUpstairs:
 
 	wait 0.3
 	// "Take a look Sergeant." maps "t "
-	self waitthread say_to dfr_T1L2_BC6915 12C115_Capdialog11 $player 1
+	self waitthread say_to dfr_T1L2_BC6915 12C115_Capdialog11 $player 1 //MiaCosa @Chrissstrahl
 
 	self lookat NULL
 	self turnto NULL
@@ -1016,7 +1049,7 @@ PlayerUpstairs:
 	// "Private Wilson will go scout the bridge.  You take out the eighty-eight down there." maps "t "
 	// "I'll provide suppressing fire from here.  Wait for my signal before attacking.  Move out!" maps "t "
 
-	self waitthread say_to dfr_T1L2_BC6914 12C116_capdialog12 $player 1
+	self waitthread say_to dfr_T1L2_BC6914 12C116_capdialog12 $player 1 //MiaCosa @Chrissstrahl
 
 	level.bCaptainDoneYacking = 1
 
@@ -1029,7 +1062,7 @@ PlayerUpstairs:
 
 ////	self waitthread BeHealthy
 	
-	End
+End
 
 //-------------------------------------------------------------------
 PlayerAtWindow:
@@ -1100,7 +1133,7 @@ PlayerOutside:
 	self runto $CappyCheat
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 GetGermansAttention:
@@ -1116,7 +1149,7 @@ GetGermansAttention:
 	$FlakGerman6 runto level.friendly1
 
 
-	End
+End
 
 //-------------------------------------------------------------------
 CoverFireStop:
@@ -1134,7 +1167,7 @@ Flak88_2_GonnaGoBoom:
 	//self runto $CappyCheat.origin
 
 	
-	End
+End
 
 //-------------------------------------------------------------------
 Flak88_2_BlownUp:
@@ -1142,7 +1175,8 @@ Flak88_2_BlownUp:
 
 	// "Nice work, Sergeant." maps "t "
 	self exec global/enable_ai.scr
-	self waitthread CappyRunTo $player 250
+	self waitthread CappyRunTo $player 250 //MiaCosa @Chrissstrahl
+	
 //	self waitthread say_to dfr_T1L2_BC6916 12C117_Capdialog13 $player
 	self say 12C117_Capdialog13
 
@@ -1150,7 +1184,7 @@ Flak88_2_BlownUp:
 
 	self thread FriendStart
 
-	End
+End
 
 //-------------------------------------------------------------------
 GoToBoat:
@@ -1167,7 +1201,7 @@ GoToBoat:
 	self.movedoneradius = 6
 	self waitthread CappyRunTo $TheBoat2
 
-	End
+End
 
 //-------------------------------------------------------------------
 BeHealthy:
@@ -1181,7 +1215,7 @@ BeHealthy:
 
 	if (self.health >= self.maxhealth)
 	{
-		end
+			end
 	}
 
 	self exec global/disable_ai.scr
@@ -1201,7 +1235,7 @@ BeHealthy:
 	self exec global/enable_ai.scr
 
 
-	End
+End
 
 // ---------------------------------------------------------------
 DownToThree:
@@ -1218,7 +1252,7 @@ DownToThree:
 	dprintln "cappy playing down to three dialog!"
 	self say dfr_T1L2_BC6963
 
-	end
+end
 
 //-------------------------------------------------------------------
 TurnUpTheFog:
@@ -1230,11 +1264,11 @@ TurnUpTheFog:
 		wait 0.01
 	}
 
-	end
+end
 
 
 //-------------------------------------------------------------------
-say_to local.sound local.anim local.ent local.movecloser:
+say_to local.sound local.anim local.ent local.movecloser: //MiaCosa @chrissstrahl
 //-------------------------------------------------------------------
 
 	if ( local.movecloser==NIL )
@@ -1249,7 +1283,7 @@ say_to local.sound local.anim local.ent local.movecloser:
 
 	self waitthread global/dialog_to.scr::dialog local.sound local.anim local.ent 250 local.movecloser
 
-	End
+End
 
 //-------------------------------------------------------------------
 CappyRunTo local.ent local.movedoneradius:
@@ -1260,13 +1294,14 @@ CappyRunTo local.ent local.movedoneradius:
 	if ( local.ent==NIL )
 	{
 		dprintln "CappyRunTo: entity is NULL: " local.ent
-		End
+			End
 	}
 
 	if ( local.movedoneradius!=NIL )
 		self.movedoneradius = local.movedoneradius
-
+//-------------------------------------------------------------------
 CappyRunTo_DoAgain:
+//-------------------------------------------------------------------
 	self runto local.ent
 	self waittill movedone
 
@@ -1275,7 +1310,7 @@ CappyRunTo_DoAgain:
 
 	self.movedoneradius		= 275
 
-	End
+End
 
 
 //-------------------------------------------------------------------
